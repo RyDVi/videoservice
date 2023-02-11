@@ -1,4 +1,4 @@
-import { useStaffLogin } from '@modules/api';
+import { useStaffLogin, setAuthHeader } from '@modules/api';
 import {
   Button,
   Container,
@@ -14,7 +14,6 @@ import { useHandleChange } from '@modules/hooks';
 import SubmitForm from 'crmui/components/SubmitForm';
 import { setCookie } from 'cookies-next';
 import ListError from 'crmui/components/ListError';
-import { setAuthHeader } from '@modules/api/base/axios';
 import { useRouter } from 'next/router';
 
 const LoginView: React.FC<{redirectTo?: string}> = ({redirectTo}) => {

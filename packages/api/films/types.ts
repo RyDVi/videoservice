@@ -1,9 +1,9 @@
 import { Dictionary } from "../../api/base";
 import { CodesOfCountry } from "@modules/constants";
-import { DealType } from "../deals";
-import { User } from "../users";
-import { Genre } from "../genres";
-import { Person } from "../persons";
+import { DealType } from "../deals/types";
+import { User } from "../users/types";
+import { Genre } from "../genres/types";
+import { Person } from "../persons/types";
 
 export const CONTENT_RATINGS = {
   0: "0+",

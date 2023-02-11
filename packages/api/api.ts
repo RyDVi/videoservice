@@ -9,5 +9,5 @@ export * from "./person_roles/endpoints";
 export * from "./persons/endpoints";
 export * from "./users/endpoints";
 export * from "./video/endpoints";
-export * from './video/videoFileEndpoints'
-export * from './video/subtitleFileEndpoints'
+export * from "./video_files/endpoints";
+export * from "./subtitle_files/endpoints";

@@ -1,7 +1,8 @@
 import { AxiosProgressEvent, AxiosResponse } from "axios";
 import { useCallback, useState } from "react";
 import useSwr from "swr";
-import { axiosInstance, RequestError, SaveEndpoint, useRequest } from "../base";
+import { axiosInstance, RequestError, useRequest } from "../base";
+import { videofiles } from "./endpoints";
 import { VideoFile } from "./types";
 
 export function useUploadVideoFile(initialVideoFile: VideoFile) {
@@ -16,8 +17,8 @@ export function useUploadVideoFile(initialVideoFile: VideoFile) {
     const formData = new FormData();
     formData.append("file", videoFile);
     return axiosInstance
-      .put(videofilesEndpoint.uploadVideo(initialVideoFile).url, formData, {
-        ...videofilesEndpoint.uploadVideo(initialVideoFile),
+      .put(videofiles.uploadVideo(initialVideoFile).url, formData, {
+        ...videofiles.uploadVideo(initialVideoFile),
         onUploadProgress: setUploadProgress,
       })
       .then((response) => {
@@ -64,8 +65,8 @@ export function useUploadVideoFile(initialVideoFile: VideoFile) {
 
 export function useSaveVideoFile(initial?: Partial<VideoFile> | null) {
   const { data, request, loading, setData, error } = useRequest({
-    initial: videofilesEndpoint.getInitial(initial),
-    config: videofilesEndpoint.save,
+    initial: videofiles.getInitial(initial),
+    config: videofiles.save,
   });
   return {
     videoFile: data,
@@ -78,7 +79,7 @@ export function useSaveVideoFile(initial?: Partial<VideoFile> | null) {
 
 export function useVideoFile(id?: string | string[]) {
   const { data, error, mutate } = useSwr<VideoFile>(
-    videofilesEndpoint.retrieve(id).url
+    videofiles.retrieve(id).url
   );
   const isVideoFileLoading = !data && !error;
   return {
@@ -90,10 +91,10 @@ export function useVideoFile(id?: string | string[]) {
 }
 
 export function useVideoFiles(
-  filters: Parameters<typeof videofilesEndpoint.list>[0] | null
+  filters: Parameters<typeof videofiles.list>[0] | null
 ) {
   const { data, error, mutate } = useSwr<VideoFile[]>(
-    filters ? [videofilesEndpoint.list(filters).url, videofilesEndpoint.list(filters)] : null
+    filters ? [videofiles.list(filters).url, videofiles.list(filters)] : null
   );
   const isVideoFilesLoading = !data && !error;
   return {
@@ -107,7 +108,7 @@ export function useVideoFiles(
 export function useDeleteVideoFile(id?: string | string[]) {
   const { loading, request, setData, error, response } = useRequest({
     initial: id,
-    config: videofilesEndpoint.destroy,
+    config: videofiles.destroy,
   });
   return {
     deleteVideoFile: request,
@@ -115,29 +116,3 @@ export function useDeleteVideoFile(id?: string | string[]) {
     errorOfDeleteVideoFile: error,
   };
 }
-
-class VideoFilesEndpoint extends SaveEndpoint<VideoFile, { video?: string }> {
-  getInitial = (videoFile?: Partial<VideoFile> | null): VideoFile => ({
-    id: "",
-    video: "",
-    file: null,
-    resolution: 480,
-    sound_studio: "",
-    ...videoFile,
-  });
-
-  uploadVideo = (videoFile: VideoFile | string) => {
-    const id = typeof videoFile === "object" ? videoFile.id : videoFile;
-    return {
-      url: `${this.uri}${id}/upload_video/`,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      method: "PUT",
-    };
-  };
-}
-
-export const videofilesEndpoint = new VideoFilesEndpoint("/videofiles/");
-const api = { videofiles:videofilesEndpoint };
-export default api;

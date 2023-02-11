@@ -33,7 +33,7 @@ const CreateVideoPage: React.FC = () => {
                 router.push(paths.video({ filmId: filmId as string, videoId: video.id }))
               }
               onCancel={() => router.back()}
-              data={api.videos.getInitial({ film: filmId as string })}
+              data={api.video.getInitial({ film: filmId as string })}
             />
           </CardForm>
         </Box>

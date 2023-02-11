@@ -4,6 +4,7 @@ import {
   ListItemButtonProps,
   ListItemText,
 } from "@mui/material";
+import React from "react";
 
 interface GenreListItemProps extends ListItemButtonProps {
   genre: Genre;

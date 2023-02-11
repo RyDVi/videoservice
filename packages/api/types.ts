@@ -10,3 +10,5 @@ export * from "./person_roles/types";
 export * from "./persons/types";
 export * from "./users/types";
 export * from "./video/types";
+export * from "./video_files/types";
+export * from "./subtitle_files/types";

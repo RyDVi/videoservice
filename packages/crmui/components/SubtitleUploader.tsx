@@ -1,6 +1,7 @@
 import { useUploadSubtitleFile, SubtitleFile } from '@modules/api';
 import { useIsValueChanged } from '@modules/hooks';
 import { Stack } from '@mui/material';
+import React from 'react';
 import { createRef, useEffect } from 'react';
 import { FileInputUploader, FileInputUploaderProps } from './FileInput';
 

@@ -1,10 +1,10 @@
-import { Dictionary } from '../../api/base';
-import { Customer } from '../customers';
+import { Dictionary } from "../../api/base";
+import { Customer } from "../customers/types";
 
 export interface DealType extends Dictionary {}
 
 export interface Deal {
   price: number; //TODO: check it should be string or number from decimal
-  type: DealType['id'];
-  customer: Customer['id'];
+  type: DealType["id"];
+  customer: Customer["id"];
 }

@@ -1,4 +1,4 @@
-import { PersonRole } from "../person_roles";
+import { PersonRole } from "../person_roles/types";
 
 export interface Person {
   readonly id: string;

@@ -1,4 +1,4 @@
-import { Film, Genre } from "@modules/api";
+import { Film } from "@modules/api";
 import { useRouter } from "next/router";
 import React from "react";
 import paths from "./paths";

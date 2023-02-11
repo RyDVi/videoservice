@@ -1,6 +1,7 @@
 import { Film } from "@modules/api";
 import { Box, Skeleton } from "@mui/material";
 import Link from "next/link";
+import React from "react";
 import CardList from "./CardList";
 import FilmCard from "./FilmCard";
 

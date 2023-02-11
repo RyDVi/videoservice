@@ -1,22 +1,24 @@
-import { axiosInstance, RequestError, SaveEndpoint, useRequest } from '../base';
-import { SubtitleFile } from './types';
-import useSwr from 'swr';
-import { useCallback, useState } from 'react';
-import { AxiosProgressEvent, AxiosResponse } from 'axios';
+import { axiosInstance, RequestError, useRequest } from "../base";
+import { SubtitleFile } from "./types";
+import useSwr from "swr";
+import { useCallback, useState } from "react";
+import { AxiosProgressEvent, AxiosResponse } from "axios";
+import { subtitlefiles } from "./endpoints";
 
 export function useUploadSubtitleFile(initialSubtitleFile: SubtitleFile) {
-  const [src, setSrc] = useState(initialSubtitleFile.file || '');
+  const [src, setSrc] = useState(initialSubtitleFile.file || "");
   const [errorOfUploadSubtitleFile, setError] = useState<File | null>();
-  const [uploadProgress, setUploadProgress] = useState<AxiosProgressEvent | null>(null);
+  const [uploadProgress, setUploadProgress] =
+    useState<AxiosProgressEvent | null>(null);
   const [subtitleFile, setSubtitleFile] = useState<File | null>(null);
 
   const upload = useCallback(() => {
     if (!subtitleFile) return {};
     const formData = new FormData();
-    formData.append('file', subtitleFile);
+    formData.append("file", subtitleFile);
     return axiosInstance
-      .put(subtitlefilesEndpoint.uploadSubtitle(initialSubtitleFile).url, formData, {
-        ...subtitlefilesEndpoint.uploadSubtitle(initialSubtitleFile),
+      .put(subtitlefiles.uploadSubtitle(initialSubtitleFile).url, formData, {
+        ...subtitlefiles.uploadSubtitle(initialSubtitleFile),
         onUploadProgress: setUploadProgress,
       })
       .then((response) => {
@@ -42,7 +44,7 @@ export function useUploadSubtitleFile(initialSubtitleFile: SubtitleFile) {
     }
     saveSubtitleFile({ ...initialSubtitleFile, file: null }).then(
       (response: AxiosResponse<SubtitleFile>) => {
-        setSrc(response.data.file || '');
+        setSrc(response.data.file || "");
       }
     );
   }, [initialSubtitleFile, saveSubtitleFile, src, subtitleFile]);
@@ -63,8 +65,8 @@ export function useUploadSubtitleFile(initialSubtitleFile: SubtitleFile) {
 
 export function useSaveSubtitleFile(initial?: Partial<SubtitleFile> | null) {
   const { data, request, loading, setData, error } = useRequest({
-    initial: subtitlefilesEndpoint.getInitial(initial),
-    config: subtitlefilesEndpoint.save,
+    initial: subtitlefiles.getInitial(initial),
+    config: subtitlefiles.save,
   });
   return {
     subtitleFile: data,
@@ -76,7 +78,9 @@ export function useSaveSubtitleFile(initial?: Partial<SubtitleFile> | null) {
 }
 
 export function useSubtitleFile(id?: string | string[]) {
-  const { data, error, mutate } = useSwr<SubtitleFile>(subtitlefilesEndpoint.retrieve(id).url);
+  const { data, error, mutate } = useSwr<SubtitleFile>(
+    subtitlefiles.retrieve(id).url
+  );
   const isSubtitleFileLoading = !data && !error;
   return {
     subtitleFile: data,
@@ -86,10 +90,12 @@ export function useSubtitleFile(id?: string | string[]) {
   };
 }
 
-export function useSubtitleFiles(filters: Parameters<typeof subtitlefilesEndpoint.list>[0]) {
+export function useSubtitleFiles(
+  filters: Parameters<typeof subtitlefiles.list>[0]
+) {
   const { data, error, mutate } = useSwr<SubtitleFile[]>([
-    subtitlefilesEndpoint.list(filters).url,
-    subtitlefilesEndpoint.list(filters),
+    subtitlefiles.list(filters).url,
+    subtitlefiles.list(filters),
   ]);
   const isSubtitleFilesLoading = !data && !error;
   return {
@@ -103,7 +109,7 @@ export function useSubtitleFiles(filters: Parameters<typeof subtitlefilesEndpoin
 export function useDeleteSubtitleFile(id?: string | string[]) {
   const { loading, request, setData, error, response } = useRequest({
     initial: id,
-    config: subtitlefilesEndpoint.destroy,
+    config: subtitlefiles.destroy,
   });
   return {
     deleteSubtitleFile: request,
@@ -111,26 +117,3 @@ export function useDeleteSubtitleFile(id?: string | string[]) {
     errorOfDeleteSubtitleFile: error,
   };
 }
-
-class SubtitleFilesEndpoint extends SaveEndpoint<SubtitleFile> {
-  getInitial = (subtitleFile?: Partial<SubtitleFile> | null): SubtitleFile => ({
-    id: '',
-    video: '',
-    file: null,
-    studio_name: '',
-    ...subtitleFile,
-  });
-
-  uploadSubtitle = (subtitleFile: SubtitleFile | string) => {
-    const id = typeof subtitleFile === 'object' ? subtitleFile.id : subtitleFile;
-    return {
-      url: `${this.uri}${id}/upload_subtitle/`,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      method: 'PUT',
-    };
-  };
-}
-export const subtitlefilesEndpoint = new SubtitleFilesEndpoint('/subtitlefilesEndpoint/');
-export default subtitlefilesEndpoint;

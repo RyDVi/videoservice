@@ -3,7 +3,6 @@ import {
   Genre,
   Person,
   PersonRole,
-  useFilm,
   useFilms,
   useGenres,
   usePersonRoles,
@@ -11,8 +10,9 @@ import {
   useVideos,
   Video,
   VideoFile,
+  api,
+  useVideoFiles,
 } from "@modules/api";
-import genresEndpoints from "@modules/api/genres/endpoints";
 import {
   Box,
   Container,
@@ -20,9 +20,7 @@ import {
   ListItem,
   ListItemText,
   Skeleton,
-  Theme,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -30,12 +28,8 @@ import StarIcon from "@mui/icons-material/Star";
 import { COUNTRIES_MAP } from "@modules/constants";
 import React from "react";
 import { AppPage } from "../../src/AppPage";
-import {
-  makeVideoFilesUrlsForPlayer,
-  PlayerJS,
-} from "@modules/videoplayer";
+import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
 import * as R from "ramda";
-import { useVideoFiles } from "@modules/api/video";
 import { NotFoundVideoFiles } from "@modules/client/notfound";
 import { styled } from "@mui/material/styles";
 import Script from "next/script";
@@ -218,7 +212,7 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
             : Array.from({ length: 5 }, (_, index) => (
                 <Skeleton key={index}>
                   <GenreListItem
-                    genre={genresEndpoints.initial({
+                    genre={api.genres.initial({
                       name: "Какой-нибудь жанр",
                     })}
                   />

@@ -3,12 +3,11 @@ import CrmSidebar from "crmui/sidebar/CrmSidebar";
 import { PageProvider } from "crmui/contexts/page/PageContext";
 import { useRouter } from "next/router";
 import {
-  subtitlefilesEndpoint,
   useFilm,
   useSubtitleFiles,
   useVideo,
   useVideoFiles,
-  videofilesEndpoint,
+  api,
 } from "@modules/api";
 import Head from "next/head";
 import { Box, Card, CardContent, CardHeader, Icon } from "@mui/material";
@@ -93,7 +92,7 @@ const FilmsPage: React.FC = () => {
                       mutateVideoFiles([...(videoFiles || []), newVideoFile]);
                     }}
                     onCancel={toAdd}
-                    data={videofilesEndpoint.getInitial({
+                    data={api.videofiles.getInitial({
                       video: videoId as string,
                     })}
                   />
@@ -125,7 +124,7 @@ const FilmsPage: React.FC = () => {
                       ]);
                     }}
                     onCancel={toAdd}
-                    data={subtitlefilesEndpoint.getInitial({
+                    data={api.subtitlefiles.getInitial({
                       video: videoId as string,
                     })}
                   />

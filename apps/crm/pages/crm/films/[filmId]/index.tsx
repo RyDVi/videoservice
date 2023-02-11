@@ -7,12 +7,11 @@ import { FilmInfoCard } from 'crmui/elements/forms/FilmForm';
 import Head from 'next/head';
 import { SeasonsContainer } from 'crmui/elements/video/Seasons';
 import { CardForm } from 'crmui/elements/forms/Form';
-import { Box, Button, CardActions, CardContent } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import paths from 'crmui/routes/paths';
 import {
   makeVideoFilesUrlsForPlayer,
   PlayerJS,
-  PlayerJSFolder,
 } from '@modules/videoplayer';
 import { useMemo } from 'react';
 import * as R from 'ramda';
