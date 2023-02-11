@@ -16,6 +16,7 @@ import {
 } from '@modules/videoplayer';
 import { useMemo } from 'react';
 import * as R from 'ramda';
+import Script from 'next/script';
 
 function groupBySeason<T extends Video>(videos: T[]): Record<string, T[]> {
   return R.groupBy(R.prop<string>('season'), videos);
@@ -71,7 +72,7 @@ const FilmsPage: React.FC = () => {
   }, [videoFiles?.length, videosWithVideoFiles]);
   return (
     <PageProvider title={`Фильм "${film?.name || ''}"`}>
-      {/* <PlayerJSScript /> */}
+      <Script src="/playerjs.js" type="text/javascript" async />
       <Head>
         <title>{film?.name}</title>
       </Head>

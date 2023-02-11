@@ -8,7 +8,7 @@
     "react":"^18.2.0",
     "axios": "^1.2.1",
     "swr": "^2.0.0",
-    "@modules/constants": "^0.0.1",
+    "@modules/constants": "*",
     "cookies-next": "^2.1.1"
   },
   "devDependencies": {

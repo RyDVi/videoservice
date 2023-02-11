@@ -33,12 +33,12 @@ import { AppPage } from "../../src/AppPage";
 import {
   makeVideoFilesUrlsForPlayer,
   PlayerJS,
-  // PlayerJSScript,
 } from "@modules/videoplayer";
 import * as R from "ramda";
 import { useVideoFiles } from "@modules/api/video";
 import { NotFoundVideoFiles } from "@modules/client/notfound";
 import { styled } from "@mui/material/styles";
+import Script from "next/script";
 
 const ratingFormatter = (rating: number) => rating.toFixed(1);
 const contentRatingFormatter = (contentRating: number) => `${contentRating}+`;
@@ -327,7 +327,7 @@ export default function FilmPage() {
   const { personRoles } = usePersonRoles();
   return (
     <Container maxWidth="lg">
-      {/* <PlayerJSScript /> */}
+      <Script src="/playerjs.js" type="text/javascript" async />
       <DescriptionContainer>
         {film?.image ? (
           <PosterImage

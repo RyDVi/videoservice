@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRange } from './counter';
+import React from "react";
+import { useRange } from "./counter";
 
 export interface PaginationProps {
   currentPage: number;
@@ -45,13 +45,13 @@ export function usePagination(
     } else if (startFrom < 4 && countPages > 7 && currentPage < 5) {
       endTo = 5;
     }
-    let neighborhoodItems = [];
+    let neighborhoodItems: number[] = [];
     for (let i = startFrom; i <= endTo; i++) {
       neighborhoodItems.push(i);
     }
 
-    const dotsBefore = startFrom > 3 ? '...' : undefined;
-    const dotsAfter = endTo < countPages - 2 ? '...' : undefined;
+    const dotsBefore = startFrom > 3 ? "..." : undefined;
+    const dotsAfter = endTo < countPages - 2 ? "..." : undefined;
     return [
       startFrom > 1 ? 1 : undefined,
       dotsBefore,

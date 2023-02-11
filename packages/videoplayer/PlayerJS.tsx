@@ -1,18 +1,11 @@
-import React, { useRef } from 'react';
-// import Script from 'next/script';
-
-// /**
-//  * 1) In public in root add playerjs.js file with current player from playerjs.com
-//  * 2) In needed pages add this script out of <Head> tag
-//  */
-// export const PlayerJSScript: React.FC = () => (
-//   <Script src="/playerjs.js" type="text/javascript" async />
-// );
+import React, { useRef } from "react";
 
 function removePlayerJs(playerOrPlayerId: string | PlayerJSProps) {
   // TODO: need implement
   const playerId =
-    typeof playerOrPlayerId === 'string' ? playerOrPlayerId : playerOrPlayerId.id;
+    typeof playerOrPlayerId === "string"
+      ? playerOrPlayerId
+      : playerOrPlayerId.id;
 }
 
 interface PlayerJSSeria {

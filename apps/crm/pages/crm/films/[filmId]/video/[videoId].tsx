@@ -8,7 +8,7 @@ import {
   useSubtitleFiles,
   useVideo,
   useVideoFiles,
-  videofilesEndpoint
+  videofilesEndpoint,
 } from "@modules/api";
 import Head from "next/head";
 import { Box, Card, CardContent, CardHeader, Icon } from "@mui/material";
@@ -25,6 +25,7 @@ import {
 } from "crmui/elements/forms/videofiles/SubtitleFileForm";
 import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
 import { useMemo } from "react";
+import Script from "next/script";
 
 const FilmsPage: React.FC = () => {
   const router = useRouter();
@@ -50,7 +51,7 @@ const FilmsPage: React.FC = () => {
         video?.series
       }.`}
     >
-      {/* <PlayerJSScript /> */}
+      <Script src="/playerjs.js" type="text/javascript" async />
       <Head>
         <title>{film?.name}</title>
       </Head>

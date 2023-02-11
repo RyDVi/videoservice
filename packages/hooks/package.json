@@ -6,8 +6,10 @@
   "author": "RyDVi (Ryabchunov Dmitry)",
   "license": "ISC",
   "dependencies": {
-    "@modules/utils": "^0.0.1",
-    "react": "^18.2.0",
+    "@modules/utils": "*",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
     "@types/react": "^18.0.26"
   }
 }

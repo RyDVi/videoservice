@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 type ObjectKeys<T> = T extends ReadonlyArray<any> | string
   ? never
   : T extends object

@@ -7,10 +7,7 @@
   "license": "ISC",
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@modules/nextjs": "^0.0.1",
     "@mui/x-data-grid": "^5.17.23",
-    "@mui/material": "^5.11.8",
-    "@mui/system": "^5.11.8"
+    "@modules/nextjs": "*"
     }
 }
