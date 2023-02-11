@@ -1,0 +1,13 @@
+{
+  "name": "@modules/hooks",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "author": "RyDVi (Ryabchunov Dmitry)",
+  "license": "ISC",
+  "dependencies": {
+    "@modules/utils": "^0.0.1",
+    "react": "^18.2.0",
+    "@types/react": "^18.0.26"
+  }
+}

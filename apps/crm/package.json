@@ -1,0 +1,42 @@
+{
+  "name": "crm",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.1",
+    "@mui/x-data-grid": "^5.17.12",
+    "@next/font": "^13.1.1",
+    "cookies-next": "^2.1.1",
+    "next": "^13.1.1",
+    "pre-commit": "^1.2.2",
+    "ramda": "^0.28.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "static-path": "^0.0.4",
+    "swr": "^2.0.0",
+    "crmui": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@types/node": "^17.0.12",
+    "@types/ramda": "^0.28.20",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.7",
+    "eslint": "^8.34.0",
+    "eslint-config-custom": "*",
+    "eslint-config-next": "13.1.6",
+    "tsconfig": "*",
+    "typescript": "^4.9.5"
+  }
+}

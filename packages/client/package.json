@@ -1,0 +1,21 @@
+{
+  "name": "@modules/client",
+  "description": "",
+  "authors": "RyDVi (Ryabchunov Dmitry)",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "dependencies": {
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.5",
+    "@modules/api": "^0.0.1",
+    "@modules/constants": "^0.0.1",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.1",
+    "@types/react": "^18.0.26",
+    "next": "^13.1.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
