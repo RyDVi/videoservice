@@ -1,38 +1,25 @@
-import { path } from 'static-path';
+import { path } from "static-path";
 
-const root = path('/');
-const crmRoot = root.path('/crm');
+export const root = path("/");
+export const crmRoot = root.path("/crm");
 
-const home = crmRoot.path('/home');
+export const home = crmRoot.path("/home");
 
-const films = crmRoot.path('/films');
-const film = films.path('/:filmId');
-const filmCreate = films.path('/create');
+export const films = crmRoot.path("/films");
+export const film = films.path("/:filmId");
+export const filmCreate = films.path("/create");
 
-const videoRoot = film.path('/video');
-const videoCreate = videoRoot.path('/create');
-const video = videoRoot.path('/:videoId');
+export const videoRoot = film.path("/video");
+export const videoCreate = videoRoot.path("/create");
+export const video = videoRoot.path("/:videoId");
 
-const customers = crmRoot.path('/customers');
-const customer = customers.path('/:customerId');
+export const customers = crmRoot.path("/customers");
+export const customer = customers.path("/:customerId");
 
-const settings = crmRoot.path('/settings');
+export const settings = crmRoot.path("/settings");
 
-const logout = crmRoot.path('/logout');
-const login = crmRoot.path('/login');
+export const logout = crmRoot.path("/logout");
+export const login = crmRoot.path("/login");
 
-const paths = {
-  crmRoot,
-  home,
-  films,
-  film,
-  filmCreate,
-  customers,
-  customer,
-  settings,
-  logout,
-  login,
-  video,
-  videoCreate,
-};
-export default paths;
+export const categories = crmRoot.path("/categories");
+export const category = categories.path("/:categoryId");

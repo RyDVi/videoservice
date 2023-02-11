@@ -1,5 +1,9 @@
-import { useDeleteSubtitleFile, useSaveSubtitleFile, SubtitleFile } from '@modules/api';
-import { useHandleChange } from '@modules/hooks';
+import {
+  useDeleteSubtitleFile,
+  useSaveSubtitleFile,
+  SubtitleFile,
+} from "@modules/api";
+import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,
   ListItem,
@@ -7,7 +11,7 @@ import {
   Paper,
   Skeleton,
   TextField,
-} from '@mui/material';
+} from "@mui/material";
 import {
   CardForm,
   CreateEditForm,
@@ -16,11 +20,11 @@ import {
   ReadEditForm,
   ReadEditFormProps,
   ReadFormFields,
-} from '../Form';
-import { useState } from 'react';
-import DeleteDialog from '../../dialogs/DeleteDialog';
-import SubtitleUploader from 'crmui/components/SubtitleUploader';
-import React from 'react';
+} from "../Form";
+import { useState } from "react";
+import { DeleteDialog } from "../../dialogs";
+import { SubtitleUploader } from "../../../components";
+import React from "react";
 
 export const SubtitleFileFormFields: React.FC<FormFields<SubtitleFile>> = ({
   data,
@@ -43,15 +47,18 @@ export const SubtitleFileFormFields: React.FC<FormFields<SubtitleFile>> = ({
   );
 };
 
-export const ReadSubtitleFileFormFields: React.FC<ReadFormFields<SubtitleFile>> = ({
-  data,
-}) => {
+export const ReadSubtitleFileFormFields: React.FC<
+  ReadFormFields<SubtitleFile>
+> = ({ data }) => {
   if (!data) {
     return (
       <>
         <ListItem>
           <Skeleton>
-            <ListItemText primary="Студия перевода" secondary="Студия перевода" />
+            <ListItemText
+              primary="Студия перевода"
+              secondary="Студия перевода"
+            />
           </Skeleton>
         </ListItem>
       </>
@@ -71,11 +78,9 @@ export const ReadSubtitleFileFormFields: React.FC<ReadFormFields<SubtitleFile>> 
   );
 };
 
-export const CreateEditSubtitleFileForm: React.FC<CreateEditForm<SubtitleFile>> = ({
-  data: initialData,
-  onSave,
-  onCancel,
-}) => {
+export const CreateEditSubtitleFileForm: React.FC<
+  CreateEditForm<SubtitleFile>
+> = ({ data: initialData, onSave, onCancel }) => {
   const {
     errorOfSaveSubtitleFile,
     isSaveSubtitleFile,
@@ -85,7 +90,9 @@ export const CreateEditSubtitleFileForm: React.FC<CreateEditForm<SubtitleFile>> 
   } = useSaveSubtitleFile(initialData);
   return (
     <CreateEditForm
-      onSubmit={() => saveSubtitleFile().then((response) => onSave(response.data))}
+      onSubmit={() =>
+        saveSubtitleFile().then((response) => onSave(response.data))
+      }
       loading={isSaveSubtitleFile}
       onCancel={onCancel}
     >
@@ -98,12 +105,9 @@ export const CreateEditSubtitleFileForm: React.FC<CreateEditForm<SubtitleFile>> 
   );
 };
 
-export const DeleteSubtitleFileDialog: React.FC<DeleteDialogFormProps<SubtitleFile>> = ({
-  onCancel,
-  onDelete,
-  open,
-  data,
-}) => {
+export const DeleteSubtitleFileDialog: React.FC<
+  DeleteDialogFormProps<SubtitleFile>
+> = ({ onCancel, onDelete, open, data }) => {
   const { deleteSubtitleFile } = useDeleteSubtitleFile(data?.id);
   if (!data) {
     return null;
@@ -125,7 +129,9 @@ export const DeleteSubtitleFileDialog: React.FC<DeleteDialogFormProps<SubtitleFi
   );
 };
 
-export const ReadEditSubtitleFileForm: React.FC<ReadEditFormProps<SubtitleFile>> = (props) => (
+export const ReadEditSubtitleFileForm: React.FC<
+  ReadEditFormProps<SubtitleFile>
+> = (props) => (
   <ReadEditForm
     {...props}
     CreateEditForm={CreateEditSubtitleFileForm}
@@ -141,14 +147,16 @@ export const SubtitleFileInfoCard: React.FC<
     onDelete?: (data: SubtitleFile) => void;
   } & CardProps
 > = ({ subtitleFile, onSave, onDelete, ...props }) => {
-  const [title, setTitle] = useState('Информация о субтитрах');
+  const [title, setTitle] = useState("Информация о субтитрах");
   return (
     <CardForm title={title} {...props}>
       <ReadEditSubtitleFileForm
         data={subtitleFile}
         onStateChange={(isEdit) => {
           setTitle(
-            isEdit ? 'Редактирование информации о субтитрах' : 'Информация о субтитрах'
+            isEdit
+              ? "Редактирование информации о субтитрах"
+              : "Информация о субтитрах"
           );
         }}
         onSave={onSave}

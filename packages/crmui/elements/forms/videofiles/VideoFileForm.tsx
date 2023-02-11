@@ -1,5 +1,5 @@
-import { useDeleteVideoFile, useSaveVideoFile, VideoFile } from '@modules/api';
-import { useHandleChange } from '@modules/hooks';
+import { useDeleteVideoFile, useSaveVideoFile, VideoFile } from "@modules/api";
+import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,
   ListItem,
@@ -8,7 +8,7 @@ import {
   Paper,
   Skeleton,
   TextField,
-} from '@mui/material';
+} from "@mui/material";
 import {
   CardForm,
   CreateEditForm,
@@ -17,12 +17,12 @@ import {
   ReadEditForm,
   ReadEditFormProps,
   ReadFormFields,
-} from '../Form';
-import { useState } from 'react';
-import { RESOLUTIONS } from './constants';
-import DeleteDialog from '../../dialogs/DeleteDialog';
-import VideoUploader from 'crmui/components/VideoUploader';
-import React from 'react';
+} from "../Form";
+import { useState } from "react";
+import { RESOLUTIONS } from "./constants";
+import { DeleteDialog } from "../../dialogs";
+import { VideoUploader } from "../../../components";
+import React from "react";
 
 export const VideoFileFormFields: React.FC<FormFields<VideoFile>> = ({
   data,
@@ -72,8 +72,8 @@ export const ReadVideoFileFormFields: React.FC<ReadFormFields<VideoFile>> = ({
             <ListItemText primary="Качество видео" secondary="Качество видео" />
           </Skeleton>
           <ListItem>
-        <ListItemText primary="Студия озвучки" secondary="Студия озвучки" />
-      </ListItem>
+            <ListItemText primary="Студия озвучки" secondary="Студия озвучки" />
+          </ListItem>
         </ListItem>
       </>
     );
@@ -122,12 +122,9 @@ export const CreateEditVideoFileForm: React.FC<CreateEditForm<VideoFile>> = ({
   );
 };
 
-export const DeleteVideoFileDialog: React.FC<DeleteDialogFormProps<VideoFile>> = ({
-  onCancel,
-  onDelete,
-  open,
-  data,
-}) => {
+export const DeleteVideoFileDialog: React.FC<
+  DeleteDialogFormProps<VideoFile>
+> = ({ onCancel, onDelete, open, data }) => {
   const { deleteVideoFile } = useDeleteVideoFile(data?.id);
   if (!data) {
     return null;
@@ -149,7 +146,9 @@ export const DeleteVideoFileDialog: React.FC<DeleteDialogFormProps<VideoFile>> =
   );
 };
 
-export const ReadEditVideoFileForm: React.FC<ReadEditFormProps<VideoFile>> = (props) => (
+export const ReadEditVideoFileForm: React.FC<ReadEditFormProps<VideoFile>> = (
+  props
+) => (
   <ReadEditForm
     {...props}
     CreateEditForm={CreateEditVideoFileForm}
@@ -165,14 +164,16 @@ export const VideoFileInfoCard: React.FC<
     onDelete?: (data: VideoFile) => void;
   } & CardProps
 > = ({ videoFile, onSave, onDelete, ...props }) => {
-  const [title, setTitle] = useState('Информация о видеофайле');
+  const [title, setTitle] = useState("Информация о видеофайле");
   return (
     <CardForm title={title} {...props}>
       <ReadEditVideoFileForm
         data={videoFile}
         onStateChange={(isEdit) => {
           setTitle(
-            isEdit ? 'Редактирование информации о видеофайле' : 'Информация о видеофайле'
+            isEdit
+              ? "Редактирование информации о видеофайле"
+              : "Информация о видеофайле"
           );
         }}
         onSave={onSave}

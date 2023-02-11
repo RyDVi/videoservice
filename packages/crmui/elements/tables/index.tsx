@@ -1,1 +1,1 @@
-export {default as FilmsTable} from './FilmsTable'
+export * from "./FilmsTable";

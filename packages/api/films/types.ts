@@ -27,6 +27,7 @@ export interface Film extends Dictionary {
   persons: Person["id"][];
   slug: string;
   year: number;
+  categories: string[];
 }
 
 export interface FilmPrice {

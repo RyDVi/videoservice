@@ -14,6 +14,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from './Sidebar';
 import LogoutIcon from '@mui/icons-material/Logout';
 import React from 'react';
+import CategoryIcon from '@mui/icons-material/Category';
 
 const CrmSidebarMenu: React.FC = () => {
   return (
@@ -33,6 +34,14 @@ const CrmSidebarMenu: React.FC = () => {
             <PersonIcon />
           </ListItemIcon>
           <ListItemText>Клиенты</ListItemText>
+        </MenuItem>
+      </Link>
+      <Link href={paths.categories({})}>
+        <MenuItem>
+          <ListItemIcon>
+            <CategoryIcon />
+          </ListItemIcon>
+          <ListItemText>Категории</ListItemText>
         </MenuItem>
       </Link>
       <Divider />
@@ -56,9 +65,8 @@ const CrmSidebarMenu: React.FC = () => {
   );
 };
 
-const CrmSidebar: React.FC = () => (
+export const CrmSidebar: React.FC = () => (
   <Sidebar>
     <CrmSidebarMenu />
   </Sidebar>
 );
-export default CrmSidebar;

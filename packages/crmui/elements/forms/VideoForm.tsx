@@ -1,5 +1,5 @@
-import { useDeleteVideo, useSaveVideo, Video, VIDEO_TYPES } from '@modules/api';
-import { useHandleChange } from '@modules/hooks';
+import { useDeleteVideo, useSaveVideo, Video, VIDEO_TYPES } from "@modules/api";
+import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,
   ListItem,
@@ -7,9 +7,10 @@ import {
   MenuItem,
   Skeleton,
   TextField,
-} from '@mui/material';
-import { useState } from 'react';
-import DeleteDialog from '../dialogs/DeleteDialog';
+} from "@mui/material";
+import React from "react";
+import { useState } from "react";
+import { DeleteDialog } from "../dialogs";
 import {
   CreateEditForm,
   FormFields,
@@ -18,9 +19,13 @@ import {
   ReadEditForm,
   CardForm,
   DeleteDialogFormProps,
-} from './Form';
+} from "./Form";
 
-export const VideoFields: React.FC<FormFields<Video>> = ({ data, onChange, error }) => {
+export const VideoFields: React.FC<FormFields<Video>> = ({
+  data,
+  onChange,
+  error,
+}) => {
   const handleChange = useHandleChange(onChange, data);
   return (
     <>
@@ -80,7 +85,9 @@ export const CreateEditVideoForm: React.FC<CreateEditForm<Video>> = ({
   );
 };
 
-export const ReadVideoFields: React.FC<ReadFormFields<Video>> = ({ data: video }) => {
+export const ReadVideoFields: React.FC<ReadFormFields<Video>> = ({
+  data: video,
+}) => {
   if (!video) {
     return (
       <>
@@ -144,7 +151,9 @@ export const DeleteVideoDialog: React.FC<DeleteDialogFormProps<Video>> = ({
   );
 };
 
-export const ReadEditVideoForm: React.FC<ReadEditFormProps<Video>> = (props) => (
+export const ReadEditVideoForm: React.FC<ReadEditFormProps<Video>> = (
+  props
+) => (
   <ReadEditForm
     {...props}
     CreateEditForm={CreateEditVideoForm}
@@ -156,13 +165,15 @@ export const ReadEditVideoForm: React.FC<ReadEditFormProps<Video>> = (props) => 
 export const VideoInfoCard: React.FC<
   { data?: Video; onSave?: (data: Video) => void } & CardProps
 > = ({ data, onSave, ...props }) => {
-  const [title, setTitle] = useState('Информация о видео');
+  const [title, setTitle] = useState("Информация о видео");
   return (
     <CardForm title={title} {...props}>
       <ReadEditVideoForm
         data={data}
         onStateChange={(isEdit) => {
-          setTitle(isEdit ? 'Редактирование информации о видео' : 'Информация о видео');
+          setTitle(
+            isEdit ? "Редактирование информации о видео" : "Информация о видео"
+          );
         }}
         onSave={onSave}
       />

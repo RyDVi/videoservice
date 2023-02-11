@@ -6,14 +6,19 @@ import {
   DialogProps,
   DialogTitle,
   DialogContentText,
-} from '@mui/material';
+} from "@mui/material";
+import React from "react";
 
 export interface DeleteDialogProps extends DialogProps {
   onDelete: () => void;
   onCancel: () => void;
 }
 
-const DeleteDialog: React.FC<DeleteDialogProps> = ({ onDelete, onCancel, ...props }) => (
+export const DeleteDialog: React.FC<DeleteDialogProps> = ({
+  onDelete,
+  onCancel,
+  ...props
+}) => (
   <Dialog {...props}>
     <DialogTitle>Подтверждение удаления</DialogTitle>
     <DialogContent>
@@ -27,5 +32,3 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ onDelete, onCancel, ...prop
     </DialogActions>
   </Dialog>
 );
-
-export default DeleteDialog;

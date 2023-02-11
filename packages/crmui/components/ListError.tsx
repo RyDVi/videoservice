@@ -1,6 +1,7 @@
-import { Alert, List, ListItem, ListItemText } from '@mui/material';
+import { Alert, List, ListItem, ListItemText } from "@mui/material";
+import React from "react";
 
-const ListError: React.FC<{ error?: string[] }> = ({ error }) => (
+export const ListError: React.FC<{ error?: string[] }> = ({ error }) => (
   <List>
     {error?.map((errText, index) => (
       <ListItem key={index}>
@@ -9,5 +10,3 @@ const ListError: React.FC<{ error?: string[] }> = ({ error }) => (
     ))}
   </List>
 );
-
-export default ListError;

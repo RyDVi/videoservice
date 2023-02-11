@@ -6,7 +6,7 @@ interface MainContainerProps {
   children: React.ReactNode;
 }
 
-const MainContainer: React.FC<MainContainerProps> = ({
+export const MainContainer: React.FC<MainContainerProps> = ({
   className,
   children,
 }) => {
@@ -20,5 +20,3 @@ const MainContainer: React.FC<MainContainerProps> = ({
     </Box>
   );
 };
-
-export default MainContainer;

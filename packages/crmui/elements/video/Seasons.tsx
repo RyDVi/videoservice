@@ -1,6 +1,6 @@
-import paths from 'crmui/routes/paths';
-import { Video } from '@modules/api';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { paths } from "crmui";
+import { Video } from "@modules/api";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
   Box,
   Collapse,
@@ -8,10 +8,10 @@ import {
   ListItemButton,
   ListItemButtonProps,
   ListItemText,
-} from '@mui/material';
-import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
-import React from 'react';
+} from "@mui/material";
+import { useRouter } from "next/router";
+import { useMemo, useState } from "react";
+import React from "react";
 
 interface SeriesInfo {
   seriesNumber: number;
@@ -97,7 +97,10 @@ export const SeasonsContainer: React.FC<{ videos: Video[] }> = ({ videos }) => {
                   {...seria}
                   onClick={() =>
                     router.push(
-                      paths.video({ filmId: seria.video.film, videoId: seria.video.id })
+                      paths.video({
+                        filmId: seria.video.film,
+                        videoId: seria.video.id,
+                      })
                     )
                   }
                   sx={{ pl: 4 }}

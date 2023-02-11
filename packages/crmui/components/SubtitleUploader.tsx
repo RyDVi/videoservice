@@ -1,9 +1,9 @@
-import { useUploadSubtitleFile, SubtitleFile } from '@modules/api';
-import { useIsValueChanged } from '@modules/hooks';
-import { Stack } from '@mui/material';
-import React from 'react';
-import { createRef, useEffect } from 'react';
-import { FileInputUploader, FileInputUploaderProps } from './FileInput';
+import { useUploadSubtitleFile, SubtitleFile } from "@modules/api";
+import { useIsValueChanged } from "@modules/hooks";
+import { Stack } from "@mui/material";
+import React from "react";
+import { createRef, useEffect } from "react";
+import { FileInputUploader, FileInputUploaderProps } from "./FileInput";
 
 const SubtitlePreview: React.FC<
   React.VideoHTMLAttributes<HTMLVideoElement> & {
@@ -26,7 +26,7 @@ const SubtitlePreview: React.FC<
         subtitlePlayerRef.current.src = value;
         return;
       }
-      subtitlePlayerRef.current.src = '';
+      subtitlePlayerRef.current.src = "";
       return;
     }
     subtitleFile.arrayBuffer().then((buffer) => {
@@ -45,10 +45,10 @@ const SubtitlePreview: React.FC<
   );
 };
 
-const SubtitleUploader: React.FC<
+export const SubtitleUploader: React.FC<
   Omit<
     FileInputUploaderProps,
-    'onChange' | 'onUpload' | 'file' | 'value' | 'onValueChange' | 'onDelete'
+    "onChange" | "onUpload" | "file" | "value" | "onValueChange" | "onDelete"
   > & {
     subtitleFile: SubtitleFile;
   }
@@ -79,5 +79,3 @@ const SubtitleUploader: React.FC<
     </Stack>
   );
 };
-
-export default SubtitleUploader;

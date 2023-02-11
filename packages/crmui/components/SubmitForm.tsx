@@ -17,7 +17,7 @@ export interface SubmitFormProps
   submitBtnText?: string;
 }
 
-const SubmitForm: React.FC<SubmitFormProps> = ({
+export const SubmitForm: React.FC<SubmitFormProps> = ({
   children,
   vertical,
   onSubmit,
@@ -37,5 +37,3 @@ const SubmitForm: React.FC<SubmitFormProps> = ({
     </Form>
   );
 };
-
-export default SubmitForm;

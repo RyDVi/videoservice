@@ -1,6 +1,6 @@
-import { PageProvider, CrmSidebar, CRMContainer } from "crmui";
+import { CrmSidebar, PageProvider, CRMContainer } from "crmui";
 
-const CustomersPage: React.FC = () => {
+const CategoriesPage: React.FC = () => {
   return (
     <PageProvider title="Клиенты">
       <CRMContainer sidebarContent={<CrmSidebar />}>Customers</CRMContainer>
@@ -8,4 +8,4 @@ const CustomersPage: React.FC = () => {
   );
 };
 
-export default CustomersPage;
+export default CategoriesPage;

@@ -1,5 +1,10 @@
-import { CONTENT_RATINGS, Film, useDeleteFilm, useSaveFilm } from '@modules/api';
-import { useHandleChange } from '@modules/hooks';
+import {
+  CONTENT_RATINGS,
+  Film,
+  useDeleteFilm,
+  useSaveFilm,
+} from "@modules/api";
+import { useHandleChange } from "@modules/hooks";
 import {
   Box,
   Button,
@@ -12,7 +17,7 @@ import {
   TextField,
   Typography,
   useTheme,
-} from '@mui/material';
+} from "@mui/material";
 import {
   CardForm,
   CreateEditForm,
@@ -21,17 +26,20 @@ import {
   ReadEditForm,
   ReadEditFormProps,
   ReadFormFields,
-} from './Form';
-import { useState } from 'react';
-import DeleteDialog from '../dialogs/DeleteDialog';
-import React from 'react';
-import Image from 'next/image';
+} from "./Form";
+import { useState } from "react";
+import { DeleteDialog } from "../dialogs";
+import React from "react";
+import Image from "next/image";
 
 const FileInput: React.FC<
   {
     onChange: (srcImage: string) => void;
     children: (props: { toUpload: () => void }) => React.ReactNode;
-  } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'children' | 'src'>
+  } & Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "onChange" | "children" | "src"
+  >
 > = ({ onChange, children, ...props }) => {
   const handleFileChange = React.useCallback(
     (event: React.SyntheticEvent<HTMLInputElement>) => {
@@ -39,7 +47,9 @@ const FileInput: React.FC<
       const newFile = files && files.length ? files[0] : null;
       if (newFile) {
         const fileReader = new FileReader();
-        fileReader.addEventListener('load', () => onChange(String(fileReader.result)));
+        fileReader.addEventListener("load", () =>
+          onChange(String(fileReader.result))
+        );
         fileReader.readAsDataURL(newFile);
       }
     },
@@ -51,7 +61,13 @@ const FileInput: React.FC<
   }, []);
   return (
     <>
-      <input type="file" ref={inputRef} hidden onChange={handleFileChange} {...props} />
+      <input
+        type="file"
+        ref={inputRef}
+        hidden
+        onChange={handleFileChange}
+        {...props}
+      />
       {children({ toUpload })}
     </>
   );
@@ -136,7 +152,12 @@ export const FilmFormFields: React.FC<FormFields<Film>> = ({
           <Box>
             <Button onClick={toUpload}>Загрузить изображение</Button>
             {film.image && (
-              <Image src={film.image} alt="Постер для фильма" width={400} height={600} />
+              <Image
+                src={film.image}
+                alt="Постер для фильма"
+                width={400}
+                height={600}
+              />
             )}
             {error?.image && (
               <Typography color={theme.palette.error.main} sx={{ p: 1, pt: 0 }}>
@@ -150,7 +171,9 @@ export const FilmFormFields: React.FC<FormFields<Film>> = ({
   );
 };
 
-export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({ data: film }) => {
+export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({
+  data: film,
+}) => {
   if (!film) {
     return (
       <>
@@ -169,12 +192,18 @@ export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({ data: film 
         </ListItem>
         <ListItem>
           <Skeleton>
-            <ListItemText primary="Краткое описание" secondary="Краткое описание" />
+            <ListItemText
+              primary="Краткое описание"
+              secondary="Краткое описание"
+            />
           </Skeleton>
         </ListItem>
         <ListItem>
           <Skeleton>
-            <ListItemText primary="Полное описание" secondary="Полное описание" />
+            <ListItemText
+              primary="Полное описание"
+              secondary="Полное описание"
+            />
           </Skeleton>
         </ListItem>
         <ListItem>
@@ -189,7 +218,10 @@ export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({ data: film 
         </ListItem>
         <ListItem>
           <Skeleton>
-            <ListItemText primary="Рейтинг контента" secondary="Рейтинг контента" />
+            <ListItemText
+              primary="Рейтинг контента"
+              secondary="Рейтинг контента"
+            />
           </Skeleton>
         </ListItem>
       </>
@@ -201,13 +233,22 @@ export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({ data: film 
         <ListItemText primary="Наименование" secondary={film.name} />
       </ListItem>
       <ListItem>
-        <ListItemText primary="Наименование в оригинале" secondary={film.original_name} />
+        <ListItemText
+          primary="Наименование в оригинале"
+          secondary={film.original_name}
+        />
       </ListItem>
       <ListItem>
-        <ListItemText primary="Краткое описание" secondary={film.description_short} />
+        <ListItemText
+          primary="Краткое описание"
+          secondary={film.description_short}
+        />
       </ListItem>
       <ListItem>
-        <ListItemText primary="Полное описание" secondary={film.description_full} />
+        <ListItemText
+          primary="Полное описание"
+          secondary={film.description_full}
+        />
       </ListItem>
       <ListItem>
         <ListItemText primary="Страна" secondary={film.country} />
@@ -215,9 +256,14 @@ export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({ data: film 
       <ListItem>
         <ListItemText primary="Постер к фильму" secondary={film.image} />
       </ListItem>
-      <ImageListItem sx={{ display: 'flex', justifyContent: 'center' }}>
+      <ImageListItem sx={{ display: "flex", justifyContent: "center" }}>
         {film.image && (
-          <Image src={film.image} alt="Постер к фильму" width={200} height={300} />
+          <Image
+            src={film.image}
+            alt="Постер к фильму"
+            width={200}
+            height={300}
+          />
         )}
       </ImageListItem>
       <ListItem>
@@ -235,7 +281,8 @@ export const CreateEditFilmForm: React.FC<CreateEditForm<Film>> = ({
   onSave,
   onCancel,
 }) => {
-  const { film, setFilm, filmError, saveFilm, loading } = useSaveFilm(initialFilm);
+  const { film, setFilm, filmError, saveFilm, loading } =
+    useSaveFilm(initialFilm);
   return (
     <CreateEditForm
       onSubmit={() => saveFilm().then((response) => onSave(response.data))}
@@ -286,13 +333,17 @@ export const ReadEditFilmForm: React.FC<ReadEditFormProps<Film>> = (props) => (
 export const FilmInfoCard: React.FC<
   { film?: Film; onSave?: (film: Film) => void } & CardProps
 > = ({ film, onSave, ...props }) => {
-  const [title, setTitle] = useState('Информация о фильме');
+  const [title, setTitle] = useState("Информация о фильме");
   return (
     <CardForm title={title} {...props}>
       <ReadEditFilmForm
         data={film}
         onStateChange={(isEdit) => {
-          setTitle(isEdit ? 'Редактирование информации о фильме' : 'Информация о фильме');
+          setTitle(
+            isEdit
+              ? "Редактирование информации о фильме"
+              : "Информация о фильме"
+          );
         }}
         onSave={onSave}
       />

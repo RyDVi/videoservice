@@ -1,11 +1,13 @@
-import CRMContainer from "crmui/containers/shell/CRMContainer";
-import CrmSidebar from "crmui/sidebar/CrmSidebar";
-import { PageProvider } from "crmui/contexts/page/PageContext";
-import { CreateEditFilmForm } from "crmui/elements/forms/FilmForm";
+import {
+  CardForm,
+  CRMContainer,
+  CrmSidebar,
+  PageProvider,
+  CreateEditFilmForm,
+  paths,
+} from "crmui";
 import { useRouter } from "next/router";
-import paths from "crmui/routes/paths";
 import Head from "next/head";
-import { CardForm } from "crmui/elements/forms/Form";
 import { styled } from "@mui/material";
 
 const CreateFilmCard = styled(CardForm)({

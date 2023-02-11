@@ -1,19 +1,23 @@
-import { Button, ButtonProps, Stack } from '@mui/material';
-import { createRef, useCallback, useState } from 'react';
-import { DeleteButton } from '../elements/forms/Form';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { LinearProgressNormalized } from './LinearProgressWithLabel';
+import { Button, ButtonProps, Stack } from "@mui/material";
+import { createRef, useCallback, useState } from "react";
+import { DeleteButton } from "../elements/forms/Form";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { LinearProgressNormalized } from "./LinearProgressWithLabel";
+import React from "react";
 
 export interface FileInputProps
-  extends Omit<ButtonProps, 'onChange' | 'onClick' | 'component' | 'variant' | 'value'>,
-    Pick<React.InputHTMLAttributes<HTMLInputElement>, 'accept'> {
+  extends Omit<
+      ButtonProps,
+      "onChange" | "onClick" | "component" | "variant" | "value"
+    >,
+    Pick<React.InputHTMLAttributes<HTMLInputElement>, "accept"> {
   onChange: (file: File) => void;
   onDelete: () => void;
   file: File | null;
   value: string;
 }
 
-const FileInput: React.FC<FileInputProps> = ({
+export const FileInput: React.FC<FileInputProps> = ({
   onChange,
   value,
   accept,
@@ -57,7 +61,7 @@ const FileInput: React.FC<FileInputProps> = ({
         if (!fileInputRef.current) {
           return;
         }
-        fileInputRef.current.value = '';
+        fileInputRef.current.value = "";
       }}
       disabled={props.disabled}
     />
@@ -89,10 +93,14 @@ export const FileInputUploader: React.FC<FileInputUploaderProps> = ({
           Сохранить
         </Button>
       )}
-      <FileInput onChange={onChange} file={file} {...props} accept=".mp4" {...props} />
+      <FileInput
+        onChange={onChange}
+        file={file}
+        {...props}
+        accept=".mp4"
+        {...props}
+      />
     </Stack>
     <LinearProgressNormalized value={uploadProgress} />
   </Stack>
 );
-
-export default FileInput;

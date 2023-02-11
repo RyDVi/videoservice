@@ -1,6 +1,5 @@
-import CRMContainer from 'crmui/containers/shell/CRMContainer';
-import { PageProvider } from 'crmui/contexts/page/PageContext';
-import CrmSidebar from 'crmui/sidebar/CrmSidebar';
+import { CrmSidebar, PageProvider, CRMContainer } from "crmui";
+
 const HomePage: React.FC = () => {
   return (
     <PageProvider title="Домашняя страница">

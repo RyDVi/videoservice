@@ -1,10 +1,10 @@
-import { Button, Card, CardActionArea } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import { useBoolean } from '@modules/hooks';
-import { Stack } from '@mui/system';
-import React from 'react';
+import { Button, Card } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { useBoolean } from "@modules/hooks";
+import { Stack } from "@mui/system";
+import React from "react";
 
-const AddElementCard: React.FC<{
+export const AddElementCard: React.FC<{
   children: (props: { toAdd: () => void }) => React.ReactElement;
   title: React.ReactNode;
 }> = ({ title, children }) => {
@@ -27,5 +27,3 @@ const AddElementCard: React.FC<{
     </Card>
   );
 };
-
-export default AddElementCard;

@@ -1,6 +1,4 @@
-import CRMContainer from 'crmui/containers/shell/CRMContainer';
-import CrmSidebar from 'crmui/sidebar/CrmSidebar';
-import { PageProvider } from 'crmui/contexts/page/PageContext';
+import { PageProvider, CRMContainer, CrmSidebar } from "crmui";
 
 const SettingsPage: React.FC = () => {
   return (

@@ -1,15 +1,15 @@
-import ShellBar from './ShellBar';
-import SidebarContainer from './SidebarContainer';
-import React from 'react';
-import MainContainer from './MainContainer';
-import { Box, Container, Stack } from '@mui/material';
+import React from "react";
+import { ShellBar } from "./ShellBar";
+import { SidebarContainer } from "./SidebarContainer";
+import { MainContainer } from "./MainContainer";
+import { Box, Stack } from "@mui/material";
 
-const CRMContainer: React.FC<{
+export const CRMContainer: React.FC<{
   children?: React.ReactNode;
   sidebarContent?: React.ReactNode;
 }> = ({ children, sidebarContent }) => {
   return (
-    <Stack sx={{ height: '100vh', width: '100vw' }} direction="row">
+    <Stack sx={{ height: "100vh", width: "100vw" }} direction="row">
       <SidebarContainer>{sidebarContent}</SidebarContainer>
       <MainContainer>
         <ShellBar />
@@ -22,5 +22,3 @@ const CRMContainer: React.FC<{
     </Stack>
   );
 };
-
-export default CRMContainer;

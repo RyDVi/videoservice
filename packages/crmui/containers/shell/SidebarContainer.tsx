@@ -6,7 +6,7 @@ interface SidebarContainerProps {
   className?: string;
 }
 
-const SidebarContainer: React.FC<SidebarContainerProps> = ({
+export const SidebarContainer: React.FC<SidebarContainerProps> = ({
   children,
   className,
   ...props
@@ -19,5 +19,3 @@ const SidebarContainer: React.FC<SidebarContainerProps> = ({
     {children}
   </Box>
 );
-
-export default SidebarContainer;

@@ -1,6 +1,15 @@
-import CRMContainer from "crmui/containers/shell/CRMContainer";
-import CrmSidebar from "crmui/sidebar/CrmSidebar";
-import { PageProvider } from "crmui/contexts/page/PageContext";
+import {
+  CRMContainer,
+  CrmSidebar,
+  CardForm,
+  AddElementCard,
+  CreateEditSubtitleFileForm,
+  SubtitleFileInfoCard,
+  PageProvider,
+  VideoInfoCard,
+  CreateEditVideoFileForm,
+  VideoFileInfoCard,
+} from "crmui";
 import { useRouter } from "next/router";
 import {
   useFilm,
@@ -11,17 +20,6 @@ import {
 } from "@modules/api";
 import Head from "next/head";
 import { Box, Card, CardContent, CardHeader, Icon } from "@mui/material";
-import { VideoInfoCard } from "crmui/elements/forms/VideoForm";
-import {
-  CreateEditVideoFileForm,
-  VideoFileInfoCard,
-} from "crmui/elements/forms/videofiles/VideoFileForm";
-import AddElementCard from "crmui/elements/forms/AddElementCard";
-import { CardForm } from "crmui/elements/forms/Form";
-import {
-  CreateEditSubtitleFileForm,
-  SubtitleFileInfoCard,
-} from "crmui/elements/forms/videofiles/SubtitleFileForm";
 import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
 import { useMemo } from "react";
 import Script from "next/script";

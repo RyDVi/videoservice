@@ -1,6 +1,7 @@
 import { useUploadVideoFile, VideoFile } from '@modules/api';
 import { useIsValueChanged } from '@modules/hooks';
 import { Stack } from '@mui/material';
+import React from 'react';
 import { createRef, useEffect, useState } from 'react';
 import { FileInputUploader, FileInputUploaderProps } from './FileInput';
 
@@ -51,7 +52,7 @@ const VideoPreview: React.FC<
   );
 };
 
-const VideoUploader: React.FC<
+export const VideoUploader: React.FC<
   Omit<
     FileInputUploaderProps,
     'onChange' | 'onUpload' | 'file' | 'value' | 'onValueChange' | 'onDelete'
@@ -88,5 +89,3 @@ const VideoUploader: React.FC<
     </Stack>
   );
 };
-
-export default VideoUploader;

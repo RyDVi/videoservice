@@ -1,9 +1,17 @@
-import { Box, LinearProgress, LinearProgressProps, Typography } from '@mui/material';
+import {
+  Box,
+  LinearProgress,
+  LinearProgressProps,
+  Typography,
+} from "@mui/material";
+import React from "react";
 
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+function LinearProgressWithLabel(
+  props: LinearProgressProps & { value: number }
+) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ width: "100%", mr: 1 }}>
         <LinearProgress variant="determinate" {...props} />
       </Box>
       <Box sx={{ minWidth: 35 }}>
@@ -16,12 +24,10 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 }
 
 export const LinearProgressNormalized: React.FC<
-  Omit<LinearProgressProps, 'value'> & { value?: number | null }
+  Omit<LinearProgressProps, "value"> & { value?: number | null }
 > = ({ value, ...props }) => {
   if (!value || value >= 1) {
     return null;
   }
   return <LinearProgressWithLabel value={value * 100} {...props} />;
 };
-
-export default LinearProgressWithLabel;

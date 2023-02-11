@@ -1,20 +1,24 @@
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import React from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
-import { usePageContext } from '../../contexts/page/PageContext';
+import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import React from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import { usePageContext } from "../../contexts";
 
 interface ShellProps {
   className?: string;
 }
 
-const ShellBar: React.FC<ShellProps> = ({ className }) => {
+export const ShellBar: React.FC<ShellProps> = ({ className }) => {
   const {
     state: {
       pageInfo: { title },
     },
   } = usePageContext();
   return (
-    <AppBar position="sticky" className={className} sx={{ position: 'sticky', top: 0 }}>
+    <AppBar
+      position="sticky"
+      className={className}
+      sx={{ position: "sticky", top: 0 }}
+    >
       <Toolbar>
         <IconButton
           size="large"
@@ -33,5 +37,3 @@ const ShellBar: React.FC<ShellProps> = ({ className }) => {
     </AppBar>
   );
 };
-
-export default ShellBar;

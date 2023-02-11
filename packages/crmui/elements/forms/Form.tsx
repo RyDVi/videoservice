@@ -7,7 +7,6 @@ import {
   CardContent,
   CardHeader,
   CardProps,
-  CircularProgress,
   List,
 } from '@mui/material';
 import { useCallback, useState } from 'react';
@@ -16,7 +15,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ValidationErrors } from '@modules/api';
-import BaseDeleteDialog, { DeleteDialogProps } from '../dialogs/DeleteDialog';
 import React from 'react';
 
 export const SubmitButton: React.FC<ButtonProps> = (props) => (

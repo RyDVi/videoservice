@@ -1,5 +1,4 @@
-import LoginView from 'crmui/elements/views/LoginView';
-import paths from 'crmui/routes/paths';
+import { LoginView, paths } from "crmui";
 
 const LoginPage: React.FC = () => {
   return <LoginView redirectTo={paths.home({})}></LoginView>;

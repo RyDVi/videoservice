@@ -20,6 +20,7 @@ class FilmsEndpoint extends PaginatedSaveEndpoint<
       original_name: "",
       slug: "",
       year: new Date().getFullYear(),
+      categories: [],
       ...props,
     };
   }
