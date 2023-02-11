@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import paths from "./paths";
-import { useThemeControl } from "./theme";
+import { useThemeControl } from "../../../packages/theme";
 import { CodesOfCountry } from "@modules/constants/country";
 import { CategoriesLists, CategoriesTooltip } from "@modules/client";
 

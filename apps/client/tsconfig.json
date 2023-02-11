@@ -1,5 +1,14 @@
 {
   "extends": "tsconfig/nextjs.json",
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "../../packages/theme/index.ts",
+    "../../packages/theme/index.ts",
+    "../../packages/theme/theme.ts",
+    "../../packages/theme/Theme.tsx",
+    "../../packages/theme/ThemeControlContext.tsx"
+  ],
   "exclude": ["node_modules"]
 }

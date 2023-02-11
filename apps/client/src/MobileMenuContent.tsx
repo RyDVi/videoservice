@@ -5,7 +5,7 @@ import { Box, BoxProps, Divider } from "@mui/material";
 import React from "react";
 import { useSearch } from "./hooks";
 import paths from "./paths";
-import { ThemeToggleButton } from "./theme";
+import { ThemeToggleButton } from "../../../packages/theme";
 
 interface MobileMenuHeaderProps extends BoxProps {}
 

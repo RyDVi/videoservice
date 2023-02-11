@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
 import React from "react";
-import { useMethods } from "@modules/hooks/methods";
+import { useMethods } from "@modules/hooks";
 
 interface ThemeContextProps {
   theme: Theme;

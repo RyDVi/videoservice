@@ -10,3 +10,4 @@ export * from "./state";
 export * from "./selector";
 export * from "./value";
 export * from "./timeout";
+export * from './methods'

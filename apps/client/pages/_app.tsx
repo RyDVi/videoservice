@@ -7,7 +7,7 @@ import createEmotionCache from "../src/createEmotionCache";
 import { SWRConfig } from "swr";
 import { axiosInstance } from "@modules/api";
 import { NextPage } from "next";
-import { Theme } from "../src/theme/Theme";
+import { Theme } from "../src/theme";
 import "../styles/index.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.

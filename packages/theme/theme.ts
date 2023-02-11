@@ -1,17 +1,12 @@
-import { Roboto } from "@next/font/google";
-import { createTheme, PaletteOptions } from "@mui/material/styles";
-import { red, blueGrey, grey } from "@mui/material/colors";
+import { createTheme, PaletteOptions, SimplePaletteColorOptions, Theme } from "@mui/material/styles";
+import { red, grey } from "@mui/material/colors";
 
-export const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
+interface DefaultPaletteOptions extends PaletteOptions {
+  primary?: SimplePaletteColorOptions;
+}
 declare module "@mui/material/styles" {
   interface Theme {
-    palette: PaletteOptions;
+    palette: DefaultPaletteOptions;
   }
   interface PaletteOptions {
     pageBackground?: {
@@ -21,6 +16,7 @@ declare module "@mui/material/styles" {
     };
   }
 }
+
 
 const commonPalette: PaletteOptions = {
   primary: {
@@ -49,7 +45,7 @@ export const lightTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    // fontFamily: roboto.style.fontFamily,
   },
 });
 
@@ -62,12 +58,12 @@ export const darkTheme = createTheme({
       dark: grey[900],
       light: grey[600],
     },
-    background:{
+    background: {
       // paper: grey[900],
       // default: grey[900]
-    }
+    },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    // fontFamily: roboto.style.fontFamily,
   },
 });
