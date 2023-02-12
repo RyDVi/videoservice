@@ -1,11 +1,10 @@
 import { useRequest } from "../base/request";
 import { ValidationErrors } from "../base/request";
 import useSwr from "swr";
-import { Paginated } from "../base/types";
 import { Category } from "./types";
-import { categories } from './endpoints';
+import { categories } from "./endpoints";
 
-export function useSaveCategory(initialCategory?: Category) {
+export function useSaveCategory(initialCategory?: Category | null) {
   const {
     data: category,
     request: saveCategory,
@@ -20,12 +19,12 @@ export function useSaveCategory(initialCategory?: Category) {
   return { category, saveCategory, setCategory, categoryError, loading };
 }
 
-export function useCategory(id?: string | string[]) {
+export function useCategory(id?: string | string[] | null) {
   const {
     data: category,
     error: categoryError,
     mutate: mutateCategory,
-  } = useSwr<Category>(categories.retrieve(id).url);
+  } = useSwr<Category>(id ? categories.retrieve(id).url : null);
   const isCategoryLoading = !category && !categoryError;
   return { category, categoryError, mutateCategory, isCategoryLoading };
 }
@@ -33,7 +32,7 @@ export function useCategory(id?: string | string[]) {
 export function useCategories(
   filters?: Parameters<typeof categories.list>[0] | null
 ) {
-  const { data, error, mutate } = useSwr<Paginated<Category>>(
+  const { data, error, mutate } = useSwr<Category[]>(
     filters ? [categories.list(filters).url, categories.list(filters)] : null
   );
   const isCategoriesLoading = !data && !error;

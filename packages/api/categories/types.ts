@@ -8,6 +8,17 @@ export const CATEGORY_TYPES = {
 
 export type CategoryTypes = keyof typeof CATEGORY_TYPES;
 
+export const CategoryTypeOptions = [
+  {
+    value: CATEGORY_TYPES.Country,
+    name: "Страна",
+  },
+  {
+    value: CATEGORY_TYPES.Genre,
+    name: "Жанр",
+  },
+];
+
 export interface Category extends Dictionary {
   type: CategoryTypes;
 }

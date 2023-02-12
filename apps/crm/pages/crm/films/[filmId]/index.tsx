@@ -6,10 +6,13 @@ import {
   CrmSidebar,
   PageProvider,
   CRMContainer,
+  FilmCategoriesMultiselect,
 } from "crmui";
 import { useRouter } from "next/router";
 import {
+  useCategories,
   useFilm,
+  useSaveFilm,
   useVideoFiles,
   useVideos,
   Video,
@@ -21,6 +24,7 @@ import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
 import { useMemo } from "react";
 import * as R from "ramda";
 import Script from "next/script";
+import React from "react";
 
 function groupBySeason<T extends Video>(videos: T[]): Record<string, T[]> {
   return R.groupBy(R.prop<string>("season"), videos);
@@ -74,6 +78,17 @@ const FilmsPage: React.FC = () => {
       })),
     }));
   }, [videoFiles?.length, videosWithVideoFiles]);
+
+  const { categories } = useCategories({});
+
+  const filmCategories = React.useMemo(
+    () =>
+      categories?.filter((category) => film?.categories.includes(category.id)),
+    [categories, film?.categories]
+  );
+
+  const { saveFilm } = useSaveFilm();
+    console.log(film?.categories)
   return (
     <PageProvider title={`Фильм "${film?.name || ""}"`}>
       <Script src="/playerjs.js" type="text/javascript" async />
@@ -101,6 +116,31 @@ const FilmsPage: React.FC = () => {
             </Button>
           </CardForm>
           {!!videoFolders && <PlayerJS id="player" file={videoFolders} />}
+          <CardForm title="Категории">
+            {categories && filmCategories && film && (
+              <FilmCategoriesMultiselect
+                data={filmCategories}
+                possibleValues={categories}
+                onAdd={(category) =>
+                  {
+                    debugger
+                    return saveFilm({
+                      ...film,
+                      categories: [...film.categories, category.id],
+                    });
+                  }
+                }
+                onDelete={(category) =>
+                  saveFilm({
+                    ...film,
+                    categories: film.categories.filter(
+                      (categoryId) => category.id !== categoryId
+                    ),
+                  })
+                }
+              />
+            )}
+          </CardForm>
         </Box>
       </CRMContainer>
     </PageProvider>
