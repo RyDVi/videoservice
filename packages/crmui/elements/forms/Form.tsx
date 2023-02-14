@@ -8,14 +8,14 @@ import {
   CardHeader,
   CardProps,
   List,
-} from '@mui/material';
-import { useCallback, useState } from 'react';
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Cancel';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { ValidationErrors } from '@modules/api';
-import React from 'react';
+} from "@mui/material";
+import { useCallback, useState } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { ValidationErrors } from "@modules/api";
+import React from "react";
 
 export const SubmitButton: React.FC<ButtonProps> = (props) => (
   <Button type="submit" startIcon={<SaveIcon />} color="success" {...props}>
@@ -60,7 +60,7 @@ export function CreateEditForm({
         event.preventDefault();
         onSubmit(event);
       }}
-      sx={{ '& .MuiTextField-root': { m: 1 } }}
+      sx={{ "& .MuiTextField-root": { m: 1 } }}
       display="flex"
       flexDirection="column"
     >
@@ -78,7 +78,11 @@ interface CardFormProps {
   children: React.ReactNode;
 }
 
-export function CardForm({ title, children, ...props }: CardFormProps & CardProps) {
+export function CardForm({
+  title,
+  children,
+  ...props
+}: CardFormProps & CardProps) {
   return (
     <Card {...props}>
       <CardHeader title={title} />
@@ -124,7 +128,7 @@ export interface ReadEditFormProps<D> {
 
 export interface DeleteDialogFormProps<D> {
   open: boolean;
-  data?: D;
+  data?: D | null;
   onDelete: (data: D) => void;
   onCancel: () => void;
 }

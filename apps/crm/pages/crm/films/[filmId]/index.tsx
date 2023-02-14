@@ -88,7 +88,6 @@ const FilmsPage: React.FC = () => {
   );
 
   const { saveFilm } = useSaveFilm();
-    console.log(film?.categories)
   return (
     <PageProvider title={`Фильм "${film?.name || ""}"`}>
       <Script src="/playerjs.js" type="text/javascript" async />
@@ -115,20 +114,16 @@ const FilmsPage: React.FC = () => {
               Добавить серию
             </Button>
           </CardForm>
-          {!!videoFolders && <PlayerJS id="player" file={videoFolders} />}
           <CardForm title="Категории">
             {categories && filmCategories && film && (
               <FilmCategoriesMultiselect
                 data={filmCategories}
                 possibleValues={categories}
                 onAdd={(category) =>
-                  {
-                    debugger
-                    return saveFilm({
-                      ...film,
-                      categories: [...film.categories, category.id],
-                    });
-                  }
+                  saveFilm({
+                    ...film,
+                    categories: [...film.categories, category.id],
+                  }).then((film) => mutateFilm(film.data))
                 }
                 onDelete={(category) =>
                   saveFilm({
@@ -136,11 +131,12 @@ const FilmsPage: React.FC = () => {
                     categories: film.categories.filter(
                       (categoryId) => category.id !== categoryId
                     ),
-                  })
+                  }).then((film) => mutateFilm(film.data))
                 }
               />
             )}
           </CardForm>
+          {!!videoFolders && <PlayerJS id="player" file={videoFolders} />}
         </Box>
       </CRMContainer>
     </PageProvider>

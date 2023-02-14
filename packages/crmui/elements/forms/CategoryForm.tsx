@@ -39,6 +39,7 @@ export const CategoryFormFields: React.FC<FormFields<Category>> = ({
   onChange,
   error,
 }) => {
+  console.log(data)
   const handleChange = useHandleChange(onChange, data);
   return (
     <>
@@ -127,7 +128,7 @@ export const CreateEditCategoryForm: React.FC<CreateEditForm<Category>> = ({
 export const DeleteCategoryDialog: React.FC<
   DeleteDialogFormProps<Category>
 > = ({ onCancel, onDelete, open, data }) => {
-  const { deleteCategory } = useDeleteCategory(data?.id);
+  const { deleteCategory } = useDeleteCategory();
   if (!data) {
     return null;
   }
@@ -136,7 +137,7 @@ export const DeleteCategoryDialog: React.FC<
       open={open}
       onCancel={onCancel}
       onDelete={() => {
-        return deleteCategory().then(
+        return deleteCategory(data?.id).then(
           () => {
             onDelete(data);
             return true;

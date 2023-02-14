@@ -9,10 +9,12 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export interface DeleteDialogProps extends DialogProps {
+interface DeleteProps {
   onDelete: () => void;
   onCancel: () => void;
+  open: boolean;
 }
+export type DeleteDialogProps = DialogProps & DeleteProps;
 
 export const DeleteDialog: React.FC<DeleteDialogProps> = ({
   onDelete,
@@ -32,3 +34,34 @@ export const DeleteDialog: React.FC<DeleteDialogProps> = ({
     </DialogActions>
   </Dialog>
 );
+
+export function useAcceptDialog(): {
+  dialogProps: DeleteProps;
+  acceptBefore: (callback: () => void) => void;
+} {
+  const [acceptCallback, setAcceptCallback] = React.useState<
+    (() => void) | null
+  >(null);
+  
+  const acceptBefore = React.useCallback((callback: () => void) => {
+    setAcceptCallback(()=>callback);
+  }, []);
+
+  const dialogProps = React.useMemo(() => {
+    return {
+      onDelete: () => {
+        acceptCallback && acceptCallback();
+        setAcceptCallback(null);
+      },
+      onCancel: () => {
+        setAcceptCallback(null);
+      },
+      open: !!acceptCallback,
+    };
+  }, [acceptCallback]);
+
+  return {
+    dialogProps,
+    acceptBefore,
+  };
+}

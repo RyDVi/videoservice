@@ -1,10 +1,12 @@
 import { Category, useCategories } from "@modules/api";
+import { SearchField } from "@modules/client";
 import {
   Box,
   CircularProgress,
   List,
+  ListItem,
   ListItemButton,
-  ListItemButtonProps,
+  ListItemProps,
   ListItemText,
 } from "@mui/material";
 import {
@@ -13,46 +15,85 @@ import {
   CRMContainer,
   paths,
   DictionaryPanel,
+  DeleteCategoryDialog,
 } from "crmui";
 import Link from "next/link";
+import React from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-interface CategoryListItemProps extends ListItemButtonProps {
+interface CategoryListItemProps extends ListItemProps {
   category: Category;
+  onDelete: () => void;
+  href: string;
 }
 
 const CategoryListItem: React.FC<CategoryListItemProps> = ({
   category,
+  onDelete,
+  href,
   ...props
 }) => (
-  <ListItemButton {...props}>
-    <ListItemText primary={category.name} secondary={category.type} />
-  </ListItemButton>
+  <ListItem {...props}>
+    <ListItemButton LinkComponent={Link} href={href}>
+      <ListItemText primary={category.name} secondary={category.type} />
+    </ListItemButton>
+    <ListItemButton
+      onClick={onDelete}
+      sx={{
+        color: "error.main",
+        justifyContent: "flex-end",
+        flex: "inherit",
+      }}
+    >
+      <DeleteIcon /> Удалить
+    </ListItemButton>
+  </ListItem>
 );
 
 interface CategoriesListProps {
   categories: Category[];
+  onDelete: (category: Category) => void;
 }
 
-const CategoriesList: React.FC<CategoriesListProps> = ({ categories }) => {
+const CategoriesList: React.FC<CategoriesListProps> = ({
+  categories,
+  onDelete,
+}) => {
+  const [search, setSearch] = React.useState("");
+  const filteredCategories = React.useMemo(
+    () =>
+      categories.filter((c) =>
+        c.name.toLowerCase().includes(search.toLowerCase())
+      ),
+    [categories, search]
+  );
   if (!categories.length) {
     return <Box>Нет категорий</Box>;
   }
   return (
-    <List>
-      {categories.map((category) => (
-        <CategoryListItem
-          key={category.id}
-          category={category}
-          component={Link}
-          to={paths.category({ categoryId: category.id })}
-        />
-      ))}
-    </List>
+    <Box>
+      <SearchField onChange={(e) => setSearch(e.target.value)} />
+      <List>
+        {filteredCategories.map((category) => (
+          <CategoryListItem
+            key={category.id}
+            category={category}
+            href={paths.category({ categoryId: category.id })}
+            onDelete={() => onDelete(category)}
+          />
+        ))}
+      </List>
+    </Box>
   );
 };
 
 const CategoriesPage: React.FC = () => {
-  const { categories, isCategoriesLoading } = useCategories({});
+  const { categories, isCategoriesLoading, mutateCategories } = useCategories(
+    {}
+  );
+  const [deleteCategory, setDeleteCategory] = React.useState<Category | null>(
+    null
+  );
   return (
     <PageProvider title="Категории фильмов">
       <CRMContainer sidebarContent={<CrmSidebar />}>
@@ -62,8 +103,22 @@ const CategoriesPage: React.FC = () => {
         {isCategoriesLoading ? (
           <CircularProgress />
         ) : (
-          <CategoriesList categories={categories || []} />
+          <CategoriesList
+            categories={categories || []}
+            onDelete={setDeleteCategory}
+          />
         )}
+        <DeleteCategoryDialog
+          data={deleteCategory}
+          open={!!deleteCategory}
+          onCancel={() => setDeleteCategory(null)}
+          onDelete={() => {
+            mutateCategories(
+              categories?.filter((c) => c.id !== deleteCategory?.id)
+            );
+            setDeleteCategory(null);
+          }}
+        />
       </CRMContainer>
     </PageProvider>
   );

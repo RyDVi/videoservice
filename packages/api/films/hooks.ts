@@ -4,6 +4,7 @@ import useSwr from "swr";
 import { Film } from "./types";
 import { Paginated } from "../base/types";
 import { films } from "./endpoints";
+import React from "react";
 
 export function useSaveFilm(initialFilm?: Film) {
   const {
@@ -17,7 +18,23 @@ export function useSaveFilm(initialFilm?: Film) {
     config: (film) => films.save(film),
   });
 
-  return { film, saveFilm, setFilm, filmError, loading };
+  const overriedSaveFilm = React.useCallback(
+    (film?: Film) => {
+      if (!film) {
+        return saveFilm();//TODO: possibly it's incorrect
+      }
+      const lFilm: Film = { ...film, image: undefined };
+      try {
+        new URL(film.image || "");
+      } catch (e) {
+        lFilm.image = film.image;
+      }
+      return saveFilm(lFilm);
+    },
+    [saveFilm]
+  );
+
+  return { film, saveFilm: overriedSaveFilm, setFilm, filmError, loading };
 }
 
 export function useFilm(id?: string | string[]) {

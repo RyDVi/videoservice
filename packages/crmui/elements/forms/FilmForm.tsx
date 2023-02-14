@@ -160,7 +160,7 @@ export const FilmFormFields: React.FC<FormFields<Film>> = ({
               />
             )}
             {error?.image && (
-              <Typography color={theme.palette.error.main} sx={{ p: 1, pt: 0 }}>
+              <Typography color={theme.palette.error?.main} sx={{ p: 1, pt: 0 }}>
                 {error?.image}
               </Typography>
             )}

@@ -14,5 +14,14 @@ function renderListItemContent(item: Category) {
 export const FilmCategoriesMultiselect: React.FC<MultiSelectData<Category>> = (
   props
 ) => (
-  <MultiSelecForm {...props} renderListItemContent={renderListItemContent} />
+  <MultiSelecForm
+    {...props}
+    renderListItemContent={renderListItemContent}
+    filterSearch={(search, categories) =>
+      categories.filter((c) =>
+        c.name.toLowerCase().includes(search.toLowerCase())
+      )
+    }
+    withAccept
+  />
 );
