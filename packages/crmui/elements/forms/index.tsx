@@ -5,5 +5,5 @@ export * from "./Form";
 export * from "./VideoForm";
 export * from "./videofiles";
 export * from "./CategoryForm";
-export * from "./FilmCategories";
+export * from "./DictionariesMultiselect";
 export * from "./GenreForm";

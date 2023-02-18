@@ -6,12 +6,13 @@ import {
   CrmSidebar,
   PageProvider,
   CRMContainer,
-  FilmCategoriesMultiselect,
+  DictionariesMultiselect
 } from "crmui";
 import { useRouter } from "next/router";
 import {
   useCategories,
   useFilm,
+  useGenres,
   useSaveFilm,
   useVideoFiles,
   useVideos,
@@ -62,8 +63,7 @@ const FilmsPage: React.FC = () => {
     () => (videos ? { video: videos.map((v) => v.id).join(",") } : null),
     [videos]
   );
-  const { videoFiles, mutateVideoFiles, isVideoFilesLoading } =
-    useVideoFiles(videoFilesFilters);
+  const { videoFiles } = useVideoFiles(videoFilesFilters);
   const videosWithVideoFiles = useVideoWithVideoFiles(videos, videoFiles);
   const videoFolders = useMemo(() => {
     if (!videoFiles?.length) {
@@ -85,6 +85,12 @@ const FilmsPage: React.FC = () => {
     () =>
       categories?.filter((category) => film?.categories.includes(category.id)),
     [categories, film?.categories]
+  );
+
+  const { genres } = useGenres({});
+  const filmGenres = React.useMemo(
+    () => genres?.filter((genre) => film?.genres.includes(genre.id)),
+    [film?.genres, genres]
   );
 
   const { saveFilm } = useSaveFilm();
@@ -116,7 +122,7 @@ const FilmsPage: React.FC = () => {
           </CardForm>
           <CardForm title="Категории">
             {categories && filmCategories && film && (
-              <FilmCategoriesMultiselect
+              <DictionariesMultiselect
                 data={filmCategories}
                 possibleValues={categories}
                 onAdd={(category) =>
@@ -130,6 +136,28 @@ const FilmsPage: React.FC = () => {
                     ...film,
                     categories: film.categories.filter(
                       (categoryId) => category.id !== categoryId
+                    ),
+                  }).then((film) => mutateFilm(film.data))
+                }
+              />
+            )}
+          </CardForm>
+          <CardForm title="Жанры">
+            {genres && filmGenres && film && (
+              <DictionariesMultiselect
+                data={filmGenres}
+                possibleValues={genres}
+                onAdd={(genre) =>
+                  saveFilm({
+                    ...film,
+                    genres: [...film.genres, genre.id],
+                  }).then((film) => mutateFilm(film.data))
+                }
+                onDelete={(genre) =>
+                  saveFilm({
+                    ...film,
+                    genres: film.genres.filter(
+                      (genreId) => genre.id !== genreId
                     ),
                   }).then((film) => mutateFilm(film.data))
                 }
