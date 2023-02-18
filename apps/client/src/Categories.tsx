@@ -9,10 +9,10 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import paths from "./paths";
+import * as paths from "./paths";
 import { useThemeControl } from "../../../packages/theme";
 import { CodesOfCountry } from "@modules/constants/country";
-import { CategoriesLists, CategoriesTooltip } from "@modules/client";
+import { CategoriesLists, CategoriesTooltip } from "./lists";
 
 interface CategoryButtonProps extends ButtonProps {
   href: string;
@@ -64,9 +64,7 @@ export const Categories: React.FC = () => {
       <CategoriesTooltip
         title={
           <CategoriesLists
-            buildHrefCategory={(subcategory) =>
-              paths.subcategory({ category: "фильмы", subcategory })
-            }
+            category="фильмы"
             genres={genres || []}
             years={years}
             countries={countries}
@@ -83,9 +81,7 @@ export const Categories: React.FC = () => {
       <CategoriesTooltip
         title={
           <CategoriesLists
-            buildHrefCategory={(subcategory) =>
-              paths.subcategory({ category: "сериал", subcategory })
-            }
+            category="сериал"
             genres={genres || []}
             years={years}
             countries={countries}
@@ -102,9 +98,7 @@ export const Categories: React.FC = () => {
       <CategoriesTooltip
         title={
           <CategoriesLists
-            buildHrefCategory={(subcategory) =>
-              paths.subcategory({ category: "мультфильмы", subcategory })
-            }
+            category="мультфильмы"
             genres={genres || []}
             years={years}
             countries={countries}

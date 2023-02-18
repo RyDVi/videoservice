@@ -1,11 +1,12 @@
 import { path } from "static-path";
 
-const root = path("/");
-const category = path("/category/:category");
-const subcategory = category.path(":subcategory");
+export const root = path("/");
+export const categories = path("/category");
+export const category = categories.path("/:category");
+export const categoryGenre = category.path("/genre/:genre");
+export const categoryCountry = category.path("/country/:country");
+export const categoryYear = category.path("/year/:year");
 
-const film = path("/:film");
+export const film = path("/:film");
 
-const search = path("/search/:searchText")
-
-export default { subcategory, root, category, film, search };
+export const search = path("/search/:searchText");

@@ -2,19 +2,14 @@ import { useFilms } from "@modules/api";
 import { FilmsGrid, FilmsGridLoader, NotFoundFilms } from "@modules/client";
 import { Container } from "@mui/material";
 import { useRouter } from "next/router";
-import { AppPage } from "../../src/AppPage";
-import { useFilmMove } from "../../src/hooks";
+import { AppPage } from "../../../../src/AppPage";
+import { useFilmMove } from "../../../../src/hooks";
 
-export default function CategoryPage() {
+export default function CategoryGenrePage() {
   const router = useRouter();
-  const category = router.query.category as string[];
-  const { films, isFilmsLoading, filmsErrors } = useFilms(
-    category
-      ? {
-          category: category.join(","),
-        }
-      : null
-  );
+  const category = router.query.category as string;
+  const year = router.query.year as string;
+  const { films, isFilmsLoading } = useFilms({ category, year });
   const { buildHrefToFilm } = useFilmMove();
   if (isFilmsLoading) {
     return <FilmsGridLoader />;
@@ -29,6 +24,6 @@ export default function CategoryPage() {
   );
 }
 
-CategoryPage.getLayout = function (page: React.ReactElement) {
+CategoryGenrePage.getLayout = function (page: React.ReactElement) {
   return <AppPage>{page}</AppPage>;
 };

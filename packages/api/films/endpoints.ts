@@ -3,7 +3,14 @@ import { Film } from "./types";
 
 class FilmsEndpoint extends PaginatedSaveEndpoint<
   Film,
-  { search?: string; category?: string; slug?: string }
+  {
+    search?: string;
+    category?: string;
+    slug?: string;
+    genre?: string;
+    year?: string;
+    country?: string;
+  }
 > {
   initial(props?: Partial<Film>): Film {
     return {

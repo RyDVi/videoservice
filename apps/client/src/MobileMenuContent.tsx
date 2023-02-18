@@ -1,11 +1,20 @@
 import { useGenres } from "@modules/api";
-import { SearchField, CategoriesLists } from "@modules/client";
+import { SearchField } from "@modules/client";
 import { CodesOfCountry } from "@modules/constants";
-import { Box, BoxProps, Divider } from "@mui/material";
+import {
+  Box,
+  BoxProps,
+  Divider,
+  List,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
 import React from "react";
 import { useSearch } from "./hooks";
-import paths from "./paths";
 import { ThemeToggleButton } from "../../../packages/theme";
+import { CategoriesLists } from "./lists";
+import Link from "next/link";
+import * as paths from "./paths";
 
 interface MobileMenuHeaderProps extends BoxProps {}
 
@@ -50,14 +59,46 @@ export const MobileMenu: React.FC = () => {
       </MobileMenuHeader>
       <Divider />
       <MobileMenuContent>
-        <CategoriesLists
-          genres={genres || []}
-          years={years}
-          countries={countries}
-          buildHrefCategory={(subcategory) =>
-            paths.subcategory({ category: "фильмы", subcategory })
-          }
-        />
+        <List>
+          <ListItemButton
+            LinkComponent={Link}
+            href={paths.category({ category: "фильмы" })}
+          >
+            <ListItemText primary="Фильмы" />
+          </ListItemButton>
+          <CategoriesLists
+            category="фильмы"
+            genres={genres || []}
+            years={years}
+            countries={countries}
+          />
+          <Divider />
+          <ListItemButton
+            LinkComponent={Link}
+            href={paths.category({ category: "сериалы" })}
+          >
+            <ListItemText primary="Сериалы" />
+          </ListItemButton>
+          <CategoriesLists
+            category="сериалы"
+            genres={genres || []}
+            years={years}
+            countries={countries}
+          />
+          <Divider />
+          <ListItemButton
+            LinkComponent={Link}
+            href={paths.category({ category: "мультфильмы" })}
+          >
+            <ListItemText primary="Мультфильмы" />
+          </ListItemButton>
+          <CategoriesLists
+            category="мультфильмы"
+            genres={genres || []}
+            years={years}
+            countries={countries}
+          />
+        </List>
       </MobileMenuContent>
     </Box>
   );

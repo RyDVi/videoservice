@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Categories } from "./Categories";
 import { useSearch } from "./hooks";
 import { MobileMenu } from "./MobileMenuContent";
-import paths from "./paths";
+import * as paths from "./paths";
 import { ThemeToggleButton } from "./theme";
 
 interface AppPageProps {

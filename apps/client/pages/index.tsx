@@ -6,7 +6,7 @@ import {
   NotFoundFilms,
 } from "@modules/client";
 import * as R from "ramda";
-import paths from "../src/paths";
+import * as paths from "../src/paths";
 import { AppPage } from "../src/AppPage";
 import { useRouter } from "next/router";
 import { useFilmMove } from "../src/hooks";
