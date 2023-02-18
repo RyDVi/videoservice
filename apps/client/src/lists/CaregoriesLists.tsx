@@ -39,7 +39,7 @@ const CategoriesContainer = styled(Box, {
   },
 }));
 interface CommonCategoriesProps {
-  genres: Genre[];
+  genres: string[];
   years: number[];
   countries: CodesOfCountry[];
   density?: boolean;
@@ -104,11 +104,11 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
             >
               {columnOfGenres.map((genre) => (
                 <ListItemButton
-                  key={genre.id}
+                  key={genre}
                   component={Link}
-                  href={paths.categoryGenre({ category, genre: genre.name })}
+                  href={paths.categoryGenre({ category, genre })}
                 >
-                  <ListItemText primary={genre.name} />
+                  <ListItemText primary={genre} />
                 </ListItemButton>
               ))}
             </List>

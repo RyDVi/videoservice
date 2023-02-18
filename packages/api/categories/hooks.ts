@@ -1,7 +1,7 @@
 import { useRequest } from "../base/request";
 import { ValidationErrors } from "../base/request";
 import useSwr from "swr";
-import { Category } from "./types";
+import { Category, CategoryWithDicts } from "./types";
 import { categories } from "./endpoints";
 
 export function useSaveCategory(initialCategory?: Category | null) {
@@ -53,5 +53,22 @@ export function useDeleteCategory(id?: string | string[]) {
     deleteCategory: request,
     isDeletingCategory: loading,
     errorOfDeleteCategory: error,
+  };
+}
+
+export function useCategoriesWithDicts(
+  filters?: Parameters<typeof categories.with_dicts>[0] | null
+) {
+  const { data, error, mutate } = useSwr<CategoryWithDicts[]>(
+    filters
+      ? [categories.with_dicts(filters).url, categories.with_dicts(filters)]
+      : null
+  );
+  const isCategoriesLoading = !data && !error;
+  return {
+    categories: data,
+    categoriesErrors: error,
+    mutateCategories: mutate,
+    isCategoriesLoading,
   };
 }

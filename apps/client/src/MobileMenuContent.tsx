@@ -1,4 +1,4 @@
-import { useGenres } from "@modules/api";
+import { useCategoriesWithDicts, useGenres } from "@modules/api";
 import { SearchField } from "@modules/client";
 import { CodesOfCountry } from "@modules/constants";
 import {
@@ -41,18 +41,19 @@ const MobileMenuContent: React.FC<MobileMenuContent> = (props) => (
 
 export const MobileMenu: React.FC = () => {
   const { search } = useSearch();
-  const { genres: filmGenres } = useGenres({ category: "фильмы" });
-  const { genres: serialGenres } = useGenres({ category: "сериалы" });
-  const { genres: multfilmsGenres } = useGenres({ category: "мультфильмы" });
-  const years = React.useMemo(
-    () =>
-      Array.from(
-        { length: 10 },
-        (_, index) => new Date().getFullYear() - index
-      ),
-    []
+  const { categories } = useCategoriesWithDicts({});
+  const filmCategory = React.useMemo(
+    () => categories?.find((c) => c.slug.toLowerCase() === "фильмы"),
+    [categories]
   );
-  const countries = React.useMemo(() => ["RU"] as CodesOfCountry[], []);
+  const serialsCategory = React.useMemo(
+    () => categories?.find((c) => c.slug.toLowerCase() === "сериалы"),
+    [categories]
+  );
+  const multfilmsCategory = React.useMemo(
+    () => categories?.find((c) => c.slug.toLowerCase() === "мультфильмы"),
+    [categories]
+  );
   return (
     <Box sx={{ width: "90vw" }}>
       <MobileMenuHeader>
@@ -68,12 +69,15 @@ export const MobileMenu: React.FC = () => {
           >
             <ListItemText primary="Фильмы" />
           </ListItemButton>
-          <CategoriesLists
-            category="фильмы"
-            genres={filmGenres || []}
-            years={years}
-            countries={countries}
-          />
+          {filmCategory && (
+            <CategoriesLists
+              category="фильмы"
+              genres={filmCategory.genres}
+              years={filmCategory.years}
+              countries={filmCategory.countries as CodesOfCountry[]}
+              density
+            />
+          )}
           <Divider />
           <ListItemButton
             LinkComponent={Link}
@@ -81,12 +85,15 @@ export const MobileMenu: React.FC = () => {
           >
             <ListItemText primary="Сериалы" />
           </ListItemButton>
-          <CategoriesLists
-            category="сериалы"
-            genres={serialGenres || []}
-            years={years}
-            countries={countries}
-          />
+          {serialsCategory && (
+            <CategoriesLists
+              category="сериал"
+              genres={serialsCategory.genres}
+              years={serialsCategory.years}
+              countries={serialsCategory.countries as CodesOfCountry[]}
+              density
+            />
+          )}
           <Divider />
           <ListItemButton
             LinkComponent={Link}
@@ -94,12 +101,15 @@ export const MobileMenu: React.FC = () => {
           >
             <ListItemText primary="Мультфильмы" />
           </ListItemButton>
-          <CategoriesLists
-            category="мультфильмы"
-            genres={multfilmsGenres || []}
-            years={years}
-            countries={countries}
-          />
+          {multfilmsCategory && (
+            <CategoriesLists
+              category="мультфильмы"
+              genres={multfilmsCategory.genres}
+              years={multfilmsCategory.years}
+              countries={multfilmsCategory.countries as CodesOfCountry[]}
+              density
+            />
+          )}
         </List>
       </MobileMenuContent>
     </Box>

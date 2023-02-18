@@ -1,4 +1,4 @@
-import { useGenres } from "@modules/api";
+import { useCategoriesWithDicts, useGenres } from "@modules/api";
 import {
   Box,
   Button,
@@ -49,71 +49,79 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
 };
 
 export const Categories: React.FC = () => {
-  const { genres: filmGenres } = useGenres({ category: "фильмы" });
-  const { genres: serialGenres } = useGenres({ category: "сериалы" });
-  const { genres: multfilmsGenres } = useGenres({ category: "мультфильмы" });
-  const years = React.useMemo(
-    () =>
-      Array.from(
-        { length: 10 },
-        (_, index) => new Date().getFullYear() - index
-      ),
-    []
+  const { categories } = useCategoriesWithDicts({});
+  const filmCategory = React.useMemo(
+    () => categories?.find((c) => c.slug.toLowerCase() === "фильмы"),
+    [categories]
+  );
+  const serialsCategory = React.useMemo(
+    () => categories?.find((c) => c.slug.toLowerCase() === "сериалы"),
+    [categories]
+  );
+  const multfilmsCategory = React.useMemo(
+    () => categories?.find((c) => c.slug.toLowerCase() === "мультфильмы"),
+    [categories]
   );
   const countries = React.useMemo(() => ["RU"] as CodesOfCountry[], []);
   return (
     <>
-      <CategoriesTooltip
-        title={
-          <CategoriesLists
-            category="фильмы"
-            genres={filmGenres || []}
-            years={years}
-            countries={countries}
-            density
-          />
-        }
-      >
-        <Box>
-          <CategoryButton href={paths.category({ category: "фильмы" })}>
-            Фильмы
-          </CategoryButton>
-        </Box>
-      </CategoriesTooltip>
-      <CategoriesTooltip
-        title={
-          <CategoriesLists
-            category="сериал"
-            genres={serialGenres || []}
-            years={years}
-            countries={countries}
-            density
-          />
-        }
-      >
-        <Box>
-          <CategoryButton href={paths.category({ category: "сериал" })}>
-            Сериалы
-          </CategoryButton>
-        </Box>
-      </CategoriesTooltip>
-      <CategoriesTooltip
-        title={
-          <CategoriesLists
-            category="мультфильмы"
-            genres={multfilmsGenres || []}
-            years={years}
-            countries={countries}
-            density
-          />
-        }
-      >
-        <Box>
-          <CategoryButton href={paths.category({ category: "мультфильмы" })}>
-            Мультфильмы
-          </CategoryButton>
-        </Box>
-      </CategoriesTooltip>
+      {filmCategory && (
+        <CategoriesTooltip
+          title={
+            <CategoriesLists
+              category="фильмы"
+              genres={filmCategory.genres}
+              years={filmCategory.years}
+              countries={filmCategory.countries as CodesOfCountry[]}
+              density
+            />
+          }
+        >
+          <Box>
+            <CategoryButton href={paths.category({ category: "фильмы" })}>
+              Фильмы
+            </CategoryButton>
+          </Box>
+        </CategoriesTooltip>
+      )}
+      {serialsCategory && (
+        <CategoriesTooltip
+          title={
+            <CategoriesLists
+              category="сериал"
+              genres={serialsCategory.genres}
+              years={serialsCategory.years}
+              countries={serialsCategory.countries as CodesOfCountry[]}
+              density
+            />
+          }
+        >
+          <Box>
+            <CategoryButton href={paths.category({ category: "сериал" })}>
+              Сериалы
+            </CategoryButton>
+          </Box>
+        </CategoriesTooltip>
+      )}
+      {multfilmsCategory && (
+        <CategoriesTooltip
+          title={
+            <CategoriesLists
+              category="мультфильмы"
+              genres={multfilmsCategory.genres}
+              years={multfilmsCategory.years}
+              countries={multfilmsCategory.countries as CodesOfCountry[]}
+              density
+            />
+          }
+        >
+          <Box>
+            <CategoryButton href={paths.category({ category: "мультфильмы" })}>
+              Мультфильмы
+            </CategoryButton>
+          </Box>
+        </CategoriesTooltip>
+      )}
     </>
   );
 };

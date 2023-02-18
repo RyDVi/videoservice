@@ -1,7 +1,8 @@
 import { SaveEndpoint } from "../base/endpoints";
 import { Category } from "./types";
 
-class CategoriesEndpoint extends SaveEndpoint<Category> {
+interface CategoriesFilters {}
+class CategoriesEndpoint extends SaveEndpoint<Category, CategoriesFilters> {
   initial(props?: Partial<Category>): Category {
     return {
       id: "",
@@ -9,6 +10,11 @@ class CategoriesEndpoint extends SaveEndpoint<Category> {
       ...props,
     };
   }
+  with_dicts = (params?: CategoriesFilters) => ({
+    url: `${this.uri}with_dicts/`,
+    method: "GET",
+    params,
+  });
 }
 
 export const categories = new CategoriesEndpoint("/categories/");
