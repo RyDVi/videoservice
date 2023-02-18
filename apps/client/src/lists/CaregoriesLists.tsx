@@ -56,7 +56,7 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
   const genresByColumns = React.useMemo(() => {
     const countGenresInColumn = 10;
     return Array.from(
-      { length: genres.length / countGenresInColumn },
+      { length: Math.ceil(genres.length / countGenresInColumn) },
       (_, index) => {
         const fromIndex = index * countGenresInColumn;
         return genres.slice(fromIndex, fromIndex + countGenresInColumn);

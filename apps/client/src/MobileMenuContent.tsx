@@ -41,7 +41,9 @@ const MobileMenuContent: React.FC<MobileMenuContent> = (props) => (
 
 export const MobileMenu: React.FC = () => {
   const { search } = useSearch();
-  const { genres } = useGenres();
+  const { genres: filmGenres } = useGenres({ category: "фильмы" });
+  const { genres: serialGenres } = useGenres({ category: "сериалы" });
+  const { genres: multfilmsGenres } = useGenres({ category: "мультфильмы" });
   const years = React.useMemo(
     () =>
       Array.from(
@@ -68,7 +70,7 @@ export const MobileMenu: React.FC = () => {
           </ListItemButton>
           <CategoriesLists
             category="фильмы"
-            genres={genres || []}
+            genres={filmGenres || []}
             years={years}
             countries={countries}
           />
@@ -81,7 +83,7 @@ export const MobileMenu: React.FC = () => {
           </ListItemButton>
           <CategoriesLists
             category="сериалы"
-            genres={genres || []}
+            genres={serialGenres || []}
             years={years}
             countries={countries}
           />
@@ -94,7 +96,7 @@ export const MobileMenu: React.FC = () => {
           </ListItemButton>
           <CategoriesLists
             category="мультфильмы"
-            genres={genres || []}
+            genres={multfilmsGenres || []}
             years={years}
             countries={countries}
           />

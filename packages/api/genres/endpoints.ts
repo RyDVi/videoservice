@@ -1,7 +1,7 @@
 import { SaveEndpoint } from "../base/endpoints";
 import { Genre } from "./types";
 
-class GenresEndpoint extends SaveEndpoint<Genre> {
+class GenresEndpoint extends SaveEndpoint<Genre, {category?: string;}> {
   initial(props?: Partial<Genre>): Genre {
     return {
       id: "",

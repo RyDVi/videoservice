@@ -49,7 +49,9 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
 };
 
 export const Categories: React.FC = () => {
-  const { genres } = useGenres();
+  const { genres: filmGenres } = useGenres({ category: "фильмы" });
+  const { genres: serialGenres } = useGenres({ category: "сериалы" });
+  const { genres: multfilmsGenres } = useGenres({ category: "мультфильмы" });
   const years = React.useMemo(
     () =>
       Array.from(
@@ -65,7 +67,7 @@ export const Categories: React.FC = () => {
         title={
           <CategoriesLists
             category="фильмы"
-            genres={genres || []}
+            genres={filmGenres || []}
             years={years}
             countries={countries}
             density
@@ -82,7 +84,7 @@ export const Categories: React.FC = () => {
         title={
           <CategoriesLists
             category="сериал"
-            genres={genres || []}
+            genres={serialGenres || []}
             years={years}
             countries={countries}
             density
@@ -99,7 +101,7 @@ export const Categories: React.FC = () => {
         title={
           <CategoriesLists
             category="мультфильмы"
-            genres={genres || []}
+            genres={multfilmsGenres || []}
             years={years}
             countries={countries}
             density
