@@ -1,45 +1,72 @@
-import { useFilms } from "@modules/api";
+import { Film, useFilms } from "@modules/api";
 import {
   FilmCategoryBlock,
   FilmsGridLoader,
   FilmsGrid,
   NotFoundFilms,
 } from "@modules/client";
-import * as R from "ramda";
 import * as paths from "../src/paths";
 import { AppPage } from "../src/AppPage";
 import { useRouter } from "next/router";
 import { useFilmMove } from "../src/hooks";
 import { Box } from "@mui/material";
 
-export default function Home() {
-  const router = useRouter();
+const FilmGridHome: React.FC<{ films?: Film[]; loading?: boolean }> = ({
+  films,
+  loading,
+}) => {
   const { buildHrefToFilm } = useFilmMove();
-  const { films, isFilmsLoading } = useFilms({
-    search: router.query.searchText as string,
-  });
-  if (isFilmsLoading) {
+  if (loading) {
     return <FilmsGridLoader />;
   }
-  if (!films) {
+  if (!films?.length) {
     return <NotFoundFilms />;
   }
-  const filmsByCategories = R.groupBy(
-    R.prop<string>("content_rating"),
-    films?.results || []
-  );
+  return <FilmsGrid films={films} toFilm={buildHrefToFilm} />;
+};
+export default function Home() {
+  const router = useRouter();
+
+  const { films: serials, isFilmsLoading: isSerialsLoading } = useFilms({
+    category: "сериалы",
+  });
+  const { films, isFilmsLoading } = useFilms({ category: "фильмы" });
+  const { films: multfilms, isFilmsLoading: isMultfilmsLoading } = useFilms({
+    category: "мультфильмы",
+  });
+
   return (
     <Box sx={{ padding: 3 }}>
-      {Object.entries(filmsByCategories).map(([category, categoryFilms]) => (
-        <FilmCategoryBlock
-          key={category}
-          categoryName={category}
-          categoryHref={paths.category({ category })}
-          sx={{ padding: 1 }}
-        >
-          <FilmsGrid films={categoryFilms} toFilm={buildHrefToFilm} />
-        </FilmCategoryBlock>
-      ))}
+      <FilmCategoryBlock
+        categoryName="Фильмы"
+        categoryHref={paths.category({ category: "фильмы" })}
+        sx={{ padding: 1 }}
+      >
+        <FilmGridHome
+          films={serials?.results || []}
+          loading={isSerialsLoading}
+        />
+      </FilmCategoryBlock>
+      <FilmCategoryBlock
+        categoryName="Сериалы"
+        categoryHref={paths.category({ category: "Сериалы" })}
+        sx={{ padding: 1 }}
+      >
+        <FilmGridHome
+          films={serials?.results || []}
+          loading={isSerialsLoading}
+        />
+      </FilmCategoryBlock>
+      <FilmCategoryBlock
+        categoryName="Мультфильмы"
+        categoryHref={paths.category({ category: "Сериалы" })}
+        sx={{ padding: 1 }}
+      >
+        <FilmGridHome
+          films={multfilms?.results || []}
+          loading={isMultfilmsLoading}
+        />
+      </FilmCategoryBlock>
     </Box>
   );
 }
