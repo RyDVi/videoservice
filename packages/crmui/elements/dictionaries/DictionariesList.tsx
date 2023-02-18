@@ -10,13 +10,19 @@ import {
 import { SearchField } from "@modules/client";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DeleteDialog, useAcceptDialog } from "../dialogs";
+import Link from "next/link";
 
 interface DictionariesListProps {
   data: Dictionary[];
   onDelete: (data: Dictionary) => void;
+  itemLink: (data: Dictionary) => string;
 }
 
-export const DictionariesList: React.FC<DictionariesListProps> = ({ data, onDelete }) => {
+export const DictionariesList: React.FC<DictionariesListProps> = ({
+  data,
+  onDelete,
+  itemLink,
+}) => {
   const [search, setSearch] = React.useState("");
   const filteredDicts = React.useMemo(
     () =>
@@ -33,7 +39,9 @@ export const DictionariesList: React.FC<DictionariesListProps> = ({ data, onDele
       <List>
         {filteredDicts.map((data) => (
           <ListItem key={data.id}>
-            <ListItemText primary={data.name} />
+            <ListItemButton LinkComponent={Link} href={itemLink(data)}>
+              <ListItemText primary={data.name} />
+            </ListItemButton>
             <ListItemButton
               onClick={() => acceptBefore(() => onDelete(data))}
               sx={{

@@ -19,15 +19,14 @@ function GenresPage() {
         <title>Жанры</title>
       </Head>
       <CRMContainer sidebarContent={<CrmSidebar />}>
-        <DictionaryPanel
-          createLink={paths.genre({ genreId: "create" })}
-        />
+        <DictionaryPanel createLink={paths.genre({ genreId: "create" })} />
         {isGenresLoading ? (
           <CircularProgress />
         ) : (
           <DictionariesList
             data={genres || []}
             onDelete={({ id }) => deleteGenre(id)}
+            itemLink={({ id }) => paths.genre({ genreId: id })}
           />
         )}
       </CRMContainer>

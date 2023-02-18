@@ -25,6 +25,7 @@ const CategoriesPage: React.FC = () => {
           <DictionariesList
             data={categories || []}
             onDelete={({ id }) => deleteCategory(id)}
+            itemLink={({ id }) => paths.category({ categoryId: id })}
           />
         )}
       </CRMContainer>
