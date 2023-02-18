@@ -19,11 +19,8 @@ export function useSaveFilm(initialFilm?: Film) {
   });
 
   const overriedSaveFilm = React.useCallback(
-    (film?: Film) => {
-      if (!film) {
-        return saveFilm();//TODO: possibly it's incorrect
-      }
-      const lFilm: Film = { ...film, image: undefined };
+    (inputFilm?: Film) => {
+      const lFilm: Film = { ...(inputFilm || film), image: undefined };
       try {
         new URL(film.image || "");
       } catch (e) {
@@ -31,7 +28,7 @@ export function useSaveFilm(initialFilm?: Film) {
       }
       return saveFilm(lFilm);
     },
-    [saveFilm]
+    [film, saveFilm]
   );
 
   return { film, saveFilm: overriedSaveFilm, setFilm, filmError, loading };

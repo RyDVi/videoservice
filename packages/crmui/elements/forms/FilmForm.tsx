@@ -132,6 +132,16 @@ export const FilmFormFields: React.FC<FormFields<Film>> = ({
         variant="standard"
       />
       <TextField
+        type="number"
+        name="year"
+        label="Год"
+        value={film.year}
+        onChange={handleChange}
+        error={!!error?.year}
+        helperText={error?.year}
+        variant="standard"
+      />
+      <TextField
         name="content_rating"
         label="Рейтинг контента"
         value={String(film.content_rating)}
@@ -160,7 +170,10 @@ export const FilmFormFields: React.FC<FormFields<Film>> = ({
               />
             )}
             {error?.image && (
-              <Typography color={theme.palette.error?.main} sx={{ p: 1, pt: 0 }}>
+              <Typography
+                color={theme.palette.error?.main}
+                sx={{ p: 1, pt: 0 }}
+              >
                 {error?.image}
               </Typography>
             )}
@@ -213,15 +226,17 @@ export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({
         </ListItem>
         <ListItem>
           <Skeleton>
-            <ListItemText primary="Постер" secondary="Постер" />
+            <ListItemText primary="Страна" secondary="Страна" />
           </Skeleton>
         </ListItem>
         <ListItem>
           <Skeleton>
-            <ListItemText
-              primary="Рейтинг контента"
-              secondary="Рейтинг контента"
-            />
+            <ListItemText primary="Год" secondary="Год" />
+          </Skeleton>
+        </ListItem>
+        <ListItem>
+          <Skeleton>
+            <ListItemText primary="Постер" secondary="Постер" />
           </Skeleton>
         </ListItem>
       </>
@@ -254,6 +269,15 @@ export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({
         <ListItemText primary="Страна" secondary={film.country} />
       </ListItem>
       <ListItem>
+        <ListItemText primary="Год" secondary={film.year} />
+      </ListItem>
+      <ListItem>
+        <ListItemText
+          primary="Рейтинг контента"
+          secondary={CONTENT_RATINGS[film.content_rating]}
+        />
+      </ListItem>
+      <ListItem>
         <ListItemText primary="Постер к фильму" secondary={film.image} />
       </ListItem>
       <ImageListItem sx={{ display: "flex", justifyContent: "center" }}>
@@ -266,12 +290,6 @@ export const ReadFilmFormFields: React.FC<ReadFormFields<Film>> = ({
           />
         )}
       </ImageListItem>
-      <ListItem>
-        <ListItemText
-          primary="Рейтинг контента"
-          secondary={CONTENT_RATINGS[film.content_rating]}
-        />
-      </ListItem>
     </>
   );
 };
