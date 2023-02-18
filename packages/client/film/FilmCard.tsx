@@ -63,11 +63,10 @@ const FilmCard: React.FC<FilmCardProps> = ({ image, name, ...props }) => {
   const [isShowOverlay, setIsShowOverlay] = React.useState(false);
   return (
     <Card
-      sx={{ position: "relative" }}
+      sx={{ position: "relative", height: 1 }}
       {...props}
       onMouseEnter={() => setIsShowOverlay(true)}
       onMouseLeave={() => setIsShowOverlay(false)}
-      sx={{ height: 1 }}
     >
       <CardActionArea sx={{ height: 1 }}>
         <CardMedia

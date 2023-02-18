@@ -18,7 +18,7 @@ export default function CategoryGenrePage() {
     return <NotFoundFilms />;
   }
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ p: 1 }}>
       <FilmsGrid films={films?.results || []} toFilm={buildHrefToFilm} />
     </Container>
   );
