@@ -44,6 +44,14 @@ const CrmSidebarMenu: React.FC = () => {
           <ListItemText>Категории</ListItemText>
         </MenuItem>
       </Link>
+      <Link href={paths.genres({})}>
+        <MenuItem>
+          <ListItemIcon>
+            <CategoryIcon />
+          </ListItemIcon>
+          <ListItemText>Жанры</ListItemText>
+        </MenuItem>
+      </Link>
       <Divider />
       <Link href={paths.settings({})}>
         <MenuItem>

@@ -17,7 +17,7 @@ const CategoriesPage: React.FC = () => {
       title={isCreating ? "Создание категории" : `Категория ${category?.name}`}
     >
       <CRMContainer sidebarContent={<CrmSidebar />}>
-        {isCategoryLoading || isCreating ? (
+        {isCategoryLoading && !isCreating ? (
           <CircularProgress />
         ) : (
           <CreateEditCategoryForm

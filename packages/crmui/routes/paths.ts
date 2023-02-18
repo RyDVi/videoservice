@@ -23,3 +23,6 @@ export const login = crmRoot.path("/login");
 
 export const categories = crmRoot.path("/categories");
 export const category = categories.path("/:categoryId");
+
+export const genres = crmRoot.path("/genres");
+export const genre = genres.path("/:genreId");

@@ -6,7 +6,6 @@ class CategoriesEndpoint extends SaveEndpoint<Category> {
     return {
       id: "",
       name: "",
-      type: "Genre",
       ...props,
     };
   }

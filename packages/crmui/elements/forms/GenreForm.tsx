@@ -1,4 +1,4 @@
-import { Category } from "@modules/api";
+import { Genre, useSaveGenre, useDeleteGenre } from "@modules/api";
 import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,
@@ -19,9 +19,8 @@ import {
 import { useState } from "react";
 import { DeleteDialog } from "../dialogs";
 import React from "react";
-import { useSaveCategory, useDeleteCategory } from "@modules/api";
 
-export const CategoryFormFields: React.FC<FormFields<Category>> = ({
+export const GenreFormFields: React.FC<FormFields<Genre>> = ({
   data,
   onChange,
   error,
@@ -42,7 +41,7 @@ export const CategoryFormFields: React.FC<FormFields<Category>> = ({
   );
 };
 
-export const ReadCategoryFormFields: React.FC<ReadFormFields<Category>> = ({
+export const ReadGenreFormFields: React.FC<ReadFormFields<Genre>> = ({
   data,
 }) => {
   if (!data) {
@@ -65,32 +64,31 @@ export const ReadCategoryFormFields: React.FC<ReadFormFields<Category>> = ({
   );
 };
 
-export const CreateEditCategoryForm: React.FC<CreateEditForm<Category>> = ({
+export const CreateEditGenreForm: React.FC<CreateEditForm<Genre>> = ({
   data,
   onSave,
   onCancel,
 }) => {
-  const { category, categoryError, loading, saveCategory, setCategory } =
-    useSaveCategory(data);
+  const { genre, genreError, loading, saveGenre, setGenre } =
+    useSaveGenre(data);
   return (
     <CreateEditForm
-      onSubmit={() => saveCategory().then((response) => onSave(response.data))}
+      onSubmit={() => saveGenre().then((response) => onSave(response.data))}
       loading={loading}
       onCancel={onCancel}
     >
-      <CategoryFormFields
-        data={category}
-        onChange={setCategory}
-        error={categoryError}
-      />
+      <GenreFormFields data={genre} onChange={setGenre} error={genreError} />
     </CreateEditForm>
   );
 };
 
-export const DeleteCategoryDialog: React.FC<
-  DeleteDialogFormProps<Category>
-> = ({ onCancel, onDelete, open, data }) => {
-  const { deleteCategory } = useDeleteCategory();
+export const DeleteGenreDialog: React.FC<DeleteDialogFormProps<Genre>> = ({
+  onCancel,
+  onDelete,
+  open,
+  data,
+}) => {
+  const { deleteGenre } = useDeleteGenre();
   if (!data) {
     return null;
   }
@@ -99,7 +97,7 @@ export const DeleteCategoryDialog: React.FC<
       open={open}
       onCancel={onCancel}
       onDelete={() => {
-        return deleteCategory(data?.id).then(
+        return deleteGenre(data?.id).then(
           () => {
             onDelete(data);
             return true;
@@ -111,30 +109,28 @@ export const DeleteCategoryDialog: React.FC<
   );
 };
 
-export const ReadEditCategoryForm: React.FC<ReadEditFormProps<Category>> = (
+export const ReadEditGenreForm: React.FC<ReadEditFormProps<Genre>> = (
   props
 ) => (
   <ReadEditForm
     {...props}
-    CreateEditForm={CreateEditCategoryForm}
-    ReadFormFields={ReadCategoryFormFields}
-    DeleteDialog={DeleteCategoryDialog}
+    CreateEditForm={CreateEditGenreForm}
+    ReadFormFields={ReadGenreFormFields}
+    DeleteDialog={DeleteGenreDialog}
   />
 );
 
-export const CategoryInfoCard: React.FC<
-  { data?: Category; onSave?: (data: Category) => void } & CardProps
+export const GenreInfoCard: React.FC<
+  { data?: Genre; onSave?: (data: Genre) => void } & CardProps
 > = ({ data, onSave, ...props }) => {
-  const [title, setTitle] = useState("Информация о категории");
+  const [title, setTitle] = useState("Информация о жанре");
   return (
     <CardForm title={title} {...props}>
-      <ReadEditCategoryForm
+      <ReadEditGenreForm
         data={data}
         onStateChange={(isEdit) => {
           setTitle(
-            isEdit
-              ? "Редактирование информации о категории"
-              : "Информация о категории"
+            isEdit ? "Редактирование информации о жанре" : "Информация о жанре"
           );
         }}
         onSave={onSave}

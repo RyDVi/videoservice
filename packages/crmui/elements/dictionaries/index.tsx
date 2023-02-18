@@ -1,1 +1,3 @@
-export * from './DictionaryPanel'
+export * from "./DictionaryPanel";
+export * from "./DictionariesList";
+

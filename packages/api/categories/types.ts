@@ -1,27 +1,7 @@
 import { Dictionary } from "../../api/base";
 import { Film } from "../films/types";
 
-export const CATEGORY_TYPES = {
-  Genre: "Genre",
-  Country: "Country",
-};
-
-export type CategoryTypes = keyof typeof CATEGORY_TYPES;
-
-export const CategoryTypeOptions = [
-  {
-    value: CATEGORY_TYPES.Country,
-    name: "Страна",
-  },
-  {
-    value: CATEGORY_TYPES.Genre,
-    name: "Жанр",
-  },
-];
-
-export interface Category extends Dictionary {
-  type: CategoryTypes;
-}
+export interface Category extends Dictionary {}
 
 export interface FilmCategory {
   film: Film["id"];

@@ -32,6 +32,16 @@ export function useGenres(filters?: Parameters<typeof genres.list>[0]) {
   };
 }
 
+export function useGenre(id?: string | string[] | null) {
+  const {
+    data: genre,
+    error: genreError,
+    mutate: mutateGenre,
+  } = useSwr<Genre>(id ? genres.retrieve(id).url : null);
+  const isGenreLoading = !genre && !genreError;
+  return { genre, genreError, mutateGenre, isGenreLoading };
+}
+
 export function useDeleteGenre(id?: string | string[]) {
   const { loading, request, error, response } = useRequest({
     initial: id,
