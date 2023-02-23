@@ -30,7 +30,7 @@ import React from "react";
 import { AppPage } from "../../src/AppPage";
 import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
 import * as R from "ramda";
-import { NotFoundVideoFiles } from "@modules/client/notfound";
+import { NotFound, NotFoundVideoFiles } from "@modules/client/notfound";
 import { styled } from "@mui/material/styles";
 import Script from "next/script";
 
@@ -289,7 +289,7 @@ const DescriptionContainer: React.FC<{ children: React.ReactNode }> = ({
 export default function FilmPage() {
   const router = useRouter();
   const filmSlug = router.query.filmSlug as string;
-  const { films } = useFilms({ slug: filmSlug });
+  const { films, filmsErrors, isFilmsLoading } = useFilms({ slug: filmSlug });
   const film = React.useMemo(
     () => (films?.results.length ? films?.results[0] : null),
     [films?.results]
@@ -319,6 +319,9 @@ export default function FilmPage() {
     [film?.genres, genres]
   );
   const { personRoles } = usePersonRoles();
+  if(!films?.results.length && !filmsErrors && !isFilmsLoading){
+    return <NotFound text="Фильм не найден" />
+  }
   return (
     <Container maxWidth="lg">
       <Script src="/playerjs.js" type="text/javascript" async />
