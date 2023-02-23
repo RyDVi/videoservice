@@ -59,7 +59,7 @@ export default function Home() {
       </FilmCategoryBlock>
       <FilmCategoryBlock
         categoryName="Мультфильмы"
-        categoryHref={paths.category({ category: "Сериалы" })}
+        categoryHref={paths.category({ category: "Мультфильмы" })}
         sx={{ padding: 1 }}
       >
         <FilmGridHome
