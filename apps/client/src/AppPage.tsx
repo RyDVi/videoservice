@@ -6,12 +6,41 @@ import {
   SidebarCloser,
 } from "@modules/client";
 import { LogoSvg } from "@modules/client/svg";
+import { Box, Typography, Link as MuiLink, Paper } from "@mui/material";
 import Link from "next/link";
 import { Categories } from "./Categories";
 import { useSearch } from "./hooks";
 import { MobileMenu } from "./MobileMenuContent";
 import * as paths from "./paths";
 import { ThemeToggleButton } from "./theme";
+
+interface PageFooterProps {
+  logo: React.ReactNode;
+}
+
+const PageFooter: React.FC<PageFooterProps> = ({ logo }) => {
+  return (
+    <Paper
+      component="footer"
+      sx={{
+        p: 1,
+        display: "flex",
+        alignItems: "center",
+        flexWrap: "wrap",
+        marginTop: "auto",
+      }}
+      elevation={1}
+    >
+      <Box sx={{ height: "60px" }}>{logo}</Box>
+      <Box></Box>
+      <Box sx={{ ml: "auto" }}>
+        <MuiLink component={Link} href={paths.copyright({})} underline="hover">
+          <Typography>Правообладателям</Typography>
+        </MuiLink>
+      </Box>
+    </Paper>
+  );
+};
 
 interface AppPageProps {
   children?: React.ReactElement;
@@ -41,6 +70,7 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
             sidebarContent={<MobileMenu />}
           />
         }
+        footer={<PageFooter logo={<LogoSvg />} />}
       >
         {children}
       </PageContainer>

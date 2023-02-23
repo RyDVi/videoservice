@@ -11,3 +11,5 @@ export const film = path("/:film");
 
 export const baseSearch = path("/search");
 export const search = baseSearch.path("/:searchText");
+
+export const copyright = path("/copyright");
