@@ -13,3 +13,4 @@ export const baseSearch = path("/search");
 export const search = baseSearch.path("/:searchText");
 
 export const copyright = path("/copyright");
+export const feedback = path("/feedback");

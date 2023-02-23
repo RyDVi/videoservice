@@ -13,6 +13,7 @@ import { useSearch } from "./hooks";
 import { MobileMenu } from "./MobileMenuContent";
 import * as paths from "./paths";
 import { ThemeToggleButton } from "./theme";
+import { EmailLink } from "./Contacts";
 
 interface PageFooterProps {
   logo: React.ReactNode;
@@ -32,8 +33,18 @@ const PageFooter: React.FC<PageFooterProps> = ({ logo }) => {
       elevation={1}
     >
       <Box sx={{ height: "60px" }}>{logo}</Box>
-      <Box></Box>
-      <Box sx={{ ml: "auto" }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <MuiLink component={Link} href={paths.feedback({})} underline="hover">
+          <Typography>Обратная связь</Typography>
+        </MuiLink>
         <MuiLink component={Link} href={paths.copyright({})} underline="hover">
           <Typography>Правообладателям</Typography>
         </MuiLink>

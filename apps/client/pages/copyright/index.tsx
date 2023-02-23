@@ -1,5 +1,6 @@
 import { Box, Link, Typography } from "@mui/material";
 import { AppPage } from "../../src/AppPage";
+import { EmailLink } from "../../src/Contacts";
 
 export default function CopyrightPage() {
   return (
@@ -50,8 +51,7 @@ export default function CopyrightPage() {
         легальной онлайн-кинотеки.
       </p>
       <p>
-        Просим Вас обращаться по контактам:{" "}
-        <Link href="mailto:some@email.com">some@email.com</Link>
+        Просим Вас обращаться по контактам: <EmailLink />
       </p>
     </Box>
   );
