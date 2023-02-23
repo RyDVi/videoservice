@@ -5,16 +5,24 @@ import {
   CardActionArea,
   CardMedia,
   CardProps,
+  styled,
   Typography,
 } from "@mui/material";
 import React from "react";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 
-const Overlay: React.FC<{ open: boolean; timeout?: number } & BoxProps> = ({
-  open,
-  timeout = 3000,
-  ...props
-}) => {
+const Overlay = styled(Box)({
+  display: "block",
+  position: "absolute",
+  width: "100%",
+  height: "100%",
+  top: 0,
+  left: 0,
+});
+
+const InteractableOverlay: React.FC<
+  { open: boolean; timeout?: number } & BoxProps
+> = ({ open, timeout = 3000, ...props }) => {
   const [isMount, setIsMount] = React.useState(false);
   React.useEffect(() => {
     let animationTimeout: NodeJS.Timeout | undefined;
@@ -37,14 +45,8 @@ const Overlay: React.FC<{ open: boolean; timeout?: number } & BoxProps> = ({
   }
 
   return (
-    <Box
+    <Overlay
       sx={{
-        display: "block",
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        top: 0,
-        left: 0,
         backgroundColor: "#00000066",
         transition: `opacity ${timeout / 10}ms`,
         opacity: Number(open),
@@ -53,6 +55,19 @@ const Overlay: React.FC<{ open: boolean; timeout?: number } & BoxProps> = ({
     />
   );
 };
+
+const CardTextPlank = styled(Box)({
+  position: "absolute",
+  bottom: "0",
+  left: "0",
+  width: "100%",
+  textAlign: "center",
+  height: "20%",
+});
+
+const BottomShadowOverlay = styled(Overlay)({
+  background: "linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgb(0 0 0 / 50%) 100%)",
+});
 
 interface FilmCardProps extends CardProps {
   image?: string;
@@ -69,37 +84,19 @@ const FilmCard: React.FC<FilmCardProps> = ({ image, name, ...props }) => {
       onMouseLeave={() => setIsShowOverlay(false)}
     >
       <CardActionArea sx={{ height: 1 }}>
-        <CardMedia
-          component="img"
-          image={
-            image ||
-            // TODO: Remove it
-            "https://static.kion.ru/content/mts/series/65241000/posters/VERTICAL_5ee72186942a4a63167b8309e846ac1f.jpeg"
-          }
-          sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: "5%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="h6" sx={{ color: "white" }}>
-            {name}
-          </Typography>
-        </Box>
-        <Overlay open={isShowOverlay}>
+        <CardMedia component="img" image={image} sx={{ height: 1, width: 1 }} />
+        <BottomShadowOverlay />
+        <CardTextPlank>
+          <Typography variant="h6">{name}</Typography>
+        </CardTextPlank>
+        <InteractableOverlay open={isShowOverlay}>
           <Box sx={{ display: "flex", height: 1, width: 1 }}>
             <PlayCircleOutlineIcon
               color="primary"
               sx={{ margin: "auto", fontSize: "5rem" }}
             />
           </Box>
-        </Overlay>
+        </InteractableOverlay>
       </CardActionArea>
     </Card>
   );
