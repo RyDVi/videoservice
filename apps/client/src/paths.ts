@@ -9,4 +9,5 @@ export const categoryYear = category.path("/year/:year");
 
 export const film = path("/:film");
 
-export const search = path("/search/:searchText");
+export const baseSearch = path("/search");
+export const search = baseSearch.path("/:searchText");

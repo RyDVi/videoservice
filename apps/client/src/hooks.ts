@@ -7,12 +7,7 @@ export function useSearch() {
   const router = useRouter();
 
   const search = React.useCallback(
-    (searchText: string) => {
-      if (!searchText) {
-        return;
-      }
-      router.push(paths.search({ searchText }));
-    },
+    (searchText: string) => router.push(paths.search({ searchText })),
     [router]
   );
   return { search };
