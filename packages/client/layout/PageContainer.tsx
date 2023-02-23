@@ -4,6 +4,7 @@ import { PageContent } from "./PageContent";
 interface AppPageProps extends ContainerProps {
   header?: React.ReactElement;
   footer?: React.ReactElement;
+  breadcrumbs?: React.ReactElement;
 }
 
 export const PageContainer: React.FC<AppPageProps> = ({
@@ -11,6 +12,7 @@ export const PageContainer: React.FC<AppPageProps> = ({
   header,
   sx,
   footer,
+  breadcrumbs,
   ...props
 }) => {
   return (
@@ -26,6 +28,7 @@ export const PageContainer: React.FC<AppPageProps> = ({
     >
       {header}
       <PageContent sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        {breadcrumbs}
         {children}
         {footer}
       </PageContent>

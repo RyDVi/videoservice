@@ -3,9 +3,12 @@ import { path } from "static-path";
 export const root = path("/");
 export const categories = path("/category");
 export const category = categories.path("/:category");
-export const categoryGenre = category.path("/genre/:genre");
-export const categoryCountry = category.path("/country/:country");
-export const categoryYear = category.path("/year/:year");
+export const categoryGenres = category.path('/genre')
+export const categoryGenre = categoryGenres.path("/:genre");
+export const categoryCountries = category.path('/country')
+export const categoryCountry = categoryCountries.path("/:country");
+export const categoryYears = category.path('/year')
+export const categoryYear = categoryYears.path("/:year");
 
 export const film = path("/:film");
 
