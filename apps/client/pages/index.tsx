@@ -7,7 +7,6 @@ import {
 } from "@modules/client";
 import * as paths from "../src/paths";
 import { AppPage } from "../src/AppPage";
-import { useRouter } from "next/router";
 import { useFilmMove } from "../src/hooks";
 import { Box } from "@mui/material";
 
@@ -25,8 +24,6 @@ const FilmGridHome: React.FC<{ films?: Film[]; loading?: boolean }> = ({
   return <FilmsGrid films={films} toFilm={buildHrefToFilm} />;
 };
 export default function Home() {
-  const router = useRouter();
-
   const { films: serials, isFilmsLoading: isSerialsLoading } = useFilms({
     category: "сериалы",
   });
@@ -43,8 +40,8 @@ export default function Home() {
         sx={{ padding: 1 }}
       >
         <FilmGridHome
-          films={serials?.results || []}
-          loading={isSerialsLoading}
+          films={films?.results || []}
+          loading={isFilmsLoading}
         />
       </FilmCategoryBlock>
       <FilmCategoryBlock

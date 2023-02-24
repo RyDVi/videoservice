@@ -141,10 +141,7 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
                 ea esse consequuntur, praesentium veritatis sequi expedita nobis
                 placeat incidunt vero libero eos iure consequatur voluptatum
                 dolores eum! Quibusdam vero numquam alias, aliquid consequuntur
-                nesciunt. Repudiandae aliquam commodi at aperiam sed, nobis nam
-                labore ipsa incidunt natus, tenetur consequuntur rerum
-                dignissimos qui perspiciatis pariatur facilis rem excepturi ut,
-                iure amet aspernatur! At atque voluptates eveniet.
+                nesciunt.
               </span>
             </Skeleton>
           )}
@@ -271,6 +268,8 @@ const PosterImage = styled(Image)(({ theme }) => ({
   },
 }));
 
+const SkeletonPosterImage = PosterImage.withComponent(Skeleton);
+
 const DescriptionContainer: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => (
@@ -286,15 +285,8 @@ const DescriptionContainer: React.FC<{ children: React.ReactNode }> = ({
   </Box>
 );
 
-export default function FilmPage() {
-  const router = useRouter();
-  const filmSlug = router.query.filmSlug as string;
-  const { films, filmsErrors, isFilmsLoading } = useFilms({ slug: filmSlug });
-  const film = React.useMemo(
-    () => (films?.results.length ? films?.results[0] : null),
-    [films?.results]
-  );
-  const { videos } = useVideos({ filmId: film?.id });
+const VideoPlayer: React.FC<{ film?: Film | null }> = ({ film }) => {
+  const { videos, isVideosLoading } = useVideos({ filmId: film?.id });
   const { videoFiles } = useVideoFiles({
     video: videos?.map((v) => v.id).join(","),
   });
@@ -312,6 +304,32 @@ export default function FilmPage() {
       })),
     }));
   }, [videoFiles?.length, videosWithVideoFiles]);
+
+  if (isVideosLoading) {
+    return (
+      <Skeleton
+        variant="rectangular"
+        width="100%"
+        height="100%"
+        sx={{ minHeight: "50vh" }}
+      />
+    );
+  }
+  if (!videoFolders.length) {
+    return <NotFoundVideoFiles />;
+  }
+  return <PlayerJS id="player" file={videoFolders} />;
+};
+
+export default function FilmPage() {
+  const router = useRouter();
+  const filmSlug = router.query.filmSlug as string;
+  const { films, filmsErrors, isFilmsLoading } = useFilms({ slug: filmSlug });
+  const film = React.useMemo(
+    () => (films?.results.length ? films?.results[0] : null),
+    [films?.results]
+  );
+
   const { genres } = useGenres();
   const { persons } = usePersons({ id: film?.persons.join(",") });
   const filmGenres = React.useMemo(
@@ -319,8 +337,8 @@ export default function FilmPage() {
     [film?.genres, genres]
   );
   const { personRoles } = usePersonRoles();
-  if(!films?.results.length && !filmsErrors && !isFilmsLoading){
-    return <NotFound text="Фильм не найден" />
+  if (!films?.results.length && !filmsErrors && !isFilmsLoading) {
+    return <NotFound text="Фильм не найден" />;
   }
   return (
     <Container maxWidth="lg">
@@ -334,7 +352,7 @@ export default function FilmPage() {
             height="1600"
           />
         ) : (
-          <Skeleton variant="rectangular" />
+          <SkeletonPosterImage variant="rectangular" src={""} alt={""} />
         )}
         <DetailsContent
           film={film}
@@ -344,11 +362,7 @@ export default function FilmPage() {
         />
       </DescriptionContainer>
       <Box sx={{ mt: 5 }}>
-        {!!videoFolders.length ? (
-          <PlayerJS id="player" file={videoFolders} />
-        ) : (
-          <NotFoundVideoFiles />
-        )}
+        <VideoPlayer film={film} />
       </Box>
     </Container>
   );
