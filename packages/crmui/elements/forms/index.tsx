@@ -7,3 +7,5 @@ export * from "./videofiles";
 export * from "./CategoryForm";
 export * from "./DictionariesMultiselect";
 export * from "./GenreForm";
+export * from "./PersonForm";
+export * from "./PersonRoleForm";

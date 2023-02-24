@@ -12,22 +12,27 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { DeleteDialog, useAcceptDialog } from "../dialogs";
 import Link from "next/link";
 
-interface DictionariesListProps {
-  data: Dictionary[];
-  onDelete: (data: Dictionary) => void;
-  itemLink: (data: Dictionary) => string;
+interface SimpleListProps<D extends { id: string }> {
+  data: D[];
+  onDelete: (data: D) => void;
+  itemLink: (data: D) => string;
+  primaryText: (data: D) => React.ReactNode;
+  secondaryText?: (data: D) => React.ReactNode;
+  onSearch: (search: string, data: D[]) => D[];
 }
 
-export const DictionariesList: React.FC<DictionariesListProps> = ({
+export function SimpleList<D extends { id: string }>({
   data,
   onDelete,
   itemLink,
-}) => {
+  primaryText,
+  secondaryText,
+  onSearch,
+}: SimpleListProps<D>) {
   const [search, setSearch] = React.useState("");
   const filteredDicts = React.useMemo(
-    () =>
-      data.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())),
-    [data, search]
+    () => onSearch(search, data),
+    [data, onSearch, search]
   );
   const { acceptBefore, dialogProps } = useAcceptDialog();
   if (!data.length) {
@@ -40,7 +45,10 @@ export const DictionariesList: React.FC<DictionariesListProps> = ({
         {filteredDicts.map((data) => (
           <ListItem key={data.id}>
             <ListItemButton LinkComponent={Link} href={itemLink(data)}>
-              <ListItemText primary={data.name} />
+              <ListItemText
+                primary={primaryText(data)}
+                secondary={secondaryText && secondaryText(data)}
+              />
             </ListItemButton>
             <ListItemButton
               onClick={() => acceptBefore(() => onDelete(data))}
@@ -58,4 +66,31 @@ export const DictionariesList: React.FC<DictionariesListProps> = ({
       <DeleteDialog {...dialogProps} />
     </Box>
   );
-};
+}
+
+interface DictionariesListProps<D extends Dictionary>
+  extends Omit<
+    SimpleListProps<D>,
+    "primaryText" | "secondaryText" | "onSearch"
+  > {}
+
+export function DictionariesList<D extends Dictionary>({
+  data,
+  onDelete,
+  itemLink,
+}: DictionariesListProps<D>) {
+  const handleSearch = React.useCallback(
+    (search, data) =>
+      data.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())),
+    []
+  );
+  return (
+    <SimpleList
+      data={data}
+      onDelete={onDelete}
+      itemLink={itemLink}
+      onSearch={handleSearch}
+      primaryText={(d) => d.name}
+    />
+  );
+}
