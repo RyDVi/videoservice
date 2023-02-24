@@ -330,10 +330,10 @@ export default function FilmPage() {
     [films?.results]
   );
 
-  const { genres } = useGenres();
+  const { genres } = useGenres({});
   const { persons } = usePersons({ id: film?.persons.join(",") });
   const filmGenres = React.useMemo(
-    () => genres?.filter((genre) => film?.genres.includes(genre.name)),
+    () => genres?.filter((genre) => film?.genres.includes(genre.id)),
     [film?.genres, genres]
   );
   const { personRoles } = usePersonRoles();
