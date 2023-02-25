@@ -23,11 +23,10 @@ export function useSaveVideo(initial?: Partial<Video> | null) {
   };
 }
 
-export function useVideos(filters: Parameters<typeof video.list>[0]) {
-  const { data, error, mutate } = useSwr<Video[]>([
-    video.list(filters).url,
-    video.list(filters),
-  ]);
+export function useVideos(filters: Parameters<typeof video.list>[0] | null) {
+  const { data, error, mutate } = useSwr<Video[]>(
+    filters ? [video.list(filters).url, video.list(filters)] : null
+  );
   const isVideosLoading = !data && !error;
   return {
     videos: data,

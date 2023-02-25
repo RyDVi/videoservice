@@ -313,10 +313,14 @@ const DescriptionContainer: React.FC<{ children: React.ReactNode }> = ({
 );
 
 const VideoPlayer: React.FC<{ film?: Film | null }> = ({ film }) => {
-  const { videos, isVideosLoading } = useVideos({ filmId: film?.id });
-  const { videoFiles } = useVideoFiles({
-    video: videos?.map((v) => v.id).join(","),
-  });
+  const { videos } = useVideos(film ? { film: film.id } : null);
+  const { videoFiles, isVideoFilesLoading } = useVideoFiles(
+    videos?.length
+      ? {
+          video: videos?.map((v) => v.id).join(","),
+        }
+      : null
+  );
   const videosWithVideoFiles = useVideoWithVideoFiles(videos, videoFiles);
   const videoFolders = React.useMemo(() => {
     if (!videoFiles?.length) {
@@ -331,8 +335,8 @@ const VideoPlayer: React.FC<{ film?: Film | null }> = ({ film }) => {
       })),
     }));
   }, [videoFiles?.length, videosWithVideoFiles]);
-
-  if (isVideosLoading) {
+  console.log(videoFiles);
+  if (isVideoFilesLoading) {
     return (
       <Skeleton
         variant="rectangular"

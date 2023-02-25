@@ -62,15 +62,16 @@ function useVideoWithVideoFiles(
 
 const FilmsPage: React.FC = () => {
   const router = useRouter();
-  const { filmId } = router.query;
+  const filmId = router.query.filmId as string;
   const { film, mutateFilm } = useFilm(filmId);
-  const { videos } = useVideos({ film: String(filmId) });
+  const { videos } = useVideos(filmId ? { film: String(filmId) } : undefined);
   const videoFilesFilters = useMemo(
-    () => (videos ? { video: videos.map((v) => v.id).join(",") } : null),
+    () => (videos ? { video: videos.map((v) => v.id).join(",") } : undefined),
     [videos]
   );
   const { videoFiles } = useVideoFiles(videoFilesFilters);
   const videosWithVideoFiles = useVideoWithVideoFiles(videos, videoFiles);
+  console.log(videosWithVideoFiles);
   const videoFolders = useMemo(() => {
     if (!videoFiles?.length) {
       return "";
@@ -84,6 +85,8 @@ const FilmsPage: React.FC = () => {
       })),
     }));
   }, [videoFiles?.length, videosWithVideoFiles]);
+
+  console.log(videoFolders);
 
   const { categories } = useCategories({});
 
@@ -179,7 +182,7 @@ const FilmsPage: React.FC = () => {
             )}
           </CardForm>
           {personRoles?.map((role) => (
-            <CardForm title={role.name}>
+            <CardForm key={role.id} title={role.name}>
               {persons && filmsPersons && film && (
                 <PersonRoleMultiselect
                   data={filmsPersons.filter(
@@ -208,7 +211,9 @@ const FilmsPage: React.FC = () => {
               )}
             </CardForm>
           ))}
-          {!!videoFolders && <PlayerJS id="player" file={videoFolders} />}
+          {!!videoFolders.length && (
+            <PlayerJS id="player" file={videoFolders} />
+          )}
         </Box>
       </CRMContainer>
     </PageProvider>

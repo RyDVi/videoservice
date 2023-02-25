@@ -96,7 +96,7 @@ export function useVideoFiles(
   const { data, error, mutate } = useSwr<VideoFile[]>(
     filters ? [videofiles.list(filters).url, videofiles.list(filters)] : null
   );
-  const isVideoFilesLoading = !data && !error;
+  const isVideoFilesLoading = !data && !error && filters;
   return {
     videoFiles: data,
     videoFilesErrors: error,

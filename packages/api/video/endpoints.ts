@@ -1,7 +1,7 @@
 import { SaveEndpoint } from "../base";
 import { Video } from "./types";
 
-class VideoEndpoint extends SaveEndpoint<Video> {
+class VideoEndpoint extends SaveEndpoint<Video, { film?: string }> {
   getInitial = (video?: Partial<Video> | null): Video => ({
     id: "",
     film: "",
