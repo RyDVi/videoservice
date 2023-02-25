@@ -21,11 +21,12 @@ export function useSaveFilm(initialFilm?: Film) {
 
   const overriedSaveFilm = React.useCallback(
     (inputFilm?: Film) => {
-      debugger;
-      const lFilm: Film = {
-        ...(inputFilm || film),
-        image: film.image && isValidURL(film.image) ? undefined : film.image,
-      };
+      const image =
+        (inputFilm?.image && isValidURL(inputFilm.image)) ||
+        (film.image && isValidURL(film.image))
+          ? undefined
+          : inputFilm?.image || film.image;
+      const lFilm: Film = { ...(inputFilm || film), image };
       return saveFilm(lFilm);
     },
     [film, saveFilm]
