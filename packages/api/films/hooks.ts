@@ -5,6 +5,7 @@ import { Film } from "./types";
 import { Paginated } from "../base/types";
 import { films } from "./endpoints";
 import React from "react";
+import { isValidURL } from "@modules/utils";
 
 export function useSaveFilm(initialFilm?: Film) {
   const {
@@ -20,12 +21,11 @@ export function useSaveFilm(initialFilm?: Film) {
 
   const overriedSaveFilm = React.useCallback(
     (inputFilm?: Film) => {
-      const lFilm: Film = { ...(inputFilm || film), image: undefined };
-      try {
-        new URL(film.image || "");
-      } catch (e) {
-        lFilm.image = film.image;
-      }
+      debugger;
+      const lFilm: Film = {
+        ...(inputFilm || film),
+        image: film.image && isValidURL(film.image) ? undefined : film.image,
+      };
       return saveFilm(lFilm);
     },
     [film, saveFilm]

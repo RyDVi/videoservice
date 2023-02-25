@@ -12,6 +12,8 @@ import {
   VideoFile,
   api,
   useVideoFiles,
+  useFilmsPersons,
+  FilmPerson,
 } from "@modules/api";
 import {
   Box,
@@ -33,6 +35,7 @@ import * as R from "ramda";
 import { NotFound, NotFoundVideoFiles } from "@modules/client/notfound";
 import { styled } from "@mui/material/styles";
 import Script from "next/script";
+import { formatFullName } from "@modules/utils";
 
 const ratingFormatter = (rating: number) => rating.toFixed(1);
 const contentRatingFormatter = (contentRating: number) => `${contentRating}+`;
@@ -77,6 +80,7 @@ interface DetailsContentProps extends React.HTMLAttributes<HTMLDivElement> {
   genres?: Genre[];
   persons?: Person[];
   personRoles?: PersonRole[];
+  filmsPersons?: FilmPerson[];
 }
 
 const DetailsContent: React.FC<DetailsContentProps> = ({
@@ -84,16 +88,28 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
   genres,
   persons,
   personRoles,
+  filmsPersons,
   ...props
 }) => {
-  const personsByRole = React.useMemo(
-    () => (persons ? groupBy(persons, "role") : {}),
-    [persons]
-  );
-  const personRolesDict = React.useMemo(
-    () => (personRoles ? dictFromArray(personRoles, "id") : {}),
-    [personRoles]
-  );
+  const personsByRole = React.useMemo(() => {
+    if (!filmsPersons || !personRoles || !persons) {
+      return {};
+    }
+    const filmsPersonsByRole = groupBy(filmsPersons, "role");
+    return Object.fromEntries(
+      Object.entries(filmsPersonsByRole).map(([roleId, filmsPersons]) => {
+        const role = personRoles.find((pr) => pr.id === roleId)!;
+        return [
+          role.name,
+          filmsPersons.map((fp) => ({
+            ...fp,
+            role,
+            person: persons.find((p) => p.id === fp.person)!,
+          })),
+        ];
+      })
+    );
+  }, [filmsPersons, personRoles, persons]);
   return (
     <Box
       sx={{
@@ -152,10 +168,11 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
           marginTop: "2rem",
           display: "flex",
           flexWrap: "wrap",
+          gap: "2rem",
         }}
       >
         <Box sx={{ maxWidth: 300 }}>
-          <ListItem>
+          <ListItem disablePadding>
             <ListItemText
               primary="Год (NI)"
               secondary={
@@ -169,7 +186,7 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
               }
             />
           </ListItem>
-          <ListItem>
+          <ListItem disablePadding>
             <ListItemText
               primary="Страна"
               secondary={
@@ -183,7 +200,7 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
               }
             />
           </ListItem>
-          <ListItem>
+          <ListItem disablePadding>
             <ListItemText
               primary="Рейтинг контента"
               secondary={
@@ -198,36 +215,45 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
             />
           </ListItem>
         </Box>
-        <List sx={{ pl: 2 }}>
-          <ListItem disablePadding>
-            <ListItemText primary="Жанры" />
-          </ListItem>
-          {genres
-            ? genres.map((genre) => (
-                <GenreListItem key={genre.id} genre={genre} />
-              ))
-            : Array.from({ length: 5 }, (_, index) => (
-                <Skeleton key={index}>
-                  <GenreListItem
-                    genre={api.genres.initial({
-                      name: "Какой-нибудь жанр",
-                    })}
-                  />
-                </Skeleton>
-              ))}
-        </List>
-        {Object.entries(personsByRole).map(([role, persons]) => (
-          <List key={role} sx={{ pl: 2 }}>
+        <Box
+          sx={{
+            flex: 1,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, 150px)",
+            gap: "1rem",
+          }}
+        >
+          <List>
             <ListItem disablePadding>
-              <ListItemText primary={personRolesDict[role]?.name} />
+              <ListItemText primary="Жанры" />
             </ListItem>
-            {persons.map((persons) => (
-              <ListItem key={persons.id} disablePadding>
-                <ListItemText secondary={persons.lastname} />
-              </ListItem>
-            ))}
+            {genres
+              ? genres.map((genre) => (
+                  <GenreListItem key={genre.id} genre={genre} />
+                ))
+              : Array.from({ length: 5 }, (_, index) => (
+                  <Skeleton key={index}>
+                    <GenreListItem
+                      genre={api.genres.initial({
+                        name: "Какой-нибудь жанр",
+                      })}
+                    />
+                  </Skeleton>
+                ))}
           </List>
-        ))}
+          {Object.entries(personsByRole).map(([roleName, filmPersons]) => (
+            <List key={roleName}>
+              <ListItem disablePadding>
+                <ListItemText primary={roleName} />
+              </ListItem>
+              {filmPersons.map((fp) => (
+                <ListItem key={fp.id} disablePadding>
+                  <ListItemText secondary={formatFullName(fp.person)} />
+                </ListItem>
+              ))}
+            </List>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
@@ -261,6 +287,7 @@ const PosterImage = styled(Image)(({ theme }) => ({
   aspectRatio: "3/4",
   height: "fit-content",
   width: "30%",
+  objectFit: "contain",
   [theme.breakpoints.down("md")]: {
     width: "auto",
     maxWidth: "100%",
@@ -337,6 +364,9 @@ export default function FilmPage() {
     [film?.genres, genres]
   );
   const { personRoles } = usePersonRoles();
+  const { filmsPersons } = useFilmsPersons(
+    film ? { film: film.id } : undefined
+  );
   if (!films?.results.length && !filmsErrors && !isFilmsLoading) {
     return <NotFound text="Фильм не найден" />;
   }
@@ -359,6 +389,7 @@ export default function FilmPage() {
           genres={filmGenres}
           persons={persons}
           personRoles={personRoles}
+          filmsPersons={filmsPersons}
         />
       </DescriptionContainer>
       <Box sx={{ mt: 5 }}>

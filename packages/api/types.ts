@@ -13,3 +13,4 @@ export * from "./subtitle_files/types";
 export * from "./users/types";
 export * from "./video/types";
 export * from "./video_files/types";
+export * from "./films_persons/types";

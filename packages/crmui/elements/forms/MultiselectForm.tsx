@@ -9,49 +9,33 @@ import {
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import { useBoolean } from "../../../hooks/boolean";
 import { SearchField } from "@modules/client";
 import { DeleteDialog, useAcceptDialog } from "../dialogs";
 
 export interface MultiSelectData<T> {
   data: T[];
-  possibleValues: T[];
-  onAdd: (value: T) => Promise<any>;
   onDelete: (item: T) => void;
 }
 
 interface MultiSelectForm<T> extends MultiSelectData<T> {
   renderListItemContent: (item: T) => React.ReactNode;
-  filterSearch: (search: string, items: T[]) => T[];
   withAccept?: boolean;
+  onAdd: () => void;
 }
 
-// TODO: нужно разнести на части и зарефакторить
+// TODO: нужно зарефакторить
 export function MultiSelecForm<T>({
   data,
   renderListItemContent,
   onDelete,
   onAdd,
-  possibleValues,
-  filterSearch,
   withAccept,
 }: MultiSelectForm<T>) {
-  const [isOpenModal, { setTrue: openModal, setFalse: closeModal }] =
-    useBoolean(false);
-  const [search, setSearch] = React.useState("");
-  const filteredPossibleValues = React.useMemo(
-    () => filterSearch(search, possibleValues),
-    [filterSearch, possibleValues, search]
-  );
   const { acceptBefore, dialogProps } = useAcceptDialog();
-  const handleCloseModal = React.useCallback(() => {
-    setSearch("");
-    closeModal();
-  }, [closeModal]);
   return (
     <Box>
       <Box>
-        <Button onClick={openModal} color="success">
+        <Button onClick={onAdd} color="success">
           <AddIcon /> Добавить
         </Button>
       </Box>
@@ -78,40 +62,73 @@ export function MultiSelecForm<T>({
           </ListItem>
         ))}
       </List>
-      <Modal open={isOpenModal} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            height: 500,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            p: 4,
-            overflow: "auto",
-          }}
-        >
-          <SearchField
-            placeholder="Поиск категории"
-            onSearch={setSearch}
-            onChange={(e) => setSearch(e.target.value)}
-            autoFocus
-          />
-          <List>
-            {filteredPossibleValues.map((value) => (
-              <ListItemButton
-                key={JSON.stringify(value)}
-                onClick={() => onAdd(value).then(handleCloseModal)}
-              >
-                {renderListItemContent(value)}
-              </ListItemButton>
-            ))}
-          </List>
-        </Box>
-      </Modal>
       <DeleteDialog {...dialogProps} />
     </Box>
+  );
+}
+
+export interface MultiSelectModalData<T> {
+  possibleValues: T[];
+  onAdd: (value: T) => Promise<any>;
+}
+
+interface MultiselectModalProps<T> extends MultiSelectModalData<T> {
+  isOpen: boolean;
+  filterSearch: (search: string, items: T[]) => T[];
+  onClose: () => void;
+  renderListItemContent: (item: T) => React.ReactNode;
+}
+
+export function MultiselectModal<T>({
+  possibleValues,
+  filterSearch,
+  onClose,
+  isOpen,
+  onAdd,
+  renderListItemContent,
+}: MultiselectModalProps<T>) {
+  const [search, setSearch] = React.useState("");
+  const filteredPossibleValues = React.useMemo(
+    () => filterSearch(search, possibleValues),
+    [filterSearch, possibleValues, search]
+  );
+  const handleCloseModal = React.useCallback(() => {
+    setSearch("");
+    onClose();
+  }, [onClose]);
+  return (
+    <Modal open={isOpen} onClose={handleCloseModal}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 400,
+          height: 500,
+          bgcolor: "background.paper",
+          border: "2px solid #000",
+          p: 4,
+          overflow: "auto",
+        }}
+      >
+        <SearchField
+          placeholder="Поиск категории"
+          onSearch={setSearch}
+          onChange={(e) => setSearch(e.target.value)}
+          autoFocus
+        />
+        <List>
+          {filteredPossibleValues.map((value) => (
+            <ListItemButton
+              key={JSON.stringify(value)}
+              onClick={() => onAdd(value).then(handleCloseModal)}
+            >
+              {renderListItemContent(value)}
+            </ListItemButton>
+          ))}
+        </List>
+      </Box>
+    </Modal>
   );
 }

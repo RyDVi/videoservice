@@ -6,14 +6,19 @@ import {
   CrmSidebar,
   PageProvider,
   CRMContainer,
-  DictionariesMultiselect
+  DictionariesMultiselect,
+  PersonRoleMultiselect,
 } from "crmui";
 import { useRouter } from "next/router";
 import {
   useCategories,
   useFilm,
+  useFilmsPersons,
   useGenres,
+  usePersonRoles,
+  usePersons,
   useSaveFilm,
+  useSaveFilmPerson,
   useVideoFiles,
   useVideos,
   Video,
@@ -26,6 +31,7 @@ import { useMemo } from "react";
 import * as R from "ramda";
 import Script from "next/script";
 import React from "react";
+import { useDeleteFilmPerson } from "../../../../../../packages/api/films_persons/hooks";
 
 function groupBySeason<T extends Video>(videos: T[]): Record<string, T[]> {
   return R.groupBy(R.prop<string>("season"), videos);
@@ -92,6 +98,14 @@ const FilmsPage: React.FC = () => {
     () => genres?.filter((genre) => film?.genres.includes(genre.id)),
     [film?.genres, genres]
   );
+
+  const { persons } = usePersons({});
+  const { personRoles } = usePersonRoles({});
+  const { filmsPersons, mutateFilmsPersons } = useFilmsPersons(
+    film ? { film: film?.id } : undefined
+  );
+  const { saveFilmPerson } = useSaveFilmPerson();
+  const { deleteFilmPerson } = useDeleteFilmPerson();
 
   const { saveFilm } = useSaveFilm();
   return (
@@ -164,6 +178,36 @@ const FilmsPage: React.FC = () => {
               />
             )}
           </CardForm>
+          {personRoles?.map((role) => (
+            <CardForm title={role.name}>
+              {persons && filmsPersons && film && (
+                <PersonRoleMultiselect
+                  data={filmsPersons.filter(
+                    (filmPerson) => filmPerson.role === role.id
+                  )}
+                  possibleValues={persons}
+                  onAdd={(person) =>
+                    saveFilmPerson({
+                      id: "",
+                      film: film.id,
+                      role: role.id,
+                      person: person.id,
+                    }).then((filmPerson) =>
+                      mutateFilmsPersons([...filmsPersons, filmPerson.data])
+                    )
+                  }
+                  onDelete={(filmPerson) =>
+                    deleteFilmPerson(filmPerson.id).then(() =>
+                      mutateFilmsPersons(
+                        filmsPersons.filter((fp) => fp.id === filmPerson.id)
+                      )
+                    )
+                  }
+                  possibleRoles={[role]}
+                />
+              )}
+            </CardForm>
+          ))}
           {!!videoFolders && <PlayerJS id="player" file={videoFolders} />}
         </Box>
       </CRMContainer>

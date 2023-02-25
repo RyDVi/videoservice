@@ -10,3 +10,4 @@ export * from "./subtitle_files/hooks";
 export * from "./users/hooks";
 export * from "./video/hooks";
 export * from "./video_files/hooks";
+export * from './films_persons/hooks'

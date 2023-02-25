@@ -12,3 +12,4 @@ export * from "./subtitle_files/endpoints";
 export * from "./users/endpoints";
 export * from "./video/endpoints";
 export * from "./video_files/endpoints";
+export * from './films_persons/endpoints'

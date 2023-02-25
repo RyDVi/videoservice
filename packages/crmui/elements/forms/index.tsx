@@ -9,3 +9,4 @@ export * from "./DictionariesMultiselect";
 export * from "./GenreForm";
 export * from "./PersonForm";
 export * from "./PersonRoleForm";
+export * from "./PersonRoleMultiselect";

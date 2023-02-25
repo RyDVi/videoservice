@@ -1,5 +1,5 @@
 import { useDeletePerson, usePersons } from "@modules/api";
-import { formatFullName } from "@modules/utils";
+import { formatFullName, searchPerson } from "@modules/utils";
 import { CircularProgress } from "@mui/material";
 import {
   CRMContainer,
@@ -30,14 +30,7 @@ function GenresPage() {
             onDelete={({ id }) => deletePerson(id)}
             itemLink={({ id }) => paths.person({ personId: id })}
             primaryText={(d) => formatFullName(d)}
-            onSearch={(search, data) => {
-              const searchText = search.toLowerCase();
-              return data.filter(
-                (d) =>
-                  d.firstname.toLowerCase().includes(searchText) ||
-                  d.lastname.toLowerCase().includes(searchText)
-              );
-            }}
+            onSearch={searchPerson}
           />
         )}
       </CRMContainer>
