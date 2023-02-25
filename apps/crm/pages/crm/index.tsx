@@ -1,5 +1,5 @@
 const CRMPage: React.FC = () => {
-  return <div>Index CRM</div>;
+  return <></>;
 };
 
 export default CRMPage;

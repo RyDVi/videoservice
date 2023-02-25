@@ -1,19 +1,61 @@
-module.exports = {
+// @ts-check
+
+/**
+ * @type {import('next').NextConfig}
+ **/
+const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/login",
+        permanent: true,
+      },
+      {
+        source: "/crm",
+        destination: "/crm/home",
+        permanent: true,
+      },
+      {
+        source: "/login",
+        destination: "/crm/home",
+        permanent: false,
+        has: [
+          {
+            type: "cookie",
+            key: "access_token",
+          },
+        ],
+      },
+      {
+        source: "/crm/(.*)",
+        destination: "/login",
+        permanent: false,
+        missing: [
+          {
+            type: "cookie",
+            key: "access_token",
+          },
+        ],
+      },
+    ];
+  },
   reactStrictMode: true,
   transpilePackages: ["crmui"],
   generateBuildId: async () => {
-    return 'videoservice-crm';
+    return "videoservice-crm";
   },
   trailingSlash: false,
-  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
-        pathname: '/media/**',
+        protocol: "http",
+        hostname: "localhost",
+        port: "8000",
+        pathname: "/media/**",
       },
     ],
   },
 };
+
+module.exports = nextConfig;

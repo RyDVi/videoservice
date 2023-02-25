@@ -1,4 +1,18 @@
 module.exports = {
+  async redirects() {
+    return [
+      {
+        source: "/category",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/search",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
   reactStrictMode: true,
   transpilePackages: ["@modules/*"],
   generateBuildId: async () => {

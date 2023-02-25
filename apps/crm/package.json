@@ -18,14 +18,14 @@
     "@mui/x-data-grid": "^5.17.12",
     "@next/font": "^13.1.1",
     "cookies-next": "^2.1.1",
-    "next": "^13.1.1",
+    "crmui": "*",
+    "next": "^13.2.1",
     "pre-commit": "^1.2.2",
     "ramda": "^0.28.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "static-path": "^0.0.4",
-    "swr": "^2.0.0",
-    "crmui": "*"
+    "swr": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

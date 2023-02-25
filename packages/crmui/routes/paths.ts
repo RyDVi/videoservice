@@ -19,7 +19,7 @@ export const customer = customers.path("/:customerId");
 export const settings = crmRoot.path("/settings");
 
 export const logout = crmRoot.path("/logout");
-export const login = crmRoot.path("/login");
+export const login = root.path("/login");
 
 export const categories = crmRoot.path("/categories");
 export const category = categories.path("/:categoryId");
