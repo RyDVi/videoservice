@@ -1,11 +1,12 @@
-import { PageProvider, CrmSidebar, CRMContainer } from "crmui";
+import { CrmSidebar, CRMContainer, useCrmPageTitle } from "crmui";
 
-const CustomersPage: React.FC = () => {
-  return (
-    <PageProvider title="Клиенты">
-      <CRMContainer sidebarContent={<CrmSidebar />}>Customers</CRMContainer>
-    </PageProvider>
-  );
+function CustomersPage() {
+  useCrmPageTitle('Клиенты')
+  return <>Клиенты</>;
+}
+
+CustomersPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
 };
 
 export default CustomersPage;

@@ -1,11 +1,12 @@
-import { CrmSidebar, PageProvider, CRMContainer } from "crmui";
+import { CrmSidebar, CRMContainer, useCrmPageTitle } from "crmui";
 
-const HomePage: React.FC = () => {
-  return (
-    <PageProvider title="Домашняя страница">
-      <CRMContainer sidebarContent={<CrmSidebar />}></CRMContainer>
-    </PageProvider>
-  );
+function HomePage() {
+  useCrmPageTitle("Домашняя страница");
+  return <></>;
+}
+
+HomePage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
 };
 
 export default HomePage;

@@ -2,9 +2,9 @@ import {
   CardForm,
   CRMContainer,
   CrmSidebar,
-  PageProvider,
   CreateEditFilmForm,
   paths,
+  useCrmPageTitle,
 } from "crmui";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -14,23 +14,26 @@ const CreateFilmCard = styled(CardForm)({
   maxWidth: 500,
 });
 
-const FilmsPage: React.FC = () => {
+function FilmsPage() {
   const router = useRouter();
+  useCrmPageTitle("Создание фильма");
   return (
-    <PageProvider title="Создание фильма">
+    <>
       <Head>
         <title>Создание фильма</title>
       </Head>
-      <CRMContainer sidebarContent={<CrmSidebar />}>
-        <CreateFilmCard title="Создание фильма">
-          <CreateEditFilmForm
-            onSave={(film) => router.push(paths.film({ filmId: film.id }))}
-            onCancel={() => router.back()}
-          />
-        </CreateFilmCard>
-      </CRMContainer>
-    </PageProvider>
+      <CreateFilmCard title="Создание фильма">
+        <CreateEditFilmForm
+          onSave={(film) => router.push(paths.film({ filmId: film.id }))}
+          onCancel={() => router.back()}
+        />
+      </CreateFilmCard>
+    </>
   );
+}
+
+FilmsPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
 };
 
 export default FilmsPage;

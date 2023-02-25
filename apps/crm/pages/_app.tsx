@@ -6,16 +6,24 @@ import createEmotionCache from "../src/createEmotionCache";
 import { SWRConfig } from "swr";
 import { axiosInstance } from "@modules/api";
 import { Theme } from "../src/theme";
+import { NextPage } from "next";
+import { PageProvider } from "crmui";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
+  Component: NextPageWithLayout;
 }
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const getLayout = Component.getLayout || ((page) => page);
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -42,7 +50,7 @@ export default function MyApp(props: MyAppProps) {
             },
           }}
         >
-          <Component {...pageProps} />
+          <PageProvider>{getLayout(<Component {...pageProps} />)}</PageProvider>
         </SWRConfig>
         {/* </SessionProvider> */}
       </Theme>

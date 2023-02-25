@@ -5,10 +5,10 @@ import {
   AddElementCard,
   CreateEditSubtitleFileForm,
   SubtitleFileInfoCard,
-  PageProvider,
   VideoInfoCard,
   CreateEditVideoFileForm,
   VideoFileInfoCard,
+  useCrmPageTitle,
 } from "crmui";
 import { useRouter } from "next/router";
 import {
@@ -24,7 +24,7 @@ import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
 import { useMemo } from "react";
 import Script from "next/script";
 
-const FilmsPage: React.FC = () => {
+function FilmsPage() {
   const router = useRouter();
   const { filmId, videoId } = router.query;
   const { film } = useFilm(filmId);
@@ -42,98 +42,101 @@ const FilmsPage: React.FC = () => {
     }
     return makeVideoFilesUrlsForPlayer(videoFiles);
   }, [videoFiles]);
+  useCrmPageTitle(
+    `Фильм "${film?.name || ""}". Сезон ${video?.season}. Серия ${
+      video?.series
+    }.`
+  );
   return (
-    <PageProvider
-      title={`Фильм "${film?.name || ""}". Сезон ${video?.season}. Серия ${
-        video?.series
-      }.`}
-    >
+    <>
       <Script src="/playerjs.js" type="text/javascript" async />
       <Head>
         <title>{film?.name}</title>
       </Head>
-      <CRMContainer sidebarContent={<CrmSidebar />}>
-        <Box>
-          <Card sx={{ mb: 1, width: "60%" }}>
-            <CardHeader title="Превью видео (как у пользователя)" />
-            <CardContent>
-              {!isVideoFilesLoading && (
-                <PlayerJS id="player" file={playerjsFilms} />
-              )}
-            </CardContent>
-          </Card>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
-              gridColumnGap: 12,
-              gridRowGap: "1em",
-            }}
-          >
-            <VideoInfoCard data={video} onSave={mutateVideo} />
-            {videoFiles?.map((videoFile) => (
-              <VideoFileInfoCard
-                key={videoFile.id}
-                videoFile={videoFile}
-                onSave={() => null}
-                onDelete={(data) =>
-                  mutateVideoFiles(videoFiles.filter((v) => v.id !== data.id))
-                }
-              />
-            ))}
-            <AddElementCard title="Добавить видеофайл">
-              {({ toAdd }) => (
-                <CardForm title="Создание видеофайла">
-                  <CreateEditVideoFileForm
-                    onSave={(newVideoFile) => {
-                      toAdd();
-                      mutateVideoFiles([...(videoFiles || []), newVideoFile]);
-                    }}
-                    onCancel={toAdd}
-                    data={api.videofiles.getInitial({
-                      video: videoId as string,
-                    })}
-                  />
-                </CardForm>
-              )}
-            </AddElementCard>
-            {/* TODO: Need preview for subtitles and check upload */}
-            {subtitleFiles?.map((subtitleFile) => (
-              <SubtitleFileInfoCard
-                key={subtitleFile.id}
-                subtitleFile={subtitleFile}
-                onSave={() => null}
-                onDelete={(data) =>
-                  mutateSubtitleFiles(
-                    subtitleFiles.filter((v) => v.id !== data.id)
-                  )
-                }
-              />
-            ))}
-            <AddElementCard title="Добавить субтитры">
-              {({ toAdd }) => (
-                <CardForm title="Создание субтитров">
-                  <CreateEditSubtitleFileForm
-                    onSave={(newSubtitleFile) => {
-                      toAdd();
-                      mutateSubtitleFiles([
-                        ...(subtitleFiles || []),
-                        newSubtitleFile,
-                      ]);
-                    }}
-                    onCancel={toAdd}
-                    data={api.subtitlefiles.getInitial({
-                      video: videoId as string,
-                    })}
-                  />
-                </CardForm>
-              )}
-            </AddElementCard>
-          </Box>
+      <Box>
+        <Card sx={{ mb: 1, width: "60%" }}>
+          <CardHeader title="Превью видео (как у пользователя)" />
+          <CardContent>
+            {!isVideoFilesLoading && (
+              <PlayerJS id="player" file={playerjsFilms} />
+            )}
+          </CardContent>
+        </Card>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+            gridColumnGap: 12,
+            gridRowGap: "1em",
+          }}
+        >
+          <VideoInfoCard data={video} onSave={mutateVideo} />
+          {videoFiles?.map((videoFile) => (
+            <VideoFileInfoCard
+              key={videoFile.id}
+              videoFile={videoFile}
+              onSave={() => null}
+              onDelete={(data) =>
+                mutateVideoFiles(videoFiles.filter((v) => v.id !== data.id))
+              }
+            />
+          ))}
+          <AddElementCard title="Добавить видеофайл">
+            {({ toAdd }) => (
+              <CardForm title="Создание видеофайла">
+                <CreateEditVideoFileForm
+                  onSave={(newVideoFile) => {
+                    toAdd();
+                    mutateVideoFiles([...(videoFiles || []), newVideoFile]);
+                  }}
+                  onCancel={toAdd}
+                  data={api.videofiles.getInitial({
+                    video: videoId as string,
+                  })}
+                />
+              </CardForm>
+            )}
+          </AddElementCard>
+          {/* TODO: Need preview for subtitles and check upload */}
+          {subtitleFiles?.map((subtitleFile) => (
+            <SubtitleFileInfoCard
+              key={subtitleFile.id}
+              subtitleFile={subtitleFile}
+              onSave={() => null}
+              onDelete={(data) =>
+                mutateSubtitleFiles(
+                  subtitleFiles.filter((v) => v.id !== data.id)
+                )
+              }
+            />
+          ))}
+          <AddElementCard title="Добавить субтитры">
+            {({ toAdd }) => (
+              <CardForm title="Создание субтитров">
+                <CreateEditSubtitleFileForm
+                  onSave={(newSubtitleFile) => {
+                    toAdd();
+                    mutateSubtitleFiles([
+                      ...(subtitleFiles || []),
+                      newSubtitleFile,
+                    ]);
+                  }}
+                  onCancel={toAdd}
+                  data={api.subtitlefiles.getInitial({
+                    video: videoId as string,
+                  })}
+                />
+              </CardForm>
+            )}
+          </AddElementCard>
         </Box>
-      </CRMContainer>
-    </PageProvider>
+      </Box>
+    </>
   );
+}
+
+FilmsPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
 };
 
 export default FilmsPage;

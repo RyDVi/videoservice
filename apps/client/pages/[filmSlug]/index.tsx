@@ -335,7 +335,6 @@ const VideoPlayer: React.FC<{ film?: Film | null }> = ({ film }) => {
       })),
     }));
   }, [videoFiles?.length, videosWithVideoFiles]);
-  console.log(videoFiles);
   if (isVideoFilesLoading) {
     return (
       <Skeleton

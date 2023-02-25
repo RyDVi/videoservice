@@ -4,38 +4,40 @@ import { CircularProgress } from "@mui/material";
 import {
   CRMContainer,
   CrmSidebar,
-  DictionariesList,
   DictionaryPanel,
-  PageProvider,
   paths,
   SimpleList,
+  useCrmPageTitle,
 } from "crmui";
 import Head from "next/head";
 
-function GenresPage() {
+function PersonsPage() {
   const { persons, isPersonsLoading } = usePersons();
   const { deletePerson } = useDeletePerson();
+  useCrmPageTitle("Персоны");
   return (
-    <PageProvider title="Персоны">
+    <>
       <Head>
-        <title>Люди</title>
+        <title>Персоны</title>
       </Head>
-      <CRMContainer sidebarContent={<CrmSidebar />}>
-        <DictionaryPanel createLink={paths.person({ personId: "create" })} />
-        {isPersonsLoading ? (
-          <CircularProgress />
-        ) : (
-          <SimpleList
-            data={persons || []}
-            onDelete={({ id }) => deletePerson(id)}
-            itemLink={({ id }) => paths.person({ personId: id })}
-            primaryText={(d) => formatFullName(d)}
-            onSearch={searchPerson}
-          />
-        )}
-      </CRMContainer>
-    </PageProvider>
+      <DictionaryPanel createLink={paths.person({ personId: "create" })} />
+      {isPersonsLoading ? (
+        <CircularProgress />
+      ) : (
+        <SimpleList
+          data={persons || []}
+          onDelete={({ id }) => deletePerson(id)}
+          itemLink={({ id }) => paths.person({ personId: id })}
+          primaryText={(d) => formatFullName(d)}
+          onSearch={searchPerson}
+        />
+      )}
+    </>
   );
 }
 
-export default GenresPage;
+PersonsPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
+};
+
+export default PersonsPage;

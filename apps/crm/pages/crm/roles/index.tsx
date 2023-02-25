@@ -1,42 +1,40 @@
-import {
-  useDeleteGenre,
-  useDeletePersonRole,
-  useGenres,
-  usePersonRoles,
-} from "@modules/api";
+import { useDeletePersonRole, usePersonRoles } from "@modules/api";
 import { CircularProgress } from "@mui/material";
 import {
   CRMContainer,
   CrmSidebar,
   DictionariesList,
   DictionaryPanel,
-  PageProvider,
   paths,
+  useCrmPageTitle,
 } from "crmui";
 import Head from "next/head";
 
-function GenresPage() {
+function PersonRolesPage() {
   const { isPersonRolesLoading, personRoles } = usePersonRoles();
   const { deletePersonRole } = useDeletePersonRole();
+  useCrmPageTitle("Роли персон");
   return (
-    <PageProvider title="Роли персон">
+    <>
       <Head>
         <title>Роли персон</title>
       </Head>
-      <CRMContainer sidebarContent={<CrmSidebar />}>
-        <DictionaryPanel createLink={paths.role({ roleId: "create" })} />
-        {isPersonRolesLoading ? (
-          <CircularProgress />
-        ) : (
-          <DictionariesList
-            data={personRoles || []}
-            onDelete={({ id }) => deletePersonRole(id)}
-            itemLink={({ id }) => paths.role({ roleId: id })}
-          />
-        )}
-      </CRMContainer>
-    </PageProvider>
+      <DictionaryPanel createLink={paths.role({ roleId: "create" })} />
+      {isPersonRolesLoading ? (
+        <CircularProgress />
+      ) : (
+        <DictionariesList
+          data={personRoles || []}
+          onDelete={({ id }) => deletePersonRole(id)}
+          itemLink={({ id }) => paths.role({ roleId: id })}
+        />
+      )}
+    </>
   );
 }
 
-export default GenresPage;
+PersonRolesPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
+};
+
+export default PersonRolesPage;

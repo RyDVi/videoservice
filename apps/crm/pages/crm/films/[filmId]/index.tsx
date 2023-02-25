@@ -4,10 +4,10 @@ import {
   paths,
   FilmInfoCard,
   CrmSidebar,
-  PageProvider,
   CRMContainer,
   DictionariesMultiselect,
   PersonRoleMultiselect,
+  useCrmPageTitle,
 } from "crmui";
 import { useRouter } from "next/router";
 import {
@@ -60,7 +60,7 @@ function useVideoWithVideoFiles(
   }, [videoFiles, videos]);
 }
 
-const FilmsPage: React.FC = () => {
+function FilmsPage() {
   const router = useRouter();
   const filmId = router.query.filmId as string;
   const { film, mutateFilm } = useFilm(filmId);
@@ -71,7 +71,6 @@ const FilmsPage: React.FC = () => {
   );
   const { videoFiles } = useVideoFiles(videoFilesFilters);
   const videosWithVideoFiles = useVideoWithVideoFiles(videos, videoFiles);
-  console.log(videosWithVideoFiles);
   const videoFolders = useMemo(() => {
     if (!videoFiles?.length) {
       return "";
@@ -85,8 +84,6 @@ const FilmsPage: React.FC = () => {
       })),
     }));
   }, [videoFiles?.length, videosWithVideoFiles]);
-
-  console.log(videoFolders);
 
   const { categories } = useCategories({});
 
@@ -111,113 +108,112 @@ const FilmsPage: React.FC = () => {
   const { deleteFilmPerson } = useDeleteFilmPerson();
 
   const { saveFilm } = useSaveFilm();
+  useCrmPageTitle(`Фильм "${film?.name || ""}"`);
   return (
-    <PageProvider title={`Фильм "${film?.name || ""}"`}>
+    <>
       <Script src="/playerjs.js" type="text/javascript" async />
       <Head>
         <title>{film?.name}</title>
       </Head>
-      <CRMContainer sidebarContent={<CrmSidebar />}>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
-            gridColumnGap: 12,
-            gridRowGap: "1em",
-          }}
-        >
-          <FilmInfoCard film={film} onSave={mutateFilm} />
-          <CardForm title="Видеофайлы">
-            <SeasonsContainer videos={videos || []}></SeasonsContainer>
-            <Button
-              onClick={() =>
-                router.push(paths.videoCreate({ filmId: filmId as string }))
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+          gridColumnGap: 12,
+          gridRowGap: "1em",
+        }}
+      >
+        <FilmInfoCard film={film} onSave={mutateFilm} />
+        <CardForm title="Видеофайлы">
+          <SeasonsContainer videos={videos || []}></SeasonsContainer>
+          <Button
+            onClick={() =>
+              router.push(paths.videoCreate({ filmId: filmId as string }))
+            }
+          >
+            Добавить серию
+          </Button>
+        </CardForm>
+        <CardForm title="Категории">
+          {categories && filmCategories && film && (
+            <DictionariesMultiselect
+              data={filmCategories}
+              possibleValues={categories}
+              onAdd={(category) =>
+                saveFilm({
+                  ...film,
+                  categories: [...film.categories, category.id],
+                }).then((film) => mutateFilm(film.data))
               }
-            >
-              Добавить серию
-            </Button>
-          </CardForm>
-          <CardForm title="Категории">
-            {categories && filmCategories && film && (
-              <DictionariesMultiselect
-                data={filmCategories}
-                possibleValues={categories}
-                onAdd={(category) =>
-                  saveFilm({
-                    ...film,
-                    categories: [...film.categories, category.id],
-                  }).then((film) => mutateFilm(film.data))
-                }
-                onDelete={(category) =>
-                  saveFilm({
-                    ...film,
-                    categories: film.categories.filter(
-                      (categoryId) => category.id !== categoryId
-                    ),
-                  }).then((film) => mutateFilm(film.data))
-                }
-              />
-            )}
-          </CardForm>
-          <CardForm title="Жанры">
-            {genres && filmGenres && film && (
-              <DictionariesMultiselect
-                data={filmGenres}
-                possibleValues={genres}
-                onAdd={(genre) =>
-                  saveFilm({
-                    ...film,
-                    genres: [...film.genres, genre.id],
-                  }).then((film) => mutateFilm(film.data))
-                }
-                onDelete={(genre) =>
-                  saveFilm({
-                    ...film,
-                    genres: film.genres.filter(
-                      (genreId) => genre.id !== genreId
-                    ),
-                  }).then((film) => mutateFilm(film.data))
-                }
-              />
-            )}
-          </CardForm>
-          {personRoles?.map((role) => (
-            <CardForm key={role.id} title={role.name}>
-              {persons && filmsPersons && film && (
-                <PersonRoleMultiselect
-                  data={filmsPersons.filter(
-                    (filmPerson) => filmPerson.role === role.id
-                  )}
-                  possibleValues={persons}
-                  onAdd={(person) =>
-                    saveFilmPerson({
-                      id: "",
-                      film: film.id,
-                      role: role.id,
-                      person: person.id,
-                    }).then((filmPerson) =>
-                      mutateFilmsPersons([...filmsPersons, filmPerson.data])
-                    )
-                  }
-                  onDelete={(filmPerson) =>
-                    deleteFilmPerson(filmPerson.id).then(() =>
-                      mutateFilmsPersons(
-                        filmsPersons.filter((fp) => fp.id === filmPerson.id)
-                      )
-                    )
-                  }
-                  possibleRoles={[role]}
-                />
-              )}
-            </CardForm>
-          ))}
-          {!!videoFolders.length && (
-            <PlayerJS id="player" file={videoFolders} />
+              onDelete={(category) =>
+                saveFilm({
+                  ...film,
+                  categories: film.categories.filter(
+                    (categoryId) => category.id !== categoryId
+                  ),
+                }).then((film) => mutateFilm(film.data))
+              }
+            />
           )}
-        </Box>
-      </CRMContainer>
-    </PageProvider>
+        </CardForm>
+        <CardForm title="Жанры">
+          {genres && filmGenres && film && (
+            <DictionariesMultiselect
+              data={filmGenres}
+              possibleValues={genres}
+              onAdd={(genre) =>
+                saveFilm({
+                  ...film,
+                  genres: [...film.genres, genre.id],
+                }).then((film) => mutateFilm(film.data))
+              }
+              onDelete={(genre) =>
+                saveFilm({
+                  ...film,
+                  genres: film.genres.filter((genreId) => genre.id !== genreId),
+                }).then((film) => mutateFilm(film.data))
+              }
+            />
+          )}
+        </CardForm>
+        {personRoles?.map((role) => (
+          <CardForm key={role.id} title={role.name}>
+            {persons && filmsPersons && film && (
+              <PersonRoleMultiselect
+                data={filmsPersons.filter(
+                  (filmPerson) => filmPerson.role === role.id
+                )}
+                possibleValues={persons}
+                onAdd={(person) =>
+                  saveFilmPerson({
+                    id: "",
+                    film: film.id,
+                    role: role.id,
+                    person: person.id,
+                  }).then((filmPerson) =>
+                    mutateFilmsPersons([...filmsPersons, filmPerson.data])
+                  )
+                }
+                onDelete={(filmPerson) =>
+                  deleteFilmPerson(filmPerson.id).then(() =>
+                    mutateFilmsPersons(
+                      filmsPersons.filter((fp) => fp.id === filmPerson.id)
+                    )
+                  )
+                }
+                possibleRoles={[role]}
+              />
+            )}
+          </CardForm>
+        ))}
+        {!!videoFolders.length && <PlayerJS id="player" file={videoFolders} />}
+      </Box>
+    </>
   );
+}
+
+FilmsPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
 };
 
 export default FilmsPage;

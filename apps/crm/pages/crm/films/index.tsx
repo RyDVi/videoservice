@@ -2,9 +2,9 @@ import {
   FilmsToolbar,
   paths,
   CrmSidebar,
-  PageProvider,
   CRMContainer,
   FilmsTable,
+  useCrmPageTitle,
 } from "crmui";
 import { useRouter } from "next/router";
 import { useQuery } from "@modules/nextjs";
@@ -14,7 +14,7 @@ import Head from "next/head";
 import { useGridSortModel, useMuiPage } from "@modules/mui-adapter";
 import { useMemo } from "react";
 
-const FilmsPage: React.FC = () => {
+function FilmsPage() {
   const query = useQuery();
   const router = useRouter();
   const [page, setPage, pageSize, setPageSize] = useMuiPage({ pageSize: 25 });
@@ -24,34 +24,37 @@ const FilmsPage: React.FC = () => {
   );
   const { films } = useFilms(filters);
   const [sortModel, setSortModel] = useGridSortModel();
+  useCrmPageTitle("Фильмы");
   return (
-    <PageProvider title="Фильмы">
+    <>
       <Head>
         <title>Фильмы</title>
       </Head>
-      <CRMContainer sidebarContent={<CrmSidebar />}>
-        <Paper sx={{ height: "90vh" }}>
-          <Box sx={{ height: 1, width: 1 }}>
-            <FilmsTable
-              rows={films?.results || []}
-              page={page}
-              pageSize={pageSize}
-              components={{ Toolbar: FilmsToolbar }}
-              onDelete={() => null}
-              onRowClick={(film) =>
-                router.push(paths.film({ filmId: String(film.id) }))
-              }
-              disableSelectionOnClick
-              onPageSizeChange={setPageSize}
-              onPageChange={setPage}
-              onSortModelChange={setSortModel}
-              sortModel={sortModel}
-            />
-          </Box>
-        </Paper>
-      </CRMContainer>
-    </PageProvider>
+      <Paper sx={{ height: "90vh" }}>
+        <Box sx={{ height: 1, width: 1 }}>
+          <FilmsTable
+            rows={films?.results || []}
+            page={page}
+            pageSize={pageSize}
+            components={{ Toolbar: FilmsToolbar }}
+            onDelete={() => null}
+            onRowClick={(film) =>
+              router.push(paths.film({ filmId: String(film.id) }))
+            }
+            disableSelectionOnClick
+            onPageSizeChange={setPageSize}
+            onPageChange={setPage}
+            onSortModelChange={setSortModel}
+            sortModel={sortModel}
+          />
+        </Box>
+      </Paper>
+    </>
   );
+}
+
+FilmsPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
 };
 
 export default FilmsPage;

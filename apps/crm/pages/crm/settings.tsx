@@ -1,11 +1,11 @@
-import { PageProvider, CRMContainer, CrmSidebar } from "crmui";
+import { CRMContainer, CrmSidebar } from "crmui";
 
-const SettingsPage: React.FC = () => {
-  return (
-    <PageProvider title="Настройки">
-      <CRMContainer sidebarContent={<CrmSidebar />}>Settings</CRMContainer>
-    </PageProvider>
-  );
+function SettingsPage() {
+  return <>Настройки</>;
+}
+
+SettingsPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
 };
 
 export default SettingsPage;

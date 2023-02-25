@@ -2,35 +2,36 @@ import { useCategories, useDeleteCategory } from "@modules/api";
 import { CircularProgress } from "@mui/material";
 import {
   CrmSidebar,
-  PageProvider,
   CRMContainer,
   paths,
   DictionaryPanel,
   DictionariesList,
+  useCrmPageTitle,
 } from "crmui";
 import React from "react";
 
-const CategoriesPage: React.FC = () => {
+function CategoriesPage() {
   const { categories, isCategoriesLoading } = useCategories({});
   const { deleteCategory } = useDeleteCategory();
+  useCrmPageTitle("Категории фильмов");
   return (
-    <PageProvider title="Категории фильмов">
-      <CRMContainer sidebarContent={<CrmSidebar />}>
-        <DictionaryPanel
-          createLink={paths.category({ categoryId: "create" })}
+    <>
+      <DictionaryPanel createLink={paths.category({ categoryId: "create" })} />
+      {isCategoriesLoading ? (
+        <CircularProgress />
+      ) : (
+        <DictionariesList
+          data={categories || []}
+          onDelete={({ id }) => deleteCategory(id)}
+          itemLink={({ id }) => paths.category({ categoryId: id })}
         />
-        {isCategoriesLoading ? (
-          <CircularProgress />
-        ) : (
-          <DictionariesList
-            data={categories || []}
-            onDelete={({ id }) => deleteCategory(id)}
-            itemLink={({ id }) => paths.category({ categoryId: id })}
-          />
-        )}
-      </CRMContainer>
-    </PageProvider>
+      )}
+    </>
   );
+}
+
+CategoriesPage.getLayout = function (page: React.ReactElement) {
+  return <CRMContainer sidebarContent={<CrmSidebar />}>{page}</CRMContainer>;
 };
 
 export default CategoriesPage;
