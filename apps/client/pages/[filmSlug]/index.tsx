@@ -138,9 +138,9 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
             </Typography>
           )}
         </div>
-        <Box sx={{ marginLeft: "auto" }}>
+        {/* <Box sx={{ marginLeft: "auto" }}>
           <FilmRating rating={9.1} />
-        </Box>
+        </Box> */}
       </Box>
       <Box sx={{ marginTop: "2rem" }}>
         <Typography component="p">
