@@ -16,7 +16,7 @@ function GenresPage() {
   const { persons, isPersonsLoading } = usePersons();
   const { deletePerson } = useDeletePerson();
   return (
-    <PageProvider title="Жанры">
+    <PageProvider title="Персоны">
       <Head>
         <title>Люди</title>
       </Head>

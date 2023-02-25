@@ -113,7 +113,7 @@ export function MultiselectModal<T>({
         }}
       >
         <SearchField
-          placeholder="Поиск категории"
+          placeholder="Поиск"
           onSearch={setSearch}
           onChange={(e) => setSearch(e.target.value)}
           autoFocus

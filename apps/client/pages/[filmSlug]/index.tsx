@@ -174,7 +174,7 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
         <Box sx={{ maxWidth: 300 }}>
           <ListItem disablePadding>
             <ListItemText
-              primary="Год (NI)"
+              primary="Год"
               secondary={
                 film ? (
                   film.year
@@ -223,7 +223,7 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
             gap: "1rem",
           }}
         >
-          <List>
+          <List disablePadding>
             <ListItem disablePadding>
               <ListItemText primary="Жанры" />
             </ListItem>
@@ -242,7 +242,7 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
                 ))}
           </List>
           {Object.entries(personsByRole).map(([roleName, filmPersons]) => (
-            <List key={roleName}>
+            <List key={roleName} disablePadding>
               <ListItem disablePadding>
                 <ListItemText primary={roleName} />
               </ListItem>
