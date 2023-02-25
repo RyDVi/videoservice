@@ -1,4 +1,5 @@
 import { Box, Paper, PaperProps } from "@mui/material";
+import React from "react";
 
 interface ContentContainerProps extends PaperProps {}
 

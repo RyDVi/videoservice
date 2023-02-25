@@ -66,7 +66,8 @@ const CardTextPlank = styled(Box)({
 });
 
 const BottomShadowOverlay = styled(Overlay)({
-  background: "linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgb(0 0 0 / 50%) 100%)",
+  background:
+    "linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgb(0 0 0 / 50%) 100%)",
 });
 
 interface FilmCardProps extends CardProps {
@@ -84,7 +85,15 @@ const FilmCard: React.FC<FilmCardProps> = ({ image, name, ...props }) => {
       onMouseLeave={() => setIsShowOverlay(false)}
     >
       <CardActionArea sx={{ height: 1 }}>
-        <CardMedia component="img" image={image} sx={{ height: 1, width: 1 }} />
+        <CardMedia
+          component="img"
+          image={image}
+          sx={{
+            height: 1,
+            width: 1,
+            backgroundColor: 'transparent',
+          }}
+        />
         <BottomShadowOverlay />
         <CardTextPlank>
           <Typography variant="h6">{name}</Typography>

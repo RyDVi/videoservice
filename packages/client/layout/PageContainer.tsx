@@ -1,4 +1,5 @@
 import { Container, ContainerProps } from "@mui/material";
+import React from "react";
 import { PageContent } from "./PageContent";
 
 interface AppPageProps extends ContainerProps {
