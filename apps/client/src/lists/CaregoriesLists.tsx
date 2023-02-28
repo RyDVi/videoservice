@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Genre } from "@modules/api";
 import { CodesOfCountry, COUNTRIES_MAP } from "@modules/constants";
 import {
   Box,

@@ -25,11 +25,11 @@ const FilmGridHome: React.FC<{ films?: Film[]; loading?: boolean }> = ({
 };
 export default function Home() {
   const { films: serials, isFilmsLoading: isSerialsLoading } = useFilms({
-    category: "сериалы",
+    category: "сериалы", page_size: 10
   });
-  const { films, isFilmsLoading } = useFilms({ category: "фильмы" });
+  const { films, isFilmsLoading } = useFilms({ category: "фильмы", page_size: 10 });
   const { films: multfilms, isFilmsLoading: isMultfilmsLoading } = useFilms({
-    category: "мультфильмы",
+    category: "мультфильмы", page_size: 10
   });
 
   return (

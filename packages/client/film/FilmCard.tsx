@@ -62,12 +62,16 @@ const CardTextPlank = styled(Box)({
   left: "0",
   width: "100%",
   textAlign: "center",
-  height: "20%",
+  height: "30%",
+  padding: '1rem'
 });
 
-const BottomShadowOverlay = styled(Overlay)({
-  background:
-    "linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgb(0 0 0 / 50%) 100%)",
+const BottomShadowOverlay = styled(Overlay)(({ theme }) => {
+  const shadow =
+    theme.palette.mode === "dark"
+      ? "linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgb(0 0 0 / 50%) 100%)"
+      : "linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgb(255 255 255 / 50%) 100%)";
+  return { background: shadow };
 });
 
 interface FilmCardProps extends CardProps {
@@ -91,7 +95,7 @@ const FilmCard: React.FC<FilmCardProps> = ({ image, name, ...props }) => {
           sx={{
             height: 1,
             width: 1,
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
           }}
         />
         <BottomShadowOverlay />
