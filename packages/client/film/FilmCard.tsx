@@ -47,7 +47,7 @@ const InteractableOverlay: React.FC<
   return (
     <Overlay
       sx={{
-        backgroundColor: "#00000066",
+        backgroundColor: "#000000AA",
         transition: `opacity ${timeout / 10}ms`,
         opacity: Number(open),
       }}
@@ -63,7 +63,7 @@ const CardTextPlank = styled(Box)({
   width: "100%",
   textAlign: "center",
   height: "30%",
-  padding: '1rem'
+  padding: "1rem",
 });
 
 const BottomShadowOverlay = styled(Overlay)(({ theme }) => {
@@ -77,9 +77,15 @@ const BottomShadowOverlay = styled(Overlay)(({ theme }) => {
 interface FilmCardProps extends CardProps {
   image?: string;
   name: string;
+  shortDescription: string;
 }
 
-const FilmCard: React.FC<FilmCardProps> = ({ image, name, ...props }) => {
+const FilmCard: React.FC<FilmCardProps> = ({
+  image,
+  name,
+  shortDescription,
+  ...props
+}) => {
   const [isShowOverlay, setIsShowOverlay] = React.useState(false);
   return (
     <Card
@@ -103,10 +109,21 @@ const FilmCard: React.FC<FilmCardProps> = ({ image, name, ...props }) => {
           <Typography variant="h6">{name}</Typography>
         </CardTextPlank>
         <InteractableOverlay open={isShowOverlay}>
-          <Box sx={{ display: "flex", height: 1, width: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: 1,
+              width: 1,
+              p: 1,
+            }}
+          >
+            <Typography component="p" sx={{ flex: 0.7 }}>
+              {shortDescription}
+            </Typography>
             <PlayCircleOutlineIcon
               color="primary"
-              sx={{ margin: "auto", fontSize: "5rem" }}
+              sx={{ margin: "auto", fontSize: "5rem", flex: 0.3 }}
             />
           </Box>
         </InteractableOverlay>

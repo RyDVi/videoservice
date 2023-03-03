@@ -28,7 +28,11 @@ export const FilmsGrid: React.FC<FilmsGrid> = ({ films, toFilm }) => (
     {films.map((film) => (
       <FilmCardContainer key={film.id}>
         <Link href={toFilm(film)}>
-          <FilmCard image={film.image} name={film.name} />
+          <FilmCard
+            image={film.image}
+            name={film.name}
+            shortDescription={film.description_short}
+          />
         </Link>
       </FilmCardContainer>
     ))}

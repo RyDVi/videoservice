@@ -21,6 +21,7 @@ const FilmCategoryBlock: React.FC<BoxProps & FilmCategoryBlockProps> = ({
         textDecoration: "none",
         color: "inherit",
         display: "flex",
+        alignItems: "center",
         ":hover >*": { opacity: 1 },
       }}
     >
