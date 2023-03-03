@@ -25,29 +25,29 @@ const FilmGridHome: React.FC<{ films?: Film[]; loading?: boolean }> = ({
 };
 export default function Home() {
   const { films: serials, isFilmsLoading: isSerialsLoading } = useFilms({
-    category: "сериалы", page_size: 10
+    category: "сериалы",
+    page_size: 10,
   });
-  const { films, isFilmsLoading } = useFilms({ category: "фильмы", page_size: 10 });
+  const { films, isFilmsLoading } = useFilms({
+    category: "фильмы",
+    page_size: 10,
+  });
   const { films: multfilms, isFilmsLoading: isMultfilmsLoading } = useFilms({
-    category: "мультфильмы", page_size: 10
+    category: "мультфильмы",
+    page_size: 10,
   });
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box sx={{ padding: 3, display: "grid", gap: "5rem" }}>
       <FilmCategoryBlock
         categoryName="Фильмы"
         categoryHref={paths.category({ category: "фильмы" })}
-        sx={{ padding: 1 }}
       >
-        <FilmGridHome
-          films={films?.results || []}
-          loading={isFilmsLoading}
-        />
+        <FilmGridHome films={films?.results || []} loading={isFilmsLoading} />
       </FilmCategoryBlock>
       <FilmCategoryBlock
         categoryName="Сериалы"
         categoryHref={paths.category({ category: "Сериалы" })}
-        sx={{ padding: 1 }}
       >
         <FilmGridHome
           films={serials?.results || []}
@@ -57,7 +57,6 @@ export default function Home() {
       <FilmCategoryBlock
         categoryName="Мультфильмы"
         categoryHref={paths.category({ category: "Мультфильмы" })}
-        sx={{ padding: 1 }}
       >
         <FilmGridHome
           films={multfilms?.results || []}

@@ -24,7 +24,7 @@ const FilmCategoryBlock: React.FC<BoxProps & FilmCategoryBlockProps> = ({
         ":hover >*": { opacity: 1 },
       }}
     >
-      <Typography component="h3" sx={{ fontSize: 20 }}>
+      <Typography component="h3" variant="h4">
         {categoryName}
       </Typography>
       <KeyboardArrowRightIcon
