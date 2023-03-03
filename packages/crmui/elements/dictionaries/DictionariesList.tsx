@@ -80,7 +80,7 @@ export function DictionariesList<D extends Dictionary>({
   itemLink,
 }: DictionariesListProps<D>) {
   const handleSearch = React.useCallback(
-    (search, data) =>
+    (search: string, data: D[]) =>
       data.filter((c) => c.name.toLowerCase().includes(search.toLowerCase())),
     []
   );

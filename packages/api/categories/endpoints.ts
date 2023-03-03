@@ -7,6 +7,7 @@ class CategoriesEndpoint extends SaveEndpoint<Category, CategoriesFilters> {
     return {
       id: "",
       name: "",
+      slug: "",
       ...props,
     };
   }

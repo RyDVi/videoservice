@@ -1,3 +1,3 @@
-import { User } from '../users';
+import { User } from "../users/types";
 
 export interface Customer extends User {}

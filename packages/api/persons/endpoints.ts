@@ -7,7 +7,6 @@ class PersonsEndpoint extends SaveEndpoint<Person> {
       id: "",
       firstname: "",
       lastname: "",
-      role: "",
       ...props,
     };
   }

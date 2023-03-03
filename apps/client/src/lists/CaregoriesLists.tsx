@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import { styled } from "@mui/material";
 import { CodesOfCountry, COUNTRIES_MAP } from "@modules/constants";
 import {
   Box,
@@ -27,14 +27,14 @@ export const CategoriesTooltip = styled(
 
 const CategoriesContainer = styled(Box, {
   shouldForwardProp: (prop) => prop !== "density",
-})<{ density?: boolean }>((props) => ({
+})<{ density?: boolean }>(({ density, theme }) => ({
   "& .MuiListItemButton-root": {
-    ...(props.density && { padding: "2px 6px" }),
+    ...(density && { padding: "2px 6px" }),
   },
   "& .MuiListSubheader-root": {
-    ...(props.density && { padding: "0px 6px", lineHeight: "36px" }),
+    ...(density && { padding: "0px 6px", lineHeight: "36px" }),
     backgroundColor: "transparent",
-    color: props.theme.palette.primary?.main,
+    color: theme.palette.primary?.main,
   },
 }));
 interface CommonCategoriesProps {

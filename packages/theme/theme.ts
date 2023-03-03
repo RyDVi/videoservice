@@ -1,8 +1,13 @@
-import { createTheme, PaletteOptions, SimplePaletteColorOptions, Theme } from "@mui/material/styles";
+import {
+  createTheme,
+  PaletteOptions,
+  SimplePaletteColorOptions,
+} from "@mui/material/styles";
 import { red, grey } from "@mui/material/colors";
 
 interface DefaultPaletteOptions extends PaletteOptions {
   primary?: SimplePaletteColorOptions;
+  error?: SimplePaletteColorOptions;
 }
 declare module "@mui/material/styles" {
   interface Theme {
@@ -16,7 +21,6 @@ declare module "@mui/material/styles" {
     };
   }
 }
-
 
 const commonPalette: PaletteOptions = {
   primary: {

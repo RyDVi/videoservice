@@ -41,7 +41,8 @@ export function getArrayFunctions<T>(
     let newItems = items;
     if (uniqueOnly) {
       const existing = new Set(arrItems);
-      newItems = [...new Set(items)].filter((x) => !existing.has(x));
+      // TOOD: Нужно проверить это. До этого это было [...new Set(items)]
+      newItems = Array.from(new Set(items)).filter((x) => !existing.has(x));
     }
     change([...arrItems, ...newItems]);
   };
