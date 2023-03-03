@@ -30,10 +30,10 @@ export default function CategoryPage() {
       <FilmsGrid films={films?.results || []} toFilm={buildHrefToFilm} />
       <Box sx={{ justifyContent: "center", display: "flex", p: 1 }}>
         <Pagination
-          count={Math.ceil(films.count / COUNT_FILMS_PER_PAGE)}
+          count={Math.ceil(films.count / page_size)}
           page={page}
           onChange={(_, page) => updatePage(page)}
-          size='large'
+          size="large"
         />
       </Box>
     </Container>

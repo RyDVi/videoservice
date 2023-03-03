@@ -104,6 +104,7 @@ function usePageBreadcrumbs() {
     [paths.categoryYears({ category })]: { text: "Год", disabled: true },
     [paths.feedback({})]: { text: "Обратная связь", disabled: true },
     [paths.copyright({})]: { text: "Правообладателям", disabled: true },
+    [paths.baseSearch({})]: { text: "Поиск", disabled: true },
   });
   return breadcrumbs;
 }

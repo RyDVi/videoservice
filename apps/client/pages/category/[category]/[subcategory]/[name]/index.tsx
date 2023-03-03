@@ -1,24 +1,28 @@
 import { useFilms } from "@modules/api";
-import { FilmsGrid, FilmsGridLoader } from "@modules/client";
-import { useRouter } from "next/router";
-import { AppPage } from "../../src/AppPage";
-import { useFilmMove } from "../../src/hooks";
-import { NotFoundFilms } from "@modules/client/notfound/NotFoundFilms";
-import { COUNT_FILMS_PER_PAGE } from "../../src/constants";
+import { FilmsGrid, FilmsGridLoader, NotFoundFilms } from "@modules/client";
 import { usePage } from "@modules/nextjs";
 import { Box, Container, Pagination } from "@mui/material";
+import { useRouter } from "next/router";
+import React from "react";
+import { AppPage } from "../../../../../src/AppPage";
+import { COUNT_FILMS_PER_PAGE } from "../../../../../src/constants";
+import { useFilmMove } from "../../../../../src/hooks";
 
-export default function SearchPage() {
+export default function CategoryGenrePage() {
   const [page, updatePage, page_size] = usePage({
     pageSize: COUNT_FILMS_PER_PAGE,
   });
   const router = useRouter();
-  const { buildHrefToFilm } = useFilmMove();
+  const category = router.query.category as string;
+  const name = router.query.name as string;
+  const subcategoryName = router.query.subcategory as string;
   const { films, isFilmsLoading } = useFilms({
-    search: router.query.searchText as string,
+    category,
+    [subcategoryName]: name,
     page_size,
     page,
   });
+  const { buildHrefToFilm } = useFilmMove();
   if (isFilmsLoading) {
     return <FilmsGridLoader />;
   }
@@ -27,7 +31,7 @@ export default function SearchPage() {
   }
   return (
     <Container maxWidth="lg" sx={{ p: 1 }}>
-      <FilmsGrid films={films.results} toFilm={buildHrefToFilm} />
+      <FilmsGrid films={films?.results || []} toFilm={buildHrefToFilm} />
       <Box sx={{ justifyContent: "center", display: "flex", p: 1 }}>
         <Pagination
           count={Math.ceil(films.count / page_size)}
@@ -40,6 +44,6 @@ export default function SearchPage() {
   );
 }
 
-SearchPage.getLayout = function (page: React.ReactElement) {
+CategoryGenrePage.getLayout = function (page: React.ReactElement) {
   return <AppPage>{page}</AppPage>;
 };
