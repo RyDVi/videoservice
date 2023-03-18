@@ -1,9 +1,12 @@
 import {
-  PageHeader,
   PageContainer,
   SearchField,
-  MenuSidebarProvider,
+  SidebarProvider,
   SidebarCloser,
+  UpTabletScreen,
+  DownTabletScreen,
+  Sidebar,
+  SidebarToggler,
 } from "@modules/client";
 import { LogoSvg } from "@modules/client/svg";
 import {
@@ -16,52 +19,91 @@ import {
   Link as MuiLink,
   Paper,
   Breadcrumbs,
+  styled,
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
 import { Categories } from "./Categories";
 import { useSearch } from "./hooks";
-import { MobileMenu } from "./MobileMenuContent";
+import { SidebarContent } from "./SidebarContent";
 import * as paths from "./paths";
 import { ThemeToggleButton } from "./theme";
+
+const PageHeaderContainer = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.pageBackground?.main,
+  boxShadow: "0 1px 5px 0 rgb(0 0 0 / 15%)",
+  display: "flex",
+  alignItems: "center",
+  padding: "0 1rem",
+  position: "sticky",
+  top: 0,
+  zIndex: 10,
+}));
+
+interface AppProps {
+  logo?: React.ReactElement;
+  actions?: React.ReactElement;
+  search?: React.ReactElement;
+  sidebarButton?: React.ReactNode;
+}
+
+const PageHeader: React.FC<AppProps> = ({
+  logo,
+  search,
+  actions,
+  sidebarButton,
+  ...props
+}) => (
+  <PageHeaderContainer {...props}>
+    <Box sx={{ height: 70 }}>{logo}</Box>
+    <UpTabletScreen>
+      <Box sx={{ display: "flex", alignItems: "center" }}>{actions}</Box>
+      <Box sx={{ marginLeft: "auto" }}>{search}</Box>
+    </UpTabletScreen>
+    <DownTabletScreen>
+      <Box sx={{ marginLeft: "auto" }}>{sidebarButton}</Box>
+    </DownTabletScreen>
+  </PageHeaderContainer>
+);
 
 interface PageFooterProps {
   logo: React.ReactNode;
 }
 
-const PageFooter: React.FC<PageFooterProps> = ({ logo }) => {
-  return (
-    <Paper
-      component="footer"
+const PageFooter: React.FC<PageFooterProps> = ({ logo }) => (
+  <Paper
+    component="footer"
+    sx={{
+      p: 1,
+      display: "flex",
+      alignItems: "center",
+      flexWrap: "wrap",
+      marginTop: "auto",
+    }}
+    elevation={1}
+  >
+    <Box sx={{ height: "60px" }}>{logo}</Box>
+    <Box
       sx={{
-        p: 1,
         display: "flex",
-        alignItems: "center",
+        gap: 2,
         flexWrap: "wrap",
-        marginTop: "auto",
+        alignItems: "center",
+        justifyContent: "center",
       }}
-      elevation={1}
     >
-      <Box sx={{ height: "60px" }}>{logo}</Box>
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <MuiLink component={Link} href={paths.feedback({})} underline="hover">
-          <Typography>Обратная связь</Typography>
-        </MuiLink>
-        <MuiLink component={Link} href={paths.copyright({})} underline="hover">
-          <Typography>Правообладателям</Typography>
-        </MuiLink>
-      </Box>
-    </Paper>
-  );
-};
+      <MuiLink component={Link} href={paths.feedback({})} underline="hover">
+        <Typography>Обратная связь</Typography>
+      </MuiLink>
+      <MuiLink component={Link} href={paths.copyright({})} underline="hover">
+        <Typography>Правообладателям</Typography>
+      </MuiLink>
+    </Box>
+  </Paper>
+);
+
+const AppPageFooter = React.memo(PageFooter)
 
 const PageBreadcrumbs: React.FC<{
   breadcrumbs: UseRouterBreadcrumbsResult[];
@@ -117,8 +159,11 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
   const { search } = useSearch();
   const pageBreadcrumbs = usePageBreadcrumbs();
   return (
-    <MenuSidebarProvider>
+    <SidebarProvider>
       <SidebarCloser />
+      <Sidebar>
+        <SidebarContent />
+      </Sidebar>
       <PageContainer
         sx={{ minHeight: "100vh", height: "100vh" }}
         header={
@@ -135,14 +180,14 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
               </>
             }
             search={<SearchField onSearch={search} />}
-            sidebarContent={<MobileMenu />}
+            sidebarButton={<SidebarToggler />}
           />
         }
         breadcrumbs={<PageBreadcrumbs breadcrumbs={pageBreadcrumbs} />}
-        footer={<PageFooter logo={<LogoSvg />} />}
+        footer={<AppPageFooter logo={<LogoSvg />} />}
       >
         {children}
       </PageContainer>
-    </MenuSidebarProvider>
+    </SidebarProvider>
   );
 };

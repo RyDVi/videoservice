@@ -1,45 +1,32 @@
-import { useCategoriesWithDicts, useGenres } from "@modules/api";
+import { useCategoriesWithDicts } from "@modules/api";
 import { SearchField } from "@modules/client";
 import { CodesOfCountry } from "@modules/constants";
 import {
   Box,
-  BoxProps,
   Divider,
   List,
   ListItemButton,
   ListItemText,
+  styled,
 } from "@mui/material";
 import React from "react";
 import { useSearch } from "./hooks";
-import { ThemeToggleButton } from "../../../packages/theme";
+import { ThemeToggleButton } from "@modules/theme";
 import { CategoriesLists } from "./lists";
 import Link from "next/link";
 import * as paths from "./paths";
 
-interface MobileMenuHeaderProps extends BoxProps {}
+const SidebarHeader = styled(Box)({
+  width: '100%',
+  padding: '1rem',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
 
-const MobileMenuHeader: React.FC<MobileMenuHeaderProps> = ({ ...props }) => {
-  return (
-    <Box
-      sx={{
-        width: 1,
-        padding: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      {...props}
-    />
-  );
-};
+const SidebarContainer = styled(Box)({ padding: 1 });
 
-interface MobileMenuContent extends BoxProps {}
-
-const MobileMenuContent: React.FC<MobileMenuContent> = (props) => (
-  <Box sx={{ padding: 1 }} {...props} />
-);
-
-export const MobileMenu: React.FC = () => {
+export const SidebarContent: React.FC = () => {
   const { search } = useSearch();
   const { categories } = useCategoriesWithDicts({});
   const filmCategory = React.useMemo(
@@ -56,12 +43,12 @@ export const MobileMenu: React.FC = () => {
   );
   return (
     <Box sx={{ width: "90vw" }}>
-      <MobileMenuHeader>
+      <SidebarHeader>
         <SearchField onSearch={search} />
         <ThemeToggleButton />
-      </MobileMenuHeader>
+      </SidebarHeader>
       <Divider />
-      <MobileMenuContent>
+      <SidebarContainer>
         <List>
           <ListItemButton
             LinkComponent={Link}
@@ -111,7 +98,7 @@ export const MobileMenu: React.FC = () => {
             />
           )}
         </List>
-      </MobileMenuContent>
+      </SidebarContainer>
     </Box>
   );
 };

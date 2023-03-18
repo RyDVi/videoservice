@@ -1,12 +1,9 @@
 import {
   Autocomplete,
-  AutocompleteProps,
   IconButton,
   InputBase,
   InputBaseProps,
   Paper,
-  TextField,
-  TextFieldProps,
 } from "@mui/material";
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";

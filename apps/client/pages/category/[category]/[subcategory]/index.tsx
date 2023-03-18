@@ -6,7 +6,6 @@ import * as paths from "../../../../src/paths";
 export default function SubcategoryPage() {
   const router = useRouter();
   const category = router.query.category as string;
-  console.log(category);
   React.useEffect(() => {
     if(!category){
         return

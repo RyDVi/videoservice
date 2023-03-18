@@ -1,5 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import React from "react";
 
 interface MediaScreen {
   children: React.ReactNode;

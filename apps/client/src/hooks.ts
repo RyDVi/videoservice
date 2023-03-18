@@ -13,22 +13,6 @@ export function useSearch() {
   return { search };
 }
 
-export function useCategoryMove() {
-  const router = useRouter();
-
-  const moveToCategory = React.useCallback(
-    (category: string) => router.push(paths.category({ category })),
-    [router]
-  );
-
-  const buildCategoryLink = React.useCallback(
-    (category: string) => paths.category({ category }),
-    []
-  );
-
-  return { moveToCategory, buildCategoryLink };
-}
-
 export function useFilmMove() {
   const router = useRouter();
 
