@@ -51,7 +51,7 @@ export const SidebarContent: React.FC = () => {
       <SidebarContainer>
         <List>
           <ListItemButton
-            LinkComponent={Link}
+            component={Link}
             href={paths.category({ category: "фильмы" })}
           >
             <ListItemText primary="Фильмы" />
@@ -67,7 +67,7 @@ export const SidebarContent: React.FC = () => {
           )}
           <Divider />
           <ListItemButton
-            LinkComponent={Link}
+            component={Link}
             href={paths.category({ category: "сериалы" })}
           >
             <ListItemText primary="Сериалы" />
@@ -83,7 +83,7 @@ export const SidebarContent: React.FC = () => {
           )}
           <Divider />
           <ListItemButton
-            LinkComponent={Link}
+            component={Link}
             href={paths.category({ category: "мультфильмы" })}
           >
             <ListItemText primary="Мультфильмы" />

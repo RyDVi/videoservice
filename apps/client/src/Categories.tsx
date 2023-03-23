@@ -1,10 +1,14 @@
-import { useCategoriesWithDicts, useGenres } from "@modules/api";
+import { useCategoriesWithDicts } from "@modules/api";
 import {
   Box,
   Button,
   ButtonProps,
   SimplePaletteColorOptions,
   Typography,
+  Tooltip,
+  tooltipClasses,
+  TooltipProps,
+  styled,
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,7 +16,8 @@ import React from "react";
 import * as paths from "./paths";
 import { useThemeControl } from "../../../packages/theme";
 import { CodesOfCountry } from "@modules/constants/country";
-import { CategoriesLists, CategoriesTooltip } from "./lists";
+import { CategoriesLists } from "./lists";
+import { useForceUpdate } from "@modules/hooks";
 
 interface CategoryButtonProps extends ButtonProps {
   href: string;
@@ -21,6 +26,7 @@ interface CategoryButtonProps extends ButtonProps {
 const CategoryButton: React.FC<CategoryButtonProps> = ({
   href,
   children,
+  onClick,
   ...props
 }) => {
   const router = useRouter();
@@ -38,6 +44,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
           ":hover": { color: activeColor, backgroundColor: "transparent" },
           display: "inline-block", // временный хак для убирания подчеркивания
         }}
+        onClick={onClick}
         {...props}
       >
         <Typography variant="h6" component="span">
@@ -47,6 +54,14 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
     </Link>
   );
 };
+
+const CategoriesTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 800,
+  },
+});
 
 export const Categories: React.FC = () => {
   const { categories } = useCategoriesWithDicts({});
@@ -62,18 +77,21 @@ export const Categories: React.FC = () => {
     () => categories?.find((c) => c.slug.toLowerCase() === "мультфильмы"),
     [categories]
   );
-  const countries = React.useMemo(() => ["RU"] as CodesOfCountry[], []);
+  // Хак для предотвращения исчезания поповера
+  const [refreshKey, forceUpdate] = useForceUpdate();
   return (
     <>
       {filmCategory && (
         <CategoriesTooltip
           title={
             <CategoriesLists
+              key={refreshKey}
               category="фильмы"
               genres={filmCategory.genres}
               years={filmCategory.years}
               countries={filmCategory.countries as CodesOfCountry[]}
               density
+              onClick={forceUpdate}
             />
           }
         >
@@ -88,16 +106,18 @@ export const Categories: React.FC = () => {
         <CategoriesTooltip
           title={
             <CategoriesLists
-              category="сериал"
+              key={refreshKey}
+              category="сериалы"
               genres={serialsCategory.genres}
               years={serialsCategory.years}
               countries={serialsCategory.countries as CodesOfCountry[]}
               density
+              onClick={forceUpdate}
             />
           }
         >
           <Box>
-            <CategoryButton href={paths.category({ category: "сериал" })}>
+            <CategoryButton href={paths.category({ category: "сериалы" })}>
               Сериалы
             </CategoryButton>
           </Box>
@@ -107,11 +127,13 @@ export const Categories: React.FC = () => {
         <CategoriesTooltip
           title={
             <CategoriesLists
+              key={refreshKey}
               category="мультфильмы"
               genres={multfilmsCategory.genres}
               years={multfilmsCategory.years}
               countries={multfilmsCategory.countries as CodesOfCountry[]}
               density
+              onClick={forceUpdate}
             />
           }
         >

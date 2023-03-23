@@ -44,7 +44,7 @@ export function SimpleList<D extends { id: string }>({
       <List>
         {filteredDicts.map((data) => (
           <ListItem key={data.id}>
-            <ListItemButton LinkComponent={Link} href={itemLink(data)}>
+            <ListItemButton component={Link} href={itemLink(data)}>
               <ListItemText
                 primary={primaryText(data)}
                 secondary={secondaryText && secondaryText(data)}

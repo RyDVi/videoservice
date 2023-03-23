@@ -11,7 +11,7 @@ export const DictionaryPanel: React.FC<DictionaryPanelProps> = ({
 }) => {
   return (
     <Box>
-      <Button LinkComponent={Link} href={createLink}>
+      <Button component={Link} href={createLink}>
         Создать
       </Button>
     </Box>

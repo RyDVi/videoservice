@@ -7,23 +7,10 @@ import {
   ListItemButton,
   ListItemText,
   ListSubheader,
-  Tooltip,
-  tooltipClasses,
-  TooltipProps,
 } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import * as paths from "../paths";
-
-export const CategoriesTooltip = styled(
-  ({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  )
-)({
-  [`& .${tooltipClasses.tooltip}`]: {
-    maxWidth: 800,
-  },
-});
 
 const CategoriesContainer = styled(Box, {
   shouldForwardProp: (prop) => prop !== "density",
@@ -43,6 +30,7 @@ interface CommonCategoriesProps {
   countries: CodesOfCountry[];
   density?: boolean;
   category: string;
+  onClick?: () => void;
 }
 
 export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
@@ -51,6 +39,7 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
   countries,
   density = false,
   category,
+  onClick
 }) => {
   const genresByColumns = React.useMemo(() => {
     const countGenresInColumn = 10;
@@ -70,8 +59,9 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
             {years.map((year) => (
               <ListItemButton
                 key={year}
-                LinkComponent={Link}
+                component={Link}
                 href={paths.categoryYear({ category, year: String(year) })}
+                onClick={onClick}
               >
                 <ListItemText primary={year} />
               </ListItemButton>
@@ -83,8 +73,9 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
             {countries.map((country) => (
               <ListItemButton
                 key={country}
-                LinkComponent={Link}
+                component={Link}
                 href={paths.categoryCountry({ category, country })}
+                onClick={onClick}
               >
                 <ListItemText primary={COUNTRIES_MAP[country]} />
               </ListItemButton>
@@ -106,6 +97,7 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
                   key={genre}
                   component={Link}
                   href={paths.categoryGenre({ category, genre })}
+                  onClick={onClick}
                 >
                   <ListItemText primary={genre} />
                 </ListItemButton>
