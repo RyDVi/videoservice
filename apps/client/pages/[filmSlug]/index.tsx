@@ -36,6 +36,7 @@ import { NotFound, NotFoundVideoFiles } from "@modules/client/notfound";
 import { styled } from "@mui/material/styles";
 import Script from "next/script";
 import { formatFullName } from "@modules/utils";
+import Head from "next/head";
 
 const ratingFormatter = (rating: number) => rating.toFixed(1);
 const contentRatingFormatter = (contentRating: number) => `${contentRating}+`;
@@ -375,6 +376,9 @@ export default function FilmPage() {
   }
   return (
     <Container maxWidth="lg">
+      <Head>
+        <title>{film?.name} смотреть онлайн</title>
+      </Head>
       <Script src="/playerjs.js" type="text/javascript" async />
       <DescriptionContainer>
         {film?.image ? (

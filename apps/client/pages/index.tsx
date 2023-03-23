@@ -9,6 +9,7 @@ import * as paths from "../src/paths";
 import { AppPage } from "../src/AppPage";
 import { useFilmMove } from "../src/hooks";
 import { Box } from "@mui/material";
+import Head from "next/head";
 
 const FilmGridHome: React.FC<{ films?: Film[]; loading?: boolean }> = ({
   films,
@@ -39,6 +40,9 @@ export default function Home() {
 
   return (
     <Box sx={{ padding: 3, display: "grid", gap: "5rem" }}>
+      <Head>
+        <title>Фильмы и сериалы смотреть онлайн</title>
+      </Head>
       <FilmCategoryBlock
         categoryName="Фильмы"
         categoryHref={paths.category({ category: "фильмы" })}

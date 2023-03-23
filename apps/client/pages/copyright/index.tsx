@@ -1,10 +1,14 @@
 import { Box, Link, Typography } from "@mui/material";
+import Head from "next/head";
 import { AppPage } from "../../src/AppPage";
 import { EmailLink } from "../../src/Contacts";
 
 export default function CopyrightPage() {
   return (
     <Box sx={{ p: 3 }}>
+      <Head>
+        <title>Правообладателям</title>
+      </Head>
       <Typography component="h1" variant="h3">
         Правообладателям
       </Typography>
