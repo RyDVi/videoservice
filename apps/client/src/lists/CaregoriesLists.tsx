@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { ListItemButtonProps, styled } from "@mui/material";
 import { CodesOfCountry, COUNTRIES_MAP } from "@modules/constants";
 import {
   Box,
@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import * as paths from "../paths";
+import { useRouter } from "next/router";
 
 const CategoriesContainer = styled(Box, {
   shouldForwardProp: (prop) => prop !== "density",
@@ -24,6 +25,29 @@ const CategoriesContainer = styled(Box, {
     color: theme.palette.primary?.main,
   },
 }));
+
+const CategoryListItemText = styled(ListItemText, {
+  shouldForwardProp: (prop) => prop !== "isActive",
+})<{ isActive?: boolean }>(
+  ({ theme, isActive }) => isActive && { color: theme.palette.primary?.light }
+);
+
+export const CategoryListItemButton: React.FC<
+  ListItemButtonProps & { href: string; primaryText: React.ReactNode }
+> = ({ href, primaryText, ...props }) => {
+  const router = useRouter();
+  const isActive = React.useCallback(
+    (href: string) => decodeURI(router.asPath).includes(href) || undefined,
+    [router.asPath]
+  );
+  return (
+    // TODO: пофиксить any
+    <ListItemButton {...props as any} component={Link} href={href}>
+      <CategoryListItemText primary={primaryText} isActive={isActive(href)} />
+    </ListItemButton>
+  );
+};
+
 interface CommonCategoriesProps {
   genres: string[];
   years: number[];
@@ -39,7 +63,7 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
   countries,
   density = false,
   category,
-  onClick
+  onClick,
 }) => {
   const genresByColumns = React.useMemo(() => {
     const countGenresInColumn = 10;
@@ -57,28 +81,24 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
         <Grid>
           <List dense subheader={<ListSubheader>По годам</ListSubheader>}>
             {years.map((year) => (
-              <ListItemButton
+              <CategoryListItemButton
                 key={year}
-                component={Link}
                 href={paths.categoryYear({ category, year: String(year) })}
                 onClick={onClick}
-              >
-                <ListItemText primary={year} />
-              </ListItemButton>
+                primaryText={year}
+              />
             ))}
           </List>
         </Grid>
         <Grid>
           <List dense subheader={<ListSubheader>По странам</ListSubheader>}>
             {countries.map((country) => (
-              <ListItemButton
+              <CategoryListItemButton
                 key={country}
-                component={Link}
                 href={paths.categoryCountry({ category, country })}
                 onClick={onClick}
-              >
-                <ListItemText primary={COUNTRIES_MAP[country]} />
-              </ListItemButton>
+                primaryText={COUNTRIES_MAP[country]}
+              />
             ))}
           </List>
         </Grid>
@@ -93,14 +113,12 @@ export const CategoriesLists: React.FC<CommonCategoriesProps> = ({
               }
             >
               {columnOfGenres.map((genre) => (
-                <ListItemButton
+                <CategoryListItemButton
                   key={genre}
-                  component={Link}
                   href={paths.categoryGenre({ category, genre })}
                   onClick={onClick}
-                >
-                  <ListItemText primary={genre} />
-                </ListItemButton>
+                  primaryText={genre}
+                />
               ))}
             </List>
           </Grid>

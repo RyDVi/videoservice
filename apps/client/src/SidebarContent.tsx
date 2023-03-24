@@ -12,19 +12,23 @@ import {
 import React from "react";
 import { useSearch } from "./hooks";
 import { ThemeToggleButton } from "@modules/theme";
-import { CategoriesLists } from "./lists";
-import Link from "next/link";
+import { CategoriesLists, CategoryListItemButton } from "./lists";
 import * as paths from "./paths";
 
 const SidebarHeader = styled(Box)({
-  width: '100%',
-  padding: '1rem',
+  width: "100%",
+  padding: "1rem",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 });
 
 const SidebarContainer = styled(Box)({ padding: 1 });
+
+const SidebarListContent = styled(List)({
+  ".MuiListItemButton-root, >.MuiBox-root": { padding: '6px 12px' },
+  ">.MuiListItemButton-root>.MuiListItemText-root": { paddingLeft: 6 },
+});
 
 export const SidebarContent: React.FC = () => {
   const { search } = useSearch();
@@ -49,13 +53,11 @@ export const SidebarContent: React.FC = () => {
       </SidebarHeader>
       <Divider />
       <SidebarContainer>
-        <List>
-          <ListItemButton
-            component={Link}
+        <SidebarListContent>
+          <CategoryListItemButton
             href={paths.category({ category: "фильмы" })}
-          >
-            <ListItemText primary="Фильмы" />
-          </ListItemButton>
+            primaryText="Фильмы"
+          />
           {filmCategory && (
             <CategoriesLists
               category="фильмы"
@@ -66,12 +68,10 @@ export const SidebarContent: React.FC = () => {
             />
           )}
           <Divider />
-          <ListItemButton
-            component={Link}
+          <CategoryListItemButton
             href={paths.category({ category: "сериалы" })}
-          >
-            <ListItemText primary="Сериалы" />
-          </ListItemButton>
+            primaryText="Сериалы"
+          />
           {serialsCategory && (
             <CategoriesLists
               category="сериал"
@@ -82,12 +82,10 @@ export const SidebarContent: React.FC = () => {
             />
           )}
           <Divider />
-          <ListItemButton
-            component={Link}
+          <CategoryListItemButton
             href={paths.category({ category: "мультфильмы" })}
-          >
-            <ListItemText primary="Мультфильмы" />
-          </ListItemButton>
+            primaryText="Мультфильмы"
+          />
           {multfilmsCategory && (
             <CategoriesLists
               category="мультфильмы"
@@ -97,7 +95,7 @@ export const SidebarContent: React.FC = () => {
               density
             />
           )}
-        </List>
+        </SidebarListContent>
       </SidebarContainer>
     </Box>
   );

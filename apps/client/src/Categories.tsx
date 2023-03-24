@@ -33,13 +33,12 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
   const { theme } = useThemeControl();
   const activeColor = (theme.palette.primary as SimplePaletteColorOptions)
     ?.main;
-
   return (
     <Link href={href}>
       <Button
         sx={{
           color:
-            router.asPath === href ? activeColor : theme.palette.text?.primary,
+            decodeURI(router.asPath).includes(href) ? activeColor : theme.palette.text?.primary,
           textDecoration: "none",
           ":hover": { color: activeColor, backgroundColor: "transparent" },
           display: "inline-block", // временный хак для убирания подчеркивания
