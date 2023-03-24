@@ -28,7 +28,6 @@ import { Categories } from "./Categories";
 import { useSearch } from "./hooks";
 import { SidebarContent } from "./SidebarContent";
 import * as paths from "./paths";
-import { ThemeToggleButton } from "./theme";
 
 const PageHeaderContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.pageBackground?.main,
@@ -175,7 +174,7 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
             }
             actions={
               <>
-                <ThemeToggleButton />
+                {/* <ThemeToggleButton /> */}
                 <Categories />
               </>
             }

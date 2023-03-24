@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useSearch } from "./hooks";
-import { ThemeToggleButton } from "@modules/theme";
 import { CategoriesLists, CategoryListItemButton } from "./lists";
 import * as paths from "./paths";
 
@@ -49,7 +48,7 @@ export const SidebarContent: React.FC = () => {
     <Box sx={{ width: "90vw" }}>
       <SidebarHeader>
         <SearchField onSearch={search} />
-        <ThemeToggleButton />
+        {/* <ThemeToggleButton /> */}
       </SidebarHeader>
       <Divider />
       <SidebarContainer>
