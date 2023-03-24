@@ -1,24 +1,29 @@
 import { Theme } from "@mui/material";
 import React from "react";
 import { useMethods } from "@modules/hooks";
+import { ThemeType } from "./theme";
 
 interface ThemeContextProps {
   theme: Theme;
   toggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
 }
 export const ThemeControlContext = React.createContext<ThemeContextProps>({
   theme: null as any,
   toggleTheme: () => null,
+  setTheme: () => null,
 });
 
 interface ThemePropviderProps {
   children: React.ReactNode;
-  themes: Record<"dark" | "light", Theme>;
+  themes: Record<ThemeType, Theme>;
+  initialTheme: Theme;
 }
 
 export const ThemeControlProvider: React.FC<ThemePropviderProps> = ({
   children,
   themes,
+  initialTheme
 }) => {
   const [state, methods] = useMethods(
     {
@@ -27,8 +32,9 @@ export const ThemeControlProvider: React.FC<ThemePropviderProps> = ({
         theme:
           state.theme.palette.mode === "light" ? themes.dark : themes.light,
       }),
+      setTheme: (state, theme: Theme) => ({ ...state, theme }),
     },
-    { theme: themes.dark }
+    { theme: initialTheme }
   );
   const themeControlValue = React.useMemo(
     () => ({ ...state, ...methods }),

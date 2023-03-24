@@ -2,6 +2,7 @@ import {
   createTheme,
   PaletteOptions,
   SimplePaletteColorOptions,
+  Theme,
 } from "@mui/material/styles";
 import { red, grey } from "@mui/material/colors";
 
@@ -71,3 +72,14 @@ export const darkTheme = createTheme({
     // fontFamily: roboto.style.fontFamily,
   },
 });
+
+export const NAME_THEME_MAP = {
+  light: lightTheme,
+  dark: darkTheme,
+};
+
+export type ThemeType = keyof typeof NAME_THEME_MAP;
+
+export const THEME_NAME_MAP = new Map<Theme, ThemeType>();
+THEME_NAME_MAP.set(lightTheme, "light");
+THEME_NAME_MAP.set(darkTheme, "dark");
