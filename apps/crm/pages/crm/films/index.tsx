@@ -22,7 +22,7 @@ function FilmsPage() {
     () => ({ ...query, page: page + 1, page_size: pageSize }),
     [page, pageSize, query]
   );
-  const { films } = useFilms(filters);
+  const { films, isFilmsLoading } = useFilms(filters);
   const [sortModel, setSortModel] = useGridSortModel();
   useCrmPageTitle("Фильмы");
   return (
@@ -46,6 +46,9 @@ function FilmsPage() {
             onPageChange={setPage}
             onSortModelChange={setSortModel}
             sortModel={sortModel}
+            paginationMode="server"
+            rowCount={films?.count}
+            loading={isFilmsLoading}
           />
         </Box>
       </Paper>
