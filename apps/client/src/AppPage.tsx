@@ -139,23 +139,25 @@ function usePageBreadcrumbs() {
   const category = (router.query.category as string) || "Категория";
   const categories = useDictionariesContext().categoriesWithDicts;
   const genres = useDictionariesContext().genres;
-  const genresBreadcrumbs = React.useMemo(
-    () =>
-      Object.fromEntries(
-        Object.values(categories)
-          .map((category) =>
-            category.genres.map((genreId) => [
-              paths.categoryGenre({
-                category: category.slug,
-                genre: genres[genreId].slug,
-              }),
-              { text: genres[genreId].name },
-            ])
-          )
-          .flat()
-      ),
-    [genres, categories]
-  );
+  const genresBreadcrumbs = React.useMemo(() => {
+    if (!Object.values(genres).length) {
+      // genres может быть ещё не получен, в таком случае выдаст ошибку
+      return {};
+    }
+    return Object.fromEntries(
+      Object.values(categories)
+        .map((category) =>
+          category.genres.map((genreId) => [
+            paths.categoryGenre({
+              category: category.slug,
+              genre: genres[genreId].slug,
+            }),
+            { text: genres[genreId].name },
+          ])
+        )
+        .flat()
+    );
+  }, [genres, categories]);
   const countriesBreadcrumbs = React.useMemo(
     () =>
       Object.fromEntries(
