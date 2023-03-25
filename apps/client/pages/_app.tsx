@@ -9,6 +9,7 @@ import { axiosInstance } from "@modules/api";
 import { NextPage } from "next";
 import { Theme, ThemeLoader, ThemeSaver } from "../src/theme";
 import "../styles/index.css";
+import { DictionariesProvider } from "@modules/stores";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -52,7 +53,9 @@ export default function MyApp(props: MyAppProps) {
             },
           }}
         >
-          {getLayout(<Component {...pageProps} />)}
+          <DictionariesProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </DictionariesProvider>
         </SWRConfig>
       </Theme>
     </CacheProvider>

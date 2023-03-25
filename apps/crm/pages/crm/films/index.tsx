@@ -47,7 +47,7 @@ function FilmsPage() {
             onSortModelChange={setSortModel}
             sortModel={sortModel}
             paginationMode="server"
-            rowCount={films?.count}
+            rowCount={films ? films.count : 0}
             loading={isFilmsLoading}
           />
         </Box>

@@ -28,6 +28,8 @@ import { Categories } from "./Categories";
 import { useSearch } from "./hooks";
 import { SidebarContent } from "./SidebarContent";
 import * as paths from "./paths";
+import { useDictionariesContext } from "@modules/stores";
+import { COUNTRIES_MAP } from "@modules/constants";
 
 const PageHeaderContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.pageBackground?.main,
@@ -102,7 +104,7 @@ const PageFooter: React.FC<PageFooterProps> = ({ logo }) => (
   </Paper>
 );
 
-const AppPageFooter = React.memo(PageFooter)
+const AppPageFooter = React.memo(PageFooter);
 
 const PageBreadcrumbs: React.FC<{
   breadcrumbs: UseRouterBreadcrumbsResult[];
@@ -131,11 +133,53 @@ const PageBreadcrumbs: React.FC<{
   );
 };
 
-//TODO: вынести отсюда в какой-нибудь src, чтобы @modules/client не знал об этом хуке и как именовать бредкрамбы
 function usePageBreadcrumbs() {
   const router = useRouter();
   const filmSlug = (router.query.filmSlug as string) || "Фильм";
   const category = (router.query.category as string) || "Категория";
+  const categories = useDictionariesContext().categoriesWithDicts;
+  const genres = useDictionariesContext().genres;
+  const genresBreadcrumbs = React.useMemo(
+    () =>
+      Object.fromEntries(
+        Object.values(categories)
+          .map((category) =>
+            category.genres.map((genreId) => [
+              paths.categoryGenre({
+                category: category.slug,
+                genre: genres[genreId].slug,
+              }),
+              { text: genres[genreId].name },
+            ])
+          )
+          .flat()
+      ),
+    [genres, categories]
+  );
+  const countriesBreadcrumbs = React.useMemo(
+    () =>
+      Object.fromEntries(
+        Object.values(categories)
+          .map((category) =>
+            Object.entries(COUNTRIES_MAP).map(([code, countryName]) => [
+              paths.categoryCountry({ category: category.slug, country: code }),
+              { text: countryName },
+            ])
+          )
+          .flat()
+      ),
+    [categories]
+  );
+  const categoriesBreadcrumbs = React.useMemo(
+    () =>
+      Object.fromEntries(
+        Object.values(categories).map((category) => [
+          paths.category({ category: category.slug }),
+          { text: category.name },
+        ])
+      ),
+    [categories]
+  );
   const breadcrumbs = useRouterBreadcrumbs({
     [paths.root({})]: { text: "Главная" },
     [paths.film({ film: filmSlug })]: { text: "Фильм", disabled: true },
@@ -146,6 +190,9 @@ function usePageBreadcrumbs() {
     [paths.feedback({})]: { text: "Обратная связь", disabled: true },
     [paths.copyright({})]: { text: "Правообладателям", disabled: true },
     [paths.baseSearch({})]: { text: "Поиск", disabled: true },
+    ...genresBreadcrumbs,
+    ...categoriesBreadcrumbs,
+    ...countriesBreadcrumbs,
   });
   return breadcrumbs;
 }

@@ -5,7 +5,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/createEmotionCache";
 import { SWRConfig } from "swr";
 import { axiosInstance } from "@modules/api";
-import { Theme } from "../src/theme";
+import { Theme, ThemeLoader, ThemeSaver } from "../src/theme";
 import { NextPage } from "next";
 import { PageProvider } from "crmui";
 
@@ -29,7 +29,9 @@ export default function MyApp(props: MyAppProps) {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <Theme>
+      <Theme defaultTheme="dark">
+        <ThemeSaver />
+        <ThemeLoader />
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         {/* <SessionProvider session={csrfToken?.toString() || null}> */}

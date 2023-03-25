@@ -1,0 +1,16 @@
+{
+  "name": "@modules/stores",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "author": "RyDVi (Ryabchunov Dmitry)",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "@modules/api": "*",
+    "@modules/utils": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26"
+  }
+}

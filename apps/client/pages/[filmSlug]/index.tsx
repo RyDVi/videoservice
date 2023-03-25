@@ -4,7 +4,6 @@ import {
   Person,
   PersonRole,
   useFilms,
-  useGenres,
   usePersonRoles,
   usePersons,
   useVideos,
@@ -37,6 +36,7 @@ import { styled } from "@mui/material/styles";
 import Script from "next/script";
 import { formatFullName } from "@modules/utils";
 import Head from "next/head";
+import { useDictionariesContext } from "@modules/stores";
 
 const ratingFormatter = (rating: number) => rating.toFixed(1);
 const contentRatingFormatter = (contentRating: number) => `${contentRating}+`;
@@ -360,11 +360,10 @@ export default function FilmPage() {
     () => (films?.results.length ? films?.results[0] : null),
     [films?.results]
   );
-
-  const { genres } = useGenres({});
+  const genres = useDictionariesContext().genres
   const { persons } = usePersons({ id: film?.persons.join(",") });
   const filmGenres = React.useMemo(
-    () => genres?.filter((genre) => film?.genres.includes(genre.id)),
+    () => Object.values(genres).filter((genre) => film?.genres.includes(genre.id)),
     [film?.genres, genres]
   );
   const { personRoles } = usePersonRoles();

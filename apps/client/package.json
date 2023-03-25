@@ -23,7 +23,8 @@
     "ramda": "^0.28.0",
     "static-path": "^0.0.4",
     "swr": "^2.0.0",
-    "@modules/theme": "*"
+    "@modules/theme": "*",
+    "@modules/stores": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

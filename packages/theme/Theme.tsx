@@ -38,7 +38,7 @@ export const ThemeSaver: React.FC = () => {
     ) {
       saveThemeToStorage(THEME_NAME_MAP.get(theme));
     }
-  }, [theme]);
+  }, [saveThemeToStorage, theme, themeFromStorage]);
   return null;
 };
 
@@ -51,6 +51,7 @@ export const ThemeLoader: React.FC = () => {
     if (themeFromStorage && theme !== NAME_THEME_MAP[themeFromStorage]) {
       setTheme(NAME_THEME_MAP[themeFromStorage]);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return null;
 };
