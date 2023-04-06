@@ -1,7 +1,7 @@
 import { Theme } from "@mui/material";
 import React from "react";
 import { useMethods } from "@modules/hooks";
-import { ThemeType } from "./theme";
+import { ThemeType } from "./themes";
 
 interface ThemeContextProps {
   theme: Theme;

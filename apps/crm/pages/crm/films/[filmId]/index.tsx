@@ -23,6 +23,7 @@ import {
   useVideos,
   Video,
   VideoFile,
+  useDeleteFilmPerson
 } from "@modules/api";
 import Head from "next/head";
 import { Box, Button } from "@mui/material";
@@ -31,7 +32,6 @@ import { useMemo } from "react";
 import * as R from "ramda";
 import Script from "next/script";
 import React from "react";
-import { useDeleteFilmPerson } from "../../../../../../packages/api/films_persons/hooks";
 
 function groupBySeason<T extends Video>(videos: T[]): Record<string, T[]> {
   return R.groupBy(R.prop<string>("season"), videos);

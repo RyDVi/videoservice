@@ -1,5 +1,5 @@
 import { IconButton, ThemeProvider } from "@mui/material";
-import { NAME_THEME_MAP, ThemeType, THEME_NAME_MAP } from "./theme";
+import { NAME_THEME_MAP, ThemeType, THEME_NAME_MAP } from "./themes";
 import { useThemeControl } from "./ThemeControlContext";
 import {
   ThemeControlContext,

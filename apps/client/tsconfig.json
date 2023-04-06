@@ -6,8 +6,8 @@
     "**/*.tsx",
     "../../packages/theme/index.ts",
     "../../packages/theme/index.ts",
-    "../../packages/theme/theme.ts",
-    "../../packages/theme/Theme.tsx",
+    "../../packages/theme/themes.ts",
+    "../../packages/theme/theme.tsx",
     "../../packages/theme/ThemeControlContext.tsx"
   ],
   "exclude": ["node_modules"]
