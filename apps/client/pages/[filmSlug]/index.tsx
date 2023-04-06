@@ -230,17 +230,17 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
             </ListItem>
             {genres
               ? genres.map((genre) => (
-                  <GenreListItem key={genre.id} genre={genre} />
-                ))
+                <GenreListItem key={genre.id} genre={genre} />
+              ))
               : Array.from({ length: 5 }, (_, index) => (
-                  <Skeleton key={index}>
-                    <GenreListItem
-                      genre={api.genres.initial({
-                        name: "Какой-нибудь жанр",
-                      })}
-                    />
-                  </Skeleton>
-                ))}
+                <Skeleton key={index}>
+                  <GenreListItem
+                    genre={api.genres.initial({
+                      name: "Какой-нибудь жанр",
+                    })}
+                  />
+                </Skeleton>
+              ))}
           </List>
           {Object.entries(personsByRole).map(([roleName, filmPersons]) => (
             <List key={roleName} disablePadding>
@@ -318,19 +318,24 @@ const VideoPlayer: React.FC<{ film?: Film | null }> = ({ film }) => {
   const { videoFiles, isVideoFilesLoading } = useVideoFiles(
     videos?.length
       ? {
-          video: videos?.map((v) => v.id).join(","),
-        }
+        video: videos?.map((v) => v.id).join(","),
+      }
       : null
   );
   const videosWithVideoFiles = useVideoWithVideoFiles(videos, videoFiles);
   const videoFolders = React.useMemo(() => {
-    if (!videoFiles?.length) {
+    if (!videoFiles?.length || !film) {
       return "";
+    }
+    if (film.type === 'film') {
+      console.log(videoFiles)
+      return makeVideoFilesUrlsForPlayer(videoFiles)
     }
     const grouppedBySeasons = groupBy(videosWithVideoFiles, "season");
     return Object.entries(grouppedBySeasons).map(([season, videos]) => ({
       title: `Сезон ${season}`,
       folder: videos.map((video) => ({
+        id: `${video.season} ${video.series}`,
         title: `Серия ${video.series}`,
         file: makeVideoFilesUrlsForPlayer(video.videoFiles),
       })),

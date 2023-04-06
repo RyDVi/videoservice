@@ -1,4 +1,4 @@
-import { useDeleteVideo, useSaveVideo, Video, VIDEO_TYPES } from "@modules/api";
+import { useDeleteVideo, useSaveVideo, Video } from "@modules/api";
 import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,
@@ -29,22 +29,6 @@ export const VideoFields: React.FC<FormFields<Video>> = ({
   const handleChange = useHandleChange(onChange, data);
   return (
     <>
-      <TextField
-        name="type"
-        label="Тип фильма"
-        value={String(data.type)}
-        onChange={handleChange}
-        error={!!error?.type}
-        helperText={error?.type}
-        variant="standard"
-        select
-      >
-        {Object.entries(VIDEO_TYPES).map(([key, value]) => (
-          <MenuItem key={key} value={key}>
-            {value}
-          </MenuItem>
-        ))}
-      </TextField>
       <TextField
         name="season"
         type="number"
@@ -93,11 +77,6 @@ export const ReadVideoFields: React.FC<ReadFormFields<Video>> = ({
       <>
         <ListItem>
           <Skeleton>
-            <ListItemText primary="Тип видео" secondary="Тип видео" />
-          </Skeleton>
-        </ListItem>
-        <ListItem>
-          <Skeleton>
             <ListItemText primary="Сезон" secondary="Сезон" />
           </Skeleton>
         </ListItem>
@@ -111,9 +90,6 @@ export const ReadVideoFields: React.FC<ReadFormFields<Video>> = ({
   }
   return (
     <>
-      <ListItem>
-        <ListItemText primary="Тип видео" secondary={VIDEO_TYPES[video.type]} />
-      </ListItem>
       <ListItem>
         <ListItemText primary="Сезон" secondary={video.season} />
       </ListItem>

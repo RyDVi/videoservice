@@ -14,6 +14,11 @@ export const CONTENT_RATINGS = {
 
 export type ContentRatingType = keyof typeof CONTENT_RATINGS;
 
+export const VIDEO_TYPES = {
+  film: "Фильм",
+  serial: "Серия",
+};
+
 export interface Film extends Dictionary {
   name: string;
   original_name: string;
@@ -28,6 +33,7 @@ export interface Film extends Dictionary {
   slug: string;
   year: number;
   categories: string[];
+  type: keyof typeof VIDEO_TYPES;
 }
 
 export interface FilmPrice {

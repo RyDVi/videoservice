@@ -7,7 +7,6 @@ class VideoEndpoint extends SaveEndpoint<Video, { film?: string }> {
     film: "",
     season: 1,
     series: 1,
-    type: "film",
     ...video,
   });
 }
