@@ -1,14 +1,17 @@
-export const buildAudioUrl = (url: string, audio: string): string => `{${audio}}${url};`;
-export const buildQualityUrl = (url: string, qualityName: string): string =>
-  `[${qualityName}]${url},`;
+function buildAudioUrl(url: string, audio: string): string {
+  return `{${audio}}${url};`
+};
+function buildQualityUrl(url: string, qualityName: string): string {
+  return `[${qualityName}]${url},`;
+}
 
-export const makeVideoFilesUrlsForPlayer = (
+export function makeVideoFilesUrlsForPlayer(
   videoFiles: {
     file?: string | null;
     resolution: string | number;
     sound_studio: string;
   }[]
-) => {
+): string {
   const existsVideoFiles = videoFiles.filter((vf) => !!vf.file);
   const qualities = new Set(existsVideoFiles.map((vf) => vf.resolution));
   let urls = '';

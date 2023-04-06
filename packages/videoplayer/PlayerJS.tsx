@@ -41,6 +41,9 @@ interface PlayerJSProps {
 export const PlayerJS: React.FC<PlayerJSProps> = (config) => {
   const playerRef = useRef<PlayerJSProps>();
   React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return
+    }
     const Playerjs = (window as any).Playerjs;
     if (Playerjs) {
       playerRef.current = new Playerjs(config);
@@ -57,7 +60,5 @@ export const PlayerJS: React.FC<PlayerJSProps> = (config) => {
       }
     };
   }, [config]);
-  return <div id="player"></div>;
+  return <div id={config.id}></div>;
 };
-
-export default PlayerJS;
