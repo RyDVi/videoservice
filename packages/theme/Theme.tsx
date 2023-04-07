@@ -33,7 +33,7 @@ function useThemeStorage() {
   return useLocalStorage<ThemeType | null>("theme", null);
 }
 
-export const ThemeSaver: React.FC = () => {
+export function ThemeSaver() {
   const { theme } = useThemeControl();
   const [themeFromStorage, saveThemeToStorage] = useThemeStorage();
   React.useEffect(() => {
@@ -45,9 +45,9 @@ export const ThemeSaver: React.FC = () => {
     }
   }, [saveThemeToStorage, theme, themeFromStorage]);
   return null;
-};
+}
 
-export const ThemeLoader: React.FC = () => {
+export function ThemeLoader() {
   const { theme, setTheme } = useThemeControl();
   const [themeFromStorage] = useThemeStorage();
   React.useEffect(() => {
@@ -59,9 +59,9 @@ export const ThemeLoader: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return null;
-};
+}
 
-export const ThemeToggleButton: React.FC = () => {
+export function ThemeToggleButton() {
   const { theme, toggleTheme } = useThemeControl();
   return (
     <IconButton
@@ -79,4 +79,4 @@ export const ThemeToggleButton: React.FC = () => {
       )}
     </IconButton>
   );
-};
+}

@@ -1,4 +1,3 @@
 export * from "./ThemeControlContext";
 export * from "./themes";
-export * from "./theme";
-export { Theme } from "./theme";
+export { Theme, ThemeLoader, ThemeSaver, ThemeToggleButton } from "./theme";
