@@ -1,2 +1,2 @@
-export * from './PlayerJS';
-export * from './utils'
+export * from "./PlayerJS";
+export * from "./utils";

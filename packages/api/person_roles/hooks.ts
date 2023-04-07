@@ -32,9 +32,14 @@ export function useSavePersonRole(initialPersonRole?: PersonRole) {
     config: (personRole) => personsRoles.save(personRole),
   });
 
-  return { personRole, savePersonRole, setPersonRole, personRoleError, loading };
+  return {
+    personRole,
+    savePersonRole,
+    setPersonRole,
+    personRoleError,
+    loading,
+  };
 }
-
 
 export function usePersonRole(id?: string | string[] | null) {
   const {

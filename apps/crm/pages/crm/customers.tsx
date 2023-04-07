@@ -1,7 +1,7 @@
 import { CrmSidebar, CRMContainer, useCrmPageTitle } from "crmui";
 
 function CustomersPage() {
-  useCrmPageTitle('Клиенты')
+  useCrmPageTitle("Клиенты");
   return <>Клиенты</>;
 }
 

@@ -15,7 +15,7 @@ import Sidebar from "./Sidebar";
 import LogoutIcon from "@mui/icons-material/Logout";
 import React from "react";
 import CategoryIcon from "@mui/icons-material/Category";
-import PeopleIcon from '@mui/icons-material/People';
+import PeopleIcon from "@mui/icons-material/People";
 
 const CrmSidebarMenu: React.FC = () => {
   return (

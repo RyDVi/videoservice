@@ -1,4 +1,4 @@
-import { useMemo, useReducer } from 'react';
+import { useMemo, useReducer } from "react";
 
 type AnyAction = {
   type: string;
@@ -30,13 +30,16 @@ type UseMethodsActionCreators<Methods extends Record<string, Method<any>>> = {
   [Key in keyof Methods]: UseMethodsActionCreator<Methods[Key]>;
 };
 
-export function useMethods<State, Methods extends Record<string, Method<State>>>(
+export function useMethods<
+  State,
+  Methods extends Record<string, Method<State>>
+>(
   methods: Methods | (() => Methods),
   initialState: State
 ): [State, UseMethodsActionCreators<Methods>] {
   const reducer = (state: State, action: AnyAction) => {
     const { type, payload } = action;
-    const actualMethods = typeof methods === 'function' ? methods() : methods;
+    const actualMethods = typeof methods === "function" ? methods() : methods;
 
     const method = actualMethods[type];
 
@@ -50,7 +53,7 @@ export function useMethods<State, Methods extends Record<string, Method<State>>>
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const methodsActions = useMemo(() => {
-    const actualMethods = typeof methods === 'function' ? methods() : methods;
+    const actualMethods = typeof methods === "function" ? methods() : methods;
 
     return Object.keys(actualMethods).reduce(
       (result: Record<string, AnyActionCreator>, type) => {

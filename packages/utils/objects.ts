@@ -17,10 +17,10 @@ type ObjectValues<T> = T extends ReadonlyArray<any> | string
   : never;
 
 export class ObjectUtils {
-  public static keyBy<T extends Record<string, any>, K extends keyof T & string>(
-    array: readonly T[],
-    prop: K
-  ): Record<T[K], T> {
+  public static keyBy<
+    T extends Record<string, any>,
+    K extends keyof T & string
+  >(array: readonly T[], prop: K): Record<T[K], T> {
     const result: Record<string, T> = {};
     array.forEach((a) => (result[a[prop]] = a));
     return result;

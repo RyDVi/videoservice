@@ -31,23 +31,27 @@ const FilmCateogory: React.FC<{ category: Category }> = ({ category }) => {
     category: category.slug,
     page_size: 10,
   });
-  return <FilmCategoryBlock
-    categoryName={category.name}
-    categoryHref={paths.category({ category: category.slug })}
-  >
-    <FilmGridHome films={films?.results || []} loading={isFilmsLoading} />
-  </FilmCategoryBlock>
-}
+  return (
+    <FilmCategoryBlock
+      categoryName={category.name}
+      categoryHref={paths.category({ category: category.slug })}
+    >
+      <FilmGridHome films={films?.results || []} loading={isFilmsLoading} />
+    </FilmCategoryBlock>
+  );
+};
 
 export default function Home() {
-  const categoriesWithDicts = useDictionariesContext().categoriesWithDicts
+  const categoriesWithDicts = useDictionariesContext().categoriesWithDicts;
 
   return (
     <Box sx={{ padding: 3, display: "grid", gap: "5rem" }}>
       <Head>
         <title>Фильмы и сериалы смотреть онлайн</title>
       </Head>
-      {Object.values(categoriesWithDicts).map((category) => <FilmCateogory key={category.id} category={category} />)}
+      {Object.values(categoriesWithDicts).map((category) => (
+        <FilmCateogory key={category.id} category={category} />
+      ))}
     </Box>
   );
 }

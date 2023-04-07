@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
-import React from 'react';
+import { useRouter } from "next/router";
+import React from "react";
 
 export type Queries = Record<string, any>;
 
@@ -14,8 +14,8 @@ export function useUpsertQuery() {
   const query = useQuery();
   const router = useRouter();
   return React.useCallback(
-    (queries: Queries, replace?: 'replace' | 'push') => {
-      const method = replace === 'replace' ? router.replace : router.push;
+    (queries: Queries, replace?: "replace" | "push") => {
+      const method = replace === "replace" ? router.replace : router.push;
       // TODO: incorrect. Need full data from router
       method({ pathname: router.pathname, query: { ...query, ...queries } });
     },

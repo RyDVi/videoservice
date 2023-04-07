@@ -22,6 +22,7 @@ export const HelpButton: React.FC<{ children: React.ReactNode }> = ({
       onClose={() => setHelpOpen(false)}
       onMouseEnter={() => setHelpOpen(true)}
       arrow
+      leaveTouchDelay={60000}
     >
       <IconButton onClick={() => setHelpOpen(!isHelpOpen)}>
         <HelpIcon />

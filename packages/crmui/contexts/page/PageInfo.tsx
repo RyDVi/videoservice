@@ -3,19 +3,22 @@ export interface PageInfo {
 }
 
 interface SetPageTitle {
-  type: 'set/pageTitle';
+  type: "set/pageTitle";
   payload: React.ReactNode;
 }
 
 export type PageInfoActions = SetPageTitle;
 
-export function pageInfoReducer(state: PageInfo, action: PageInfoActions): PageInfo {
+export function pageInfoReducer(
+  state: PageInfo,
+  action: PageInfoActions
+): PageInfo {
   switch (action.type) {
-    case 'set/pageTitle':
+    case "set/pageTitle":
       return { ...state, title: action.payload };
   }
 }
 
 export const initialPageInfo: PageInfo = {
-  title: '<Page title not set>',
+  title: "<Page title not set>",
 };

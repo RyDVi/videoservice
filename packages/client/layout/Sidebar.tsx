@@ -60,7 +60,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ children }) => {
 export const SidebarToggler: React.FC = () => {
   const { openSidebar } = useSidebar();
   return (
-    <IconButton onClick={openSidebar} color='primary'>
+    <IconButton onClick={openSidebar} color="primary">
       <MenuIcon />
     </IconButton>
   );

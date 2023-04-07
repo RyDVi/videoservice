@@ -151,7 +151,9 @@ export const PersonInfoCard: React.FC<
         data={data}
         onStateChange={(isEdit) => {
           setTitle(
-            isEdit ? "Редактирование информации о персоне" : "Информация о персоне"
+            isEdit
+              ? "Редактирование информации о персоне"
+              : "Информация о персоне"
           );
         }}
         onSave={onSave}

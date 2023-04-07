@@ -1,5 +1,5 @@
-import React from 'react';
-import { useUncontrolled } from './state';
+import React from "react";
+import { useUncontrolled } from "./state";
 
 export interface ArrayFunctions<T> {
   items: T[];
@@ -68,8 +68,14 @@ export function getArrayFunctions<T>(
 
 // function useArray<T>(items: T[], onChange: (items: T[]) => void): ArrayFunctions<T>;
 // function useArray<T>(items: T[]): ArrayFunctions<T>;
-function useArray<T>(items: T[], onChange?: (items: T[]) => void): ArrayFunctions<T> {
+function useArray<T>(
+  items: T[],
+  onChange?: (items: T[]) => void
+): ArrayFunctions<T> {
   const [arrItems, change] = useUncontrolled(items, onChange);
-  return React.useMemo(() => getArrayFunctions(arrItems, change), [arrItems, change]);
+  return React.useMemo(
+    () => getArrayFunctions(arrItems, change),
+    [arrItems, change]
+  );
 }
 export { useArray };

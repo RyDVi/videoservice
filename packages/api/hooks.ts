@@ -1,5 +1,5 @@
 export * from "./auth/hooks";
-export * from './categories/hooks'
+export * from "./categories/hooks";
 export * from "./customers/hooks";
 export * from "./films/hooks";
 export * from "./genres/hooks";
@@ -10,4 +10,4 @@ export * from "./subtitle_files/hooks";
 export * from "./users/hooks";
 export * from "./video/hooks";
 export * from "./video_files/hooks";
-export * from './films_persons/hooks'
+export * from "./films_persons/hooks";

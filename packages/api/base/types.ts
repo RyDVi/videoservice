@@ -2,8 +2,8 @@ export interface Dictionary {
   readonly id: string;
   name: string;
 }
-export type PageFiltersKeys = 'page' | 'page_size';
-export type OrderingKey<Key extends string = 'ordering'> = Key;
+export type PageFiltersKeys = "page" | "page_size";
+export type OrderingKey<Key extends string = "ordering"> = Key;
 export type RelaxedPageFilters = Partial<
   Record<PageFiltersKeys | OrderingKey, string | number>
 >;

@@ -1,23 +1,23 @@
-import React, { useCallback } from 'react';
-import { Queries, useQuery, useUpsertQuery } from './query';
+import React, { useCallback } from "react";
+import { Queries, useQuery, useUpsertQuery } from "./query";
 
-export type SortQuery<Fields extends string | number | symbol = string> = Record<
-  Fields,
-  'asc' | 'desc' | undefined | null
->;
+export type SortQuery<Fields extends string | number | symbol = string> =
+  Record<Fields, "asc" | "desc" | undefined | null>;
 
 const buildSortQuery = (sorting: SortQuery) =>
   Object.entries(sorting)
     .filter(([, ascending]) => !!ascending)
-    .map(([sortKey, ascending]) => `${ascending === 'asc' ? '' : '-'}${sortKey}`)
-    .join(',');
+    .map(
+      ([sortKey, ascending]) => `${ascending === "asc" ? "" : "-"}${sortKey}`
+    )
+    .join(",");
 
 export interface SortReturn<Fields extends string | number | symbol> {
   ordering?: string;
   sorting: SortQuery<Fields>;
-  upsertSort: (field: Fields, ascending?: 'asc' | 'desc' | null) => void;
+  upsertSort: (field: Fields, ascending?: "asc" | "desc" | null) => void;
   removeSort: (field: Fields) => void;
-  setSort: (field: Fields, ascending?: 'asc' | 'desc' | null) => void;
+  setSort: (field: Fields, ascending?: "asc" | "desc" | null) => void;
   clearSort: () => void;
 }
 
@@ -32,13 +32,13 @@ export function useSort<
     if (!query.ordering) {
       return {};
     }
-    const sortFields = query.ordering.split(',');
+    const sortFields = query.ordering.split(",");
     return Object.fromEntries(
       sortFields.map((sortField) => {
-        if (sortField[0] === '-') {
-          return [sortField.slice(1), 'desc'];
+        if (sortField[0] === "-") {
+          return [sortField.slice(1), "desc"];
         }
-        return [sortField, 'asc'];
+        return [sortField, "asc"];
       })
     );
   }, [query.ordering]);
@@ -52,7 +52,7 @@ export function useSort<
           }
           return [sortKey, acsending];
         })
-        .filter(Boolean) as [string, 'asc' | 'desc'][];
+        .filter(Boolean) as [string, "asc" | "desc"][];
       const sortQuery = buildSortQuery(Object.fromEntries(sortEntries));
       upsertQuery({ ordering: sortQuery });
     },
@@ -60,7 +60,7 @@ export function useSort<
   );
 
   const upsertSort = React.useCallback(
-    (field: Fields, ascending?: 'asc' | 'desc' | null) => {
+    (field: Fields, ascending?: "asc" | "desc" | null) => {
       const sortQuery = buildSortQuery({
         ...sorting,
         [field]: ascending,
@@ -71,7 +71,7 @@ export function useSort<
   );
 
   const setSort = useCallback(
-    (field: Fields, ascending?: 'asc' | 'desc' | null) => {
+    (field: Fields, ascending?: "asc" | "desc" | null) => {
       upsertQuery({ ordering: buildSortQuery({ [field]: ascending }) });
     },
     [upsertQuery]

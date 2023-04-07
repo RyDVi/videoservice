@@ -1,5 +1,5 @@
-import React from 'react';
-import { useUncontrolled } from './state';
+import React from "react";
+import { useUncontrolled } from "./state";
 
 export interface Counter {
   value: number;
@@ -14,8 +14,14 @@ export function useCounter(
 ): Counter {
   const [value, setValue] = useUncontrolled(initialValue || 0, onChange);
 
-  const increment = React.useCallback(() => setValue(value + 1), [setValue, value]);
-  const decrement = React.useCallback(() => setValue(value - 1), [setValue, value]);
+  const increment = React.useCallback(
+    () => setValue(value + 1),
+    [setValue, value]
+  );
+  const decrement = React.useCallback(
+    () => setValue(value - 1),
+    [setValue, value]
+  );
 
   return {
     value,

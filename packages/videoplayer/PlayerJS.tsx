@@ -42,7 +42,7 @@ export const PlayerJS: React.FC<PlayerJSProps> = (config) => {
   const playerRef = useRef<PlayerJSProps>();
   React.useEffect(() => {
     if (typeof window === "undefined") {
-      return
+      return;
     }
     const Playerjs = (window as any).Playerjs;
     if (Playerjs) {

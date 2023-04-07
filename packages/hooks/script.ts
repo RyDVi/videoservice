@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export function useScript(url: string) {
   const scriptRef = useRef<HTMLScriptElement>();
   useEffect(() => {
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     scriptRef.current = script;
     script.src = url;
     script.async = true;

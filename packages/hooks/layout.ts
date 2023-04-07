@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Get height and width of screen. Update component, when screen resized
@@ -9,9 +9,9 @@ export const useWindowSize = (): number[] => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
     }
-    window.addEventListener('resize', updateSize);
+    window.addEventListener("resize", updateSize);
     updateSize();
-    return () => window.removeEventListener('resize', updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
   return size;
 };

@@ -1,4 +1,8 @@
-import { PersonRole, useSavePersonRole, useDeletePersonRole } from "@modules/api";
+import {
+  PersonRole,
+  useSavePersonRole,
+  useDeletePersonRole,
+} from "@modules/api";
 import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,
@@ -69,25 +73,33 @@ export const CreateEditPersonRoleForm: React.FC<CreateEditForm<PersonRole>> = ({
   onSave,
   onCancel,
 }) => {
-  const { personRole, personRoleError, loading, savePersonRole, setPersonRole } =
-    useSavePersonRole(data);
+  const {
+    personRole,
+    personRoleError,
+    loading,
+    savePersonRole,
+    setPersonRole,
+  } = useSavePersonRole(data);
   return (
     <CreateEditForm
-      onSubmit={() => savePersonRole().then((response) => onSave(response.data))}
+      onSubmit={() =>
+        savePersonRole().then((response) => onSave(response.data))
+      }
       loading={loading}
       onCancel={onCancel}
     >
-      <PersonRoleFormFields data={personRole} onChange={setPersonRole} error={personRoleError} />
+      <PersonRoleFormFields
+        data={personRole}
+        onChange={setPersonRole}
+        error={personRoleError}
+      />
     </CreateEditForm>
   );
 };
 
-export const DeletePersonRoleDialog: React.FC<DeleteDialogFormProps<PersonRole>> = ({
-  onCancel,
-  onDelete,
-  open,
-  data,
-}) => {
+export const DeletePersonRoleDialog: React.FC<
+  DeleteDialogFormProps<PersonRole>
+> = ({ onCancel, onDelete, open, data }) => {
   const { deletePersonRole } = useDeletePersonRole();
   if (!data) {
     return null;
@@ -130,7 +142,9 @@ export const PersonRoleInfoCard: React.FC<
         data={data}
         onStateChange={(isEdit) => {
           setTitle(
-            isEdit ? "Редактирование информации о роли персоны" : "Информация о роли персоны"
+            isEdit
+              ? "Редактирование информации о роли персоны"
+              : "Информация о роли персоны"
           );
         }}
         onSave={onSave}

@@ -1,9 +1,9 @@
-import { useUploadVideoFile, VideoFile } from '@modules/api';
-import { useIsValueChanged } from '@modules/hooks';
-import { Stack } from '@mui/material';
-import React from 'react';
-import { createRef, useEffect, useState } from 'react';
-import { FileInputUploader, FileInputUploaderProps } from './FileInput';
+import { useUploadVideoFile, VideoFile } from "@modules/api";
+import { useIsValueChanged } from "@modules/hooks";
+import { Stack } from "@mui/material";
+import React from "react";
+import { createRef, useEffect, useState } from "react";
+import { FileInputUploader, FileInputUploaderProps } from "./FileInput";
 
 const VideoPreview: React.FC<
   React.VideoHTMLAttributes<HTMLVideoElement> & {
@@ -26,7 +26,7 @@ const VideoPreview: React.FC<
         videoPlayerRef.current.src = value;
         return;
       }
-      videoPlayerRef.current.src = '';
+      videoPlayerRef.current.src = "";
       return;
     }
     videoFile.arrayBuffer().then((buffer) => {
@@ -55,7 +55,7 @@ const VideoPreview: React.FC<
 export const VideoUploader: React.FC<
   Omit<
     FileInputUploaderProps,
-    'onChange' | 'onUpload' | 'file' | 'value' | 'onValueChange' | 'onDelete'
+    "onChange" | "onUpload" | "file" | "value" | "onValueChange" | "onDelete"
   > & {
     videoFile: VideoFile;
   }
@@ -85,7 +85,7 @@ export const VideoUploader: React.FC<
       />
       {(uploadProgress?.progress || 0) >= 1 &&
         isUploadingVideoFile &&
-        'Сохранение в хранилище'}
+        "Сохранение в хранилище"}
     </Stack>
   );
 };

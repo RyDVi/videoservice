@@ -1,7 +1,7 @@
-import * as types from './types';
+import * as types from "./types";
 
 type NumberFilters = Record<string, string | undefined | number>;
-export const BASE_URL = '/api/v1';
+export const BASE_URL = "/api/v1";
 
 export class BaseEndpoint {
   uri: string;
@@ -13,28 +13,28 @@ export class BaseEndpoint {
 
 export class RestEndpoint extends BaseEndpoint {
   retrieve = (id?: string | string[]) => {
-    if (!id || typeof id === 'object') {
+    if (!id || typeof id === "object") {
       return {
         url: null,
-        method: 'GET',
+        method: "GET",
       };
     }
     return {
       url: `${this.uri}${id}/`,
-      method: 'GET',
+      method: "GET",
     };
   };
 
   destroy = (id?: string | string[]) => {
-    if (!id || typeof id === 'object') {
+    if (!id || typeof id === "object") {
       return {
         url: undefined,
-        method: 'DELETE',
+        method: "DELETE",
       };
     }
     return {
       url: `${this.uri}${id}/`,
-      method: 'DELETE',
+      method: "DELETE",
     };
   };
 }
@@ -42,15 +42,17 @@ export class RestEndpoint extends BaseEndpoint {
 export class Endpoint<F = NumberFilters> extends RestEndpoint {
   list = (params?: F) => ({
     url: this.uri,
-    method: 'GET',
+    method: "GET",
     params,
   });
 }
 
-export class PaginatedEndpoint<F = types.RelaxedPageFilters> extends RestEndpoint {
+export class PaginatedEndpoint<
+  F = types.RelaxedPageFilters
+> extends RestEndpoint {
   list = (params?: F & types.RelaxedPageFilters) => ({
     url: this.uri,
-    method: 'GET',
+    method: "GET",
     params,
   });
 }
@@ -61,7 +63,7 @@ export class SaveEndpoint<
 > extends Endpoint<F> {
   save = (data: U) => ({
     url: data.id ? `${this.uri}${data.id}/` : this.uri,
-    method: data.id ? 'PUT' : 'POST',
+    method: data.id ? "PUT" : "POST",
     data,
   });
 }
@@ -73,7 +75,7 @@ export class PaginatedSaveEndpoint<
 > extends PaginatedEndpoint<F> {
   save = (data: U) => ({
     url: data.id ? `${this.uri}${data.id}/` : this.uri,
-    method: data.id ? 'PUT' : 'POST',
+    method: data.id ? "PUT" : "POST",
     data,
   });
 }

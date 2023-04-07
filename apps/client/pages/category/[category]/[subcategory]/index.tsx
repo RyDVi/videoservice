@@ -7,8 +7,8 @@ export default function SubcategoryPage() {
   const router = useRouter();
   const category = router.query.category as string;
   React.useEffect(() => {
-    if(!category){
-        return
+    if (!category) {
+      return;
     }
     router.replace(paths.category({ category }));
   }, [category, router]);

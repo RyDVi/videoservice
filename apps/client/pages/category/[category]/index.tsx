@@ -8,7 +8,6 @@ import { COUNT_FILMS_PER_PAGE } from "../../../src/constants";
 import { useFilmMove } from "../../../src/hooks";
 import { CategoryTitle } from "../../../src/HeadTitles";
 
-
 export default function CategoryPage() {
   const [page, updatePage, page_size] = usePage({
     pageSize: COUNT_FILMS_PER_PAGE,

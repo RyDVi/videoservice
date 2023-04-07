@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosInstance } from 'axios';
-import { getCookie } from 'cookies-next';
-import { RequestError } from './types';
+import axios, { AxiosError, AxiosRequestConfig, AxiosInstance } from "axios";
+import { getCookie } from "cookies-next";
+import { RequestError } from "./types";
 
 export function createRequestError(error: any): RequestError {
   if (axios.isAxiosError(error)) {
@@ -23,7 +23,7 @@ export function createRequestError(error: any): RequestError {
 const errorInterceptor = (error: AxiosError): Promise<RequestError> => {
   if (error.response?.status === 401) {
     // eslint-disable-next-line no-console
-    console.error('auth failure');
+    console.error("auth failure");
   }
   return Promise.reject(createRequestError(error));
 };
@@ -33,18 +33,18 @@ export const getAuthHeader = (accessToken: string) => ({
 });
 
 export const setAuthHeader = (accessToken: string) =>
-  (axiosInstance.defaults.headers['Authorization'] = `Token ${accessToken}`);
+  (axiosInstance.defaults.headers["Authorization"] = `Token ${accessToken}`);
 
 export const getCsrfConfig = (baseURL: string): AxiosRequestConfig => {
-  const accessToken = getCookie('access_token');
+  const accessToken = getCookie("access_token");
   return {
     baseURL,
     headers: {
-      'X-Requested-With': 'XMLHttpRequest',
+      "X-Requested-With": "XMLHttpRequest",
       ...(accessToken ? getAuthHeader(String(accessToken)) : {}),
     },
-    xsrfCookieName: 'csrftoken',
-    xsrfHeaderName: 'X-CSRFToken',
+    xsrfCookieName: "csrftoken",
+    xsrfHeaderName: "X-CSRFToken",
   };
 };
 
@@ -54,7 +54,10 @@ export const createRequestInstance = (
 ): AxiosInstance => {
   const axiosInstance = axios.create(config);
   if (withDefaultInterceptor) {
-    axiosInstance.interceptors.response.use((response) => response, errorInterceptor);
+    axiosInstance.interceptors.response.use(
+      (response) => response,
+      errorInterceptor
+    );
   }
   return axiosInstance;
 };

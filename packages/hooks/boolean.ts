@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export function useWasTrue(currentValue: boolean): boolean {
   // Always return false untill currentValue is true then always return true
@@ -12,7 +12,10 @@ export function useWasTrue(currentValue: boolean): boolean {
 
 export function useBoolean(
   initial: boolean
-): [boolean, { setFalse: () => void; setTrue: () => void; toggle: () => void }] {
+): [
+  boolean,
+  { setFalse: () => void; setTrue: () => void; toggle: () => void }
+] {
   const [isTrue, setIsTrue] = React.useState(initial);
   const setTrue = React.useCallback(() => setIsTrue(true), []);
   const setFalse = React.useCallback(() => setIsTrue(false), []);

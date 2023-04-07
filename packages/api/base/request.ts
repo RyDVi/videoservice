@@ -1,10 +1,12 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import React from 'react';
-import axiosInstance from './axios';
-import { RequestError } from './types';
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import React from "react";
+import axiosInstance from "./axios";
+import { RequestError } from "./types";
 
 export interface ListValidationErrors<T> {
-  [index: number]: T extends string | number | symbol ? string[] : ValidationErrors<T>;
+  [index: number]: T extends string | number | symbol
+    ? string[]
+    : ValidationErrors<T>;
 }
 
 export type ValidationErrors<T> = {
@@ -38,23 +40,25 @@ export function useRequest<D = any, R = any, E = ValidationErrors<D>>({
   const request = React.useCallback(
     async (requestData?: D) => {
       setLoading(true);
-      return axiosInstance.request<D, AxiosResponse<R>>(config(requestData || data)).then(
-        (response) => {
-          setLoading(false);
-          setResponse(response);
-          return response;
-        },
-        (error: RequestError<E>) => {
-          setLoading(false);
-          setError(error.data);
-          throw error.data;
-        }
-      );
+      return axiosInstance
+        .request<D, AxiosResponse<R>>(config(requestData || data))
+        .then(
+          (response) => {
+            setLoading(false);
+            setResponse(response);
+            return response;
+          },
+          (error: RequestError<E>) => {
+            setLoading(false);
+            setError(error.data);
+            throw error.data;
+          }
+        );
     },
     [data, config, setError]
   );
   return {
-    request: request as RequestType<D, R, E>['request'],
+    request: request as RequestType<D, R, E>["request"],
     data,
     setData,
     error,

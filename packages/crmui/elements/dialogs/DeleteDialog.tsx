@@ -42,9 +42,9 @@ export function useAcceptDialog(): {
   const [acceptCallback, setAcceptCallback] = React.useState<
     (() => void) | null
   >(null);
-  
+
   const acceptBefore = React.useCallback((callback: () => void) => {
-    setAcceptCallback(()=>callback);
+    setAcceptCallback(() => callback);
   }, []);
 
   const dialogProps = React.useMemo(() => {

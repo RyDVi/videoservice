@@ -1,5 +1,5 @@
-import React, { createContext } from 'react';
-import { useArray } from './array';
+import React, { createContext } from "react";
+import { useArray } from "./array";
 
 export interface SelectionResult<Data, Value = any> {
   select: (data: Data | Data[]) => void;
@@ -41,7 +41,9 @@ export function useSelector<Data, Value = any>(
     (data: Data | Data[]) => {
       if (Array.isArray(data)) {
         const itemsForUnselect = data.map((d) => getSelectionValue(d));
-        const itemsForSelect = items.filter((item) => !itemsForUnselect.includes(item));
+        const itemsForSelect = items.filter(
+          (item) => !itemsForUnselect.includes(item)
+        );
         setItems(itemsForSelect);
         return;
       }
@@ -92,13 +94,20 @@ export function SelectorProvider<Data, Value = any>(props: {
 }) {
   const { children, isSelectedCallback } = props;
   const selector = useSelector<Data, Value>(isSelectedCallback);
-  return <SelectorContext.Provider value={selector}>{children}</SelectorContext.Provider>;
+  return (
+    <SelectorContext.Provider value={selector}>
+      {children}
+    </SelectorContext.Provider>
+  );
 }
 
-export function useSelectorContext<Data, Value = any>(): SelectionResult<Data, Value> {
+export function useSelectorContext<Data, Value = any>(): SelectionResult<
+  Data,
+  Value
+> {
   const selectionContext = React.useContext(SelectorContext);
   if (selectionContext === undefined) {
-    throw new Error('SelectionContext is not provided.');
+    throw new Error("SelectionContext is not provided.");
   }
   return selectionContext;
 }

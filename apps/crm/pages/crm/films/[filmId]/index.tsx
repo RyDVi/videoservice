@@ -23,7 +23,7 @@ import {
   useVideos,
   Video,
   VideoFile,
-  useDeleteFilmPerson
+  useDeleteFilmPerson,
 } from "@modules/api";
 import Head from "next/head";
 import { Box, Button } from "@mui/material";

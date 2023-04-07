@@ -23,7 +23,7 @@ interface ThemePropviderProps {
 export const ThemeControlProvider: React.FC<ThemePropviderProps> = ({
   children,
   themes,
-  initialTheme
+  initialTheme,
 }) => {
   const [state, methods] = useMethods(
     {
