@@ -47,7 +47,7 @@ export default function Home() {
       <Head>
         <title>Фильмы и сериалы смотреть онлайн</title>
       </Head>
-      {Object.values(categoriesWithDicts).map((category) => <FilmCateogory category={category} />)}
+      {Object.values(categoriesWithDicts).map((category) => <FilmCateogory key={category.id} category={category} />)}
     </Box>
   );
 }
