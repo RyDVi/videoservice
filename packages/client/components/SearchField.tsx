@@ -4,9 +4,12 @@ import {
   InputBase,
   InputBaseProps,
   Paper,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import HelpIcon from "@mui/icons-material/Help";
 
 interface SearchFieldProps extends InputBaseProps {
   onSearch?: (searchText: string) => void;
@@ -24,6 +27,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
     },
     [onSearch, searchText]
   );
+  const [isHelpOpen, setHelpOpen] = React.useState(false);
   return (
     <Paper
       sx={{ padding: "8px 1rem", display: "flex", width: 1 }}
@@ -32,7 +36,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
     >
       <InputBase
         name="search"
-        placeholder="Поиск фильма"
+        placeholder="Введите название или описание фильма"
         sx={{ flex: 1 }}
         onChange={(event) => setSearchText(event.target.value)}
         {...props}
@@ -40,6 +44,21 @@ export const SearchField: React.FC<SearchFieldProps> = ({
       <IconButton type="submit">
         <SearchIcon />
       </IconButton>
+      <Tooltip
+        title={
+          <Typography variant="caption">
+            Введите всё, что помните о фильме: название, описание, актера, продюсера, режисера
+          </Typography>
+        }
+        open={isHelpOpen}
+        onClose={() => setHelpOpen(false)}
+        onMouseEnter={() => setHelpOpen(true)}
+        arrow
+      >
+        <IconButton onClick={() => setHelpOpen(!isHelpOpen)}>
+          <HelpIcon />
+        </IconButton>
+      </Tooltip>
     </Paper>
   );
 };
