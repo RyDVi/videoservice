@@ -1,4 +1,4 @@
-import { SearchField } from "@modules/client";
+import { HelpButton, HelpSearchFilmText, SearchField } from "@modules/client";
 import { CodesOfCountry } from "@modules/constants";
 import { useDictionariesContext } from "@modules/stores";
 import { Box, Divider, List, styled } from "@mui/material";
@@ -29,7 +29,15 @@ export const SidebarContent: React.FC = () => {
   return (
     <Box sx={{ width: "90vw" }}>
       <SidebarHeader>
-        <SearchField onSearch={search} />
+        <SearchField
+          onSearch={search}
+          endButtons={
+            <HelpButton>
+              <HelpSearchFilmText />
+            </HelpButton>
+          }
+          placeholder="Введите название или опишите фильм"
+        />
         {/* <ThemeToggleButton /> */}
       </SidebarHeader>
       <Divider />

@@ -7,6 +7,8 @@ import {
   DownTabletScreen,
   Sidebar,
   SidebarToggler,
+  HelpButton,
+  HelpSearchFilmText,
 } from "@modules/client";
 import { LogoSvg } from "@modules/client/svg";
 import {
@@ -227,7 +229,17 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
                 <Categories />
               </>
             }
-            search={<SearchField onSearch={search} />}
+            search={
+              <SearchField
+                onSearch={search}
+                endButtons={
+                  <HelpButton>
+                    <HelpSearchFilmText />
+                  </HelpButton>
+                }
+                placeholder="Введите название или опишите фильм"
+              />
+            }
             sidebarButton={<SidebarToggler />}
           />
         }
