@@ -9,7 +9,7 @@ export default function CopyrightPage() {
       <Head>
         <title>Правообладателям</title>
       </Head>
-      <Typography component="h1" variant="h3">
+      <Typography component="h1" variant="h3" sx={{ wordWrap: "break-word" }}>
         Правообладателям
       </Typography>
       <p>

@@ -382,7 +382,6 @@ export default function FilmPage() {
   if (!films?.results.length && !filmsErrors && !isFilmsLoading) {
     return <NotFound text="Фильм не найден" />;
   }
-  console.log(film?.image);
   return (
     <Container maxWidth="lg">
       <Head>
