@@ -7,7 +7,7 @@ import createEmotionCache from "../src/createEmotionCache";
 import { SWRConfig } from "swr";
 import { axiosInstance } from "@modules/api";
 import { NextPage } from "next";
-import { Theme, ThemeLoader, ThemeSaver } from "../src/Theme";
+import { Theme, ThemeLoader, ThemeSaver } from "@modules/theme";
 import "../styles/index.css";
 import { DictionariesProvider } from "@modules/stores";
 

@@ -3,12 +3,9 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "../../packages/theme/index.ts",
-    "../../packages/theme/index.ts",
-    "../../packages/theme/themes.ts",
-    "../../packages/theme/theme.tsx",
-    "../../packages/theme/ThemeControlContext.tsx"
+    "**/*.tsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

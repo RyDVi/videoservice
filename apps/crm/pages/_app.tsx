@@ -5,7 +5,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/createEmotionCache";
 import { SWRConfig } from "swr";
 import { axiosInstance } from "@modules/api";
-import { Theme, ThemeLoader, ThemeSaver } from "../src/theme";
+import { Theme, ThemeLoader, ThemeSaver } from "@modules/theme";
 import { NextPage } from "next";
 import { PageProvider } from "crmui";
 
