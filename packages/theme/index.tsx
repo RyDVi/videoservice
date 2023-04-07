@@ -1,3 +1,4 @@
 export * from "./ThemeControlContext";
-export * from "./theme";
 export * from "./themes";
+export * from "./theme";
+export { Theme } from "./theme";

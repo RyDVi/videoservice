@@ -41,7 +41,7 @@ const nextConfig = {
     ];
   },
   reactStrictMode: true,
-  transpilePackages: ["crmui"],
+  transpilePackages: ["crmui", "@modules/*"],
   generateBuildId: async () => {
     return "videoservice-crm";
   },

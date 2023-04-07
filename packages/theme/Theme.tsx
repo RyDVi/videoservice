@@ -10,19 +10,24 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import React from "react";
 import { useLocalStorage } from "@modules/hooks";
 
-export const Theme: React.FC<{
+export function Theme({
+  children,
+  defaultTheme,
+}: {
   children: React.ReactNode;
   defaultTheme: ThemeType;
-}> = ({ children, defaultTheme }) => (
-  <ThemeControlProvider
-    themes={NAME_THEME_MAP}
-    initialTheme={NAME_THEME_MAP[defaultTheme]}
-  >
-    <ThemeControlContext.Consumer>
-      {({ theme }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>}
-    </ThemeControlContext.Consumer>
-  </ThemeControlProvider>
-);
+}) {
+  return (
+    <ThemeControlProvider
+      themes={NAME_THEME_MAP}
+      initialTheme={NAME_THEME_MAP[defaultTheme]}
+    >
+      <ThemeControlContext.Consumer>
+        {({ theme }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>}
+      </ThemeControlContext.Consumer>
+    </ThemeControlProvider>
+  );
+}
 
 function useThemeStorage() {
   return useLocalStorage<ThemeType | null>("theme", null);
@@ -51,7 +56,7 @@ export const ThemeLoader: React.FC = () => {
     if (themeFromStorage && theme !== NAME_THEME_MAP[themeFromStorage]) {
       setTheme(NAME_THEME_MAP[themeFromStorage]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return null;
 };

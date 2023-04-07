@@ -229,17 +229,17 @@ const DetailsContent: React.FC<DetailsContentProps> = ({
             </ListItem>
             {genres
               ? genres.map((genre) => (
-                <GenreListItem key={genre.id} genre={genre} />
-              ))
+                  <GenreListItem key={genre.id} genre={genre} />
+                ))
               : Array.from({ length: 5 }, (_, index) => (
-                <Skeleton key={index}>
-                  <GenreListItem
-                    genre={api.genres.initial({
-                      name: "Какой-нибудь жанр",
-                    })}
-                  />
-                </Skeleton>
-              ))}
+                  <Skeleton key={index}>
+                    <GenreListItem
+                      genre={api.genres.initial({
+                        name: "Какой-нибудь жанр",
+                      })}
+                    />
+                  </Skeleton>
+                ))}
           </List>
           {Object.entries(personsByRole).map(([roleName, filmPersons]) => (
             <List key={roleName} disablePadding>
@@ -272,19 +272,21 @@ function useVideoWithVideoFiles(
     if (!videos) {
       return [];
     }
-    return videos.map((video) => {
-      let videoFilesForVideo: VideoFile[] = [];
-      if (videoFiles) {
-        videoFilesForVideo = videoFiles.filter(
-          (videoFile) => videoFile.video === video.id && !!videoFile.file
-        );
-      }
-      return { ...video, videoFiles: videoFilesForVideo };
-    }, []).filter((video)=>!!video.videoFiles.length);
+    return videos
+      .map((video) => {
+        let videoFilesForVideo: VideoFile[] = [];
+        if (videoFiles) {
+          videoFilesForVideo = videoFiles.filter(
+            (videoFile) => videoFile.video === video.id && !!videoFile.file
+          );
+        }
+        return { ...video, videoFiles: videoFilesForVideo };
+      }, [])
+      .filter((video) => !!video.videoFiles.length);
   }, [videoFiles, videos]);
 }
 
-const PosterImage = styled('img')(({ theme }) => ({
+const PosterImage = styled("img")(({ theme }) => ({
   aspectRatio: "3/4",
   height: "fit-content",
   width: "30%",
@@ -318,8 +320,8 @@ const VideoPlayer: React.FC<{ film?: Film | null }> = ({ film }) => {
   const { videoFiles, isVideoFilesLoading } = useVideoFiles(
     videos?.length
       ? {
-        video: videos?.map((v) => v.id).join(","),
-      }
+          video: videos?.map((v) => v.id).join(","),
+        }
       : null
   );
   const videosWithVideoFiles = useVideoWithVideoFiles(videos, videoFiles);
@@ -327,21 +329,21 @@ const VideoPlayer: React.FC<{ film?: Film | null }> = ({ film }) => {
     if (!videoFiles?.length || !film) {
       return "";
     }
-    if (film.type === 'film') {
-      return makeVideoFilesUrlsForPlayer(videoFiles)
+    if (film.type === "film") {
+      return makeVideoFilesUrlsForPlayer(videoFiles);
     }
     const grouppedBySeasons = groupBy(videosWithVideoFiles, "season");
     return Object.entries(grouppedBySeasons).map(([season, videos]) => {
-      return ({
+      return {
         title: `Сезон ${season}`,
         folder: videos.map((video) => ({
           id: `${video.season} ${video.series}`,
           title: `Серия ${video.series}`,
           file: makeVideoFilesUrlsForPlayer(video.videoFiles),
-        }))
-      });
+        })),
+      };
     });
-  }, [videoFiles?.length, videosWithVideoFiles]);
+  }, [film, videoFiles, videosWithVideoFiles]);
   if (isVideoFilesLoading) {
     return (
       <Skeleton
@@ -366,10 +368,11 @@ export default function FilmPage() {
     () => (films?.results.length ? films?.results[0] : null),
     [films?.results]
   );
-  const genres = useDictionariesContext().genres
+  const genres = useDictionariesContext().genres;
   const { persons } = usePersons({ id: film?.persons.join(",") });
   const filmGenres = React.useMemo(
-    () => Object.values(genres).filter((genre) => film?.genres.includes(genre.id)),
+    () =>
+      Object.values(genres).filter((genre) => film?.genres.includes(genre.id)),
     [film?.genres, genres]
   );
   const { personRoles } = usePersonRoles();
@@ -379,7 +382,7 @@ export default function FilmPage() {
   if (!films?.results.length && !filmsErrors && !isFilmsLoading) {
     return <NotFound text="Фильм не найден" />;
   }
-  console.log(film?.image)
+  console.log(film?.image);
   return (
     <Container maxWidth="lg">
       <Head>
