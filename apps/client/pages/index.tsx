@@ -1,4 +1,4 @@
-import { Film, useFilms } from "@modules/api";
+import { Category, Film, useFilms } from "@modules/api";
 import {
   FilmCategoryBlock,
   FilmsGridLoader,
@@ -10,6 +10,7 @@ import { AppPage } from "../src/AppPage";
 import { useFilmMove } from "../src/hooks";
 import { Box } from "@mui/material";
 import Head from "next/head";
+import { useDictionariesContext } from "@modules/stores";
 
 const FilmGridHome: React.FC<{ films?: Film[]; loading?: boolean }> = ({
   films,
@@ -24,49 +25,29 @@ const FilmGridHome: React.FC<{ films?: Film[]; loading?: boolean }> = ({
   }
   return <FilmsGrid films={films} toFilm={buildHrefToFilm} />;
 };
-export default function Home() {
-  const { films: serials, isFilmsLoading: isSerialsLoading } = useFilms({
-    category: "сериалы",
-    page_size: 10,
-  });
+
+const FilmCateogory: React.FC<{ category: Category }> = ({ category }) => {
   const { films, isFilmsLoading } = useFilms({
-    category: "фильмы",
+    category: category.slug,
     page_size: 10,
   });
-  const { films: multfilms, isFilmsLoading: isMultfilmsLoading } = useFilms({
-    category: "мультфильмы",
-    page_size: 10,
-  });
+  return <FilmCategoryBlock
+    categoryName={category.name}
+    categoryHref={paths.category({ category: category.slug })}
+  >
+    <FilmGridHome films={films?.results || []} loading={isFilmsLoading} />
+  </FilmCategoryBlock>
+}
+
+export default function Home() {
+  const categoriesWithDicts = useDictionariesContext().categoriesWithDicts
 
   return (
     <Box sx={{ padding: 3, display: "grid", gap: "5rem" }}>
       <Head>
         <title>Фильмы и сериалы смотреть онлайн</title>
       </Head>
-      <FilmCategoryBlock
-        categoryName="Фильмы"
-        categoryHref={paths.category({ category: "фильмы" })}
-      >
-        <FilmGridHome films={films?.results || []} loading={isFilmsLoading} />
-      </FilmCategoryBlock>
-      <FilmCategoryBlock
-        categoryName="Сериалы"
-        categoryHref={paths.category({ category: "Сериалы" })}
-      >
-        <FilmGridHome
-          films={serials?.results || []}
-          loading={isSerialsLoading}
-        />
-      </FilmCategoryBlock>
-      <FilmCategoryBlock
-        categoryName="Мультфильмы"
-        categoryHref={paths.category({ category: "Мультфильмы" })}
-      >
-        <FilmGridHome
-          films={multfilms?.results || []}
-          loading={isMultfilmsLoading}
-        />
-      </FilmCategoryBlock>
+      {Object.values(categoriesWithDicts).map((category) => <FilmCateogory category={category} />)}
     </Box>
   );
 }

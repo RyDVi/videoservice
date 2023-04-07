@@ -2,25 +2,12 @@ import { useFilms } from "@modules/api";
 import { FilmsGrid, FilmsGridLoader, NotFoundFilms } from "@modules/client";
 import { usePage } from "@modules/nextjs";
 import { Box, Container, Pagination } from "@mui/material";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import { AppPage } from "../../../../../src/AppPage";
 import { COUNT_FILMS_PER_PAGE } from "../../../../../src/constants";
 import { useFilmMove } from "../../../../../src/hooks";
-
-const SubcategoryHeadTitle: React.FC = () => {
-  const router = useRouter();
-  const category = router.query.category as string;
-  const name = router.query.name as string;
-  return (
-    <Head>
-      <title>
-        {category} {name} смотреть онлайн
-      </title>
-    </Head>
-  );
-};
+import { CategoryTitle } from "../../../../../src/HeadTitles";
 
 export default function SubCategoryPage() {
   const [page, updatePage, page_size] = usePage({
@@ -40,7 +27,7 @@ export default function SubCategoryPage() {
   if (isFilmsLoading) {
     return (
       <>
-        <SubcategoryHeadTitle />
+        <CategoryTitle />
         <FilmsGridLoader />
       </>
     );
@@ -48,14 +35,14 @@ export default function SubCategoryPage() {
   if (!films?.results.length) {
     return (
       <>
-        <SubcategoryHeadTitle />
+        <CategoryTitle />
         <NotFoundFilms />
       </>
     );
   }
   return (
     <Container maxWidth="lg" sx={{ p: 1 }}>
-      <SubcategoryHeadTitle />
+      <CategoryTitle />
       <FilmsGrid films={films?.results || []} toFilm={buildHrefToFilm} />
       <Box sx={{ justifyContent: "center", display: "flex", p: 1 }}>
         <Pagination
