@@ -24,7 +24,6 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import StarIcon from "@mui/icons-material/Star";
 import { COUNTRIES_MAP } from "@modules/constants";
 import React from "react";
@@ -264,6 +263,7 @@ interface VideoWithVideoFiles extends Video {
   videoFiles: VideoFile[];
 }
 
+// TODO: нужно оптимизировать, изменить map и filter, а то сложность O^2
 function useVideoWithVideoFiles(
   videos?: Video[],
   videoFiles?: VideoFile[]
@@ -276,19 +276,19 @@ function useVideoWithVideoFiles(
       let videoFilesForVideo: VideoFile[] = [];
       if (videoFiles) {
         videoFilesForVideo = videoFiles.filter(
-          (videoFile) => videoFile.video === video.id
+          (videoFile) => videoFile.video === video.id && !!videoFile.file
         );
       }
       return { ...video, videoFiles: videoFilesForVideo };
-    }, []);
+    }, []).filter((video)=>!!video.videoFiles.length);
   }, [videoFiles, videos]);
 }
 
-const PosterImage = styled(Image)(({ theme }) => ({
+const PosterImage = styled('img')(({ theme }) => ({
   aspectRatio: "3/4",
   height: "fit-content",
   width: "30%",
-  objectFit: "contain",
+  objectFit: "cover",
   [theme.breakpoints.down("md")]: {
     width: "auto",
     maxWidth: "100%",
@@ -328,18 +328,19 @@ const VideoPlayer: React.FC<{ film?: Film | null }> = ({ film }) => {
       return "";
     }
     if (film.type === 'film') {
-      console.log(videoFiles)
       return makeVideoFilesUrlsForPlayer(videoFiles)
     }
     const grouppedBySeasons = groupBy(videosWithVideoFiles, "season");
-    return Object.entries(grouppedBySeasons).map(([season, videos]) => ({
-      title: `Сезон ${season}`,
-      folder: videos.map((video) => ({
-        id: `${video.season} ${video.series}`,
-        title: `Серия ${video.series}`,
-        file: makeVideoFilesUrlsForPlayer(video.videoFiles),
-      })),
-    }));
+    return Object.entries(grouppedBySeasons).map(([season, videos]) => {
+      return ({
+        title: `Сезон ${season}`,
+        folder: videos.map((video) => ({
+          id: `${video.season} ${video.series}`,
+          title: `Серия ${video.series}`,
+          file: makeVideoFilesUrlsForPlayer(video.videoFiles),
+        }))
+      });
+    });
   }, [videoFiles?.length, videosWithVideoFiles]);
   if (isVideoFilesLoading) {
     return (
@@ -378,6 +379,7 @@ export default function FilmPage() {
   if (!films?.results.length && !filmsErrors && !isFilmsLoading) {
     return <NotFound text="Фильм не найден" />;
   }
+  console.log(film?.image)
   return (
     <Container maxWidth="lg">
       <Head>
@@ -393,7 +395,7 @@ export default function FilmPage() {
             height="1600"
           />
         ) : (
-          <SkeletonPosterImage variant="rectangular" src={""} alt={""} />
+          <SkeletonPosterImage variant="rectangular" />
         )}
         <DetailsContent
           film={film}

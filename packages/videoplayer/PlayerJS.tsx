@@ -19,7 +19,7 @@ interface PlayerJSSeria {
 
 export interface PlayerJSFolder {
   title: string;
-  folder: PlayerJSSeria[];
+  folder?: PlayerJSSeria[];
 }
 
 interface PlayerJSProps {
