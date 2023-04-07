@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import * as paths from "./paths";
-import { useThemeControl } from "../../../packages/theme";
+import { useThemeControl } from "@modules/theme";
 import { CodesOfCountry } from "@modules/constants/country";
 import { CategoriesLists } from "./lists";
 import { useForceUpdate } from "@modules/hooks";
