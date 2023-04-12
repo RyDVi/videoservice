@@ -8,6 +8,7 @@ import { red, grey } from "@mui/material/colors";
 
 interface DefaultPaletteOptions extends PaletteOptions {
   primary?: SimplePaletteColorOptions;
+  secondary?: SimplePaletteColorOptions;
   error?: SimplePaletteColorOptions;
 }
 declare module "@mui/material/styles" {

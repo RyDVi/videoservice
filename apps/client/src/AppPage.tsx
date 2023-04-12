@@ -9,6 +9,7 @@ import {
   SidebarToggler,
   HelpButton,
   HelpSearchFilmText,
+  FloatingSearchChatButton,
 } from "@modules/client";
 import { LogoSvg } from "@modules/client/svg";
 import {
@@ -215,7 +216,7 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
         <SidebarContent />
       </Sidebar>
       <PageContainer
-        sx={{ minHeight: "100vh", height: "100vh" }}
+        sx={{ minHeight: "100vh", height: "100vh", position: "relative" }}
         header={
           <PageHeader
             logo={
@@ -247,6 +248,7 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
         footer={<AppPageFooter logo={<LogoSvg />} />}
       >
         {children}
+        <FloatingSearchChatButton />
       </PageContainer>
     </SidebarProvider>
   );
