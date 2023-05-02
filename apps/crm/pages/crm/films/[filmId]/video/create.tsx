@@ -1,15 +1,12 @@
-import {
-  CRMContainer,
-  CrmSidebar,
-  paths,
-  CreateEditVideoForm,
-  CardForm,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import { useRouter } from "next/router";
-import { api, useFilm } from "@modules/api";
+import { api } from "@modules/api";
+import { useFilm } from "@modules/request-hooks";
 import Head from "next/head";
 import { Box } from "@mui/material";
+import * as paths from "src/paths";
+import { CardForm, CreateEditVideoForm } from "src/forms";
+import { CrmSidebar } from "src/CrmSidebar";
 
 function CreateVideoPage() {
   const router = useRouter();

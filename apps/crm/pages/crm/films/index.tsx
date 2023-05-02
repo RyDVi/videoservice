@@ -1,18 +1,29 @@
-import {
-  FilmsToolbar,
-  paths,
-  CrmSidebar,
-  CRMContainer,
-  FilmsTable,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, FilmsTable, useCrmPageTitle } from "@modules/crm";
+import { CrmSidebar } from "src/CrmSidebar";
 import { useRouter } from "next/router";
 import { useQuery } from "@modules/nextjs";
-import { useFilms } from "@modules/api";
-import { Box, Paper } from "@mui/material";
+import { useFilms } from "@modules/request-hooks";
+import { Box, Button, Paper } from "@mui/material";
 import Head from "next/head";
 import { useGridSortModel, useMuiPage } from "@modules/mui-adapter";
 import { useMemo } from "react";
+import * as paths from "src/paths";
+import AddIcon from "@mui/icons-material/Add";
+import { GridToolbarContainer } from "@mui/x-data-grid";
+
+const FilmsToolbar: React.FC = () => {
+  const router = useRouter();
+  return (
+    <GridToolbarContainer>
+      <Button
+        startIcon={<AddIcon />}
+        onClick={() => router.push(paths.filmCreate({}))}
+      >
+        Создать фильм
+      </Button>
+    </GridToolbarContainer>
+  );
+};
 
 function FilmsPage() {
   const query = useQuery();

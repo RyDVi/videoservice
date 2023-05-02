@@ -1,14 +1,10 @@
-import { useDeletePersonRole, usePersonRoles } from "@modules/api";
+import { useDeletePersonRole, usePersonRoles } from "@modules/request-hooks";
 import { CircularProgress } from "@mui/material";
-import {
-  CRMContainer,
-  CrmSidebar,
-  DictionariesList,
-  DictionaryPanel,
-  paths,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import Head from "next/head";
+import * as paths from "src/paths";
+import { CrmSidebar } from "src/CrmSidebar";
+import { DictionariesList, DictionaryPanel } from "src/elements";
 
 function PersonRolesPage() {
   const { isPersonRolesLoading, personRoles } = usePersonRoles();

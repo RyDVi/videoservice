@@ -1,16 +1,17 @@
-import { Category, Film, useFilms } from "@modules/api";
+import { Category, Film } from "@modules/api";
 import {
   FilmCategoryBlock,
-  FilmsGridLoader,
   FilmsGrid,
+  FilmsGridLoader,
   NotFoundFilms,
 } from "@modules/client";
-import * as paths from "../src/paths";
-import { AppPage } from "../src/AppPage";
-import { useFilmMove } from "../src/hooks";
+import { useFilms } from "@modules/request-hooks";
+import { useDictionariesContext } from "@modules/stores";
 import { Box } from "@mui/material";
 import Head from "next/head";
-import { useDictionariesContext } from "@modules/stores";
+import * as paths from "src/paths";
+import { AppPage } from "src/AppPage";
+import { useFilmMove } from "src/hooks";
 
 const FilmGridHome: React.FC<{ films?: Film[]; loading?: boolean }> = ({
   films,

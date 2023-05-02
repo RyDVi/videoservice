@@ -1,9 +1,10 @@
-import { useCategory } from "@modules/api";
-import { CrmSidebar, CRMContainer, useCrmPageTitle } from "crmui";
+import { useCategory } from "@modules/request-hooks";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
+import { CrmSidebar } from "src/CrmSidebar";
 import { useRouter } from "next/router";
-import { CreateEditCategoryForm } from "crmui";
 import React from "react";
 import { CircularProgress } from "@mui/material";
+import { CreateEditCategoryForm } from "src/forms";
 
 function CategoriesPage() {
   const router = useRouter();

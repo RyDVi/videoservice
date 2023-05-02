@@ -2,12 +2,21 @@ import Head from "next/head";
 import { AppProps } from "next/app";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import createEmotionCache from "../src/createEmotionCache";
+import createEmotionCache from "src/createEmotionCache";
 import { SWRConfig } from "swr";
-import { axiosInstance } from "@modules/api";
 import { Theme, ThemeLoader, ThemeSaver } from "@modules/theme";
 import { NextPage } from "next";
-import { PageProvider } from "crmui";
+import { PageProvider } from "@modules/crm";
+import {
+  AxiosContext,
+  createRequestInstance,
+  getCsrfConfig,
+} from "@modules/request-hooks";
+
+const axiosInstance = createRequestInstance(
+  getCsrfConfig(process.env.NEXT_PUBLIC_SERVER_URL!),
+  true
+);
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -34,7 +43,6 @@ export default function MyApp(props: MyAppProps) {
         <ThemeLoader />
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        {/* <SessionProvider session={csrfToken?.toString() || null}> */}
         <SWRConfig
           value={{
             fetcher: (resource: string | [string, any], init) => {
@@ -52,9 +60,12 @@ export default function MyApp(props: MyAppProps) {
             },
           }}
         >
-          <PageProvider>{getLayout(<Component {...pageProps} />)}</PageProvider>
+          <AxiosContext.Provider value={axiosInstance}>
+            <PageProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </PageProvider>
+          </AxiosContext.Provider>
         </SWRConfig>
-        {/* </SessionProvider> */}
       </Theme>
     </CacheProvider>
   );

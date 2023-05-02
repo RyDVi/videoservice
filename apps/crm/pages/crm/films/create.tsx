@@ -1,14 +1,10 @@
-import {
-  CardForm,
-  CRMContainer,
-  CrmSidebar,
-  CreateEditFilmForm,
-  paths,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
+import { CrmSidebar } from "src/CrmSidebar";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { styled } from "@mui/material";
+import * as paths from "src/paths";
+import { CardForm, CreateEditFilmForm } from "src/forms";
 
 const CreateFilmCard = styled(CardForm)({
   maxWidth: 500,

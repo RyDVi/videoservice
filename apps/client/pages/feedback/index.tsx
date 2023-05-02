@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import Head from "next/head";
-import { AppPage } from "../../src/AppPage";
-import { EmailLink } from "../../src/Contacts";
+import { AppPage } from "src/AppPage";
+import { EmailLink } from "src/Contacts";
 
 export default function FeedbackPage() {
   return (

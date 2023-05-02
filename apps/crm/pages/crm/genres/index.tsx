@@ -1,14 +1,10 @@
-import { useDeleteGenre, useGenres } from "@modules/api";
+import { useDeleteGenre, useGenres } from "@modules/request-hooks";
 import { CircularProgress } from "@mui/material";
-import {
-  CRMContainer,
-  CrmSidebar,
-  DictionariesList,
-  DictionaryPanel,
-  paths,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import Head from "next/head";
+import * as paths from "src/paths";
+import { CrmSidebar } from "src/CrmSidebar";
+import { DictionariesList, DictionaryPanel } from "src/elements";
 
 function GenresPage() {
   const { genres, isGenresLoading } = useGenres();

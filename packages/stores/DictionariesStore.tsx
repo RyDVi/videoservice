@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  CategoryWithDicts,
-  Genre,
-  useCategoriesWithDicts,
-  useGenres,
-} from "@modules/api";
+import { CategoryWithDicts, Genre } from "@modules/api";
+import { useCategoriesWithDicts, useGenres } from "@modules/request-hooks";
 import { ObjectUtils } from "../utils/objects";
 
 interface DictionariesContext {

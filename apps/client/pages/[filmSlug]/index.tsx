@@ -3,17 +3,19 @@ import {
   Genre,
   Person,
   PersonRole,
+  Video,
+  VideoFile,
+  api,
+  FilmPerson,
+} from "@modules/api";
+import {
+  useVideoFiles,
+  useFilmsPersons,
   useFilms,
   usePersonRoles,
   usePersons,
   useVideos,
-  Video,
-  VideoFile,
-  api,
-  useVideoFiles,
-  useFilmsPersons,
-  FilmPerson,
-} from "@modules/api";
+} from "@modules/request-hooks";
 import {
   Box,
   Container,
@@ -27,7 +29,7 @@ import { useRouter } from "next/router";
 import StarIcon from "@mui/icons-material/Star";
 import { COUNTRIES_MAP } from "@modules/constants";
 import React from "react";
-import { AppPage } from "../../src/AppPage";
+import { AppPage } from "src/AppPage";
 import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
 import * as R from "ramda";
 import { NotFound, NotFoundVideoFiles } from "@modules/client/notfound";

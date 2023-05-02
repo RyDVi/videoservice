@@ -1,4 +1,5 @@
-import { CRMContainer, CrmSidebar } from "crmui";
+import { CRMContainer } from "@modules/crm";
+import { CrmSidebar } from "src/CrmSidebar";
 
 function SettingsPage() {
   return <>Настройки</>;

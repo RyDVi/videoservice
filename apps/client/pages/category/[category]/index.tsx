@@ -1,12 +1,12 @@
-import { useFilms } from "@modules/api";
+import { useFilms } from "@modules/request-hooks";
 import { FilmsGrid, FilmsGridLoader, NotFoundFilms } from "@modules/client";
 import { usePage } from "@modules/nextjs";
 import { Box, Container, Pagination } from "@mui/material";
 import { useRouter } from "next/router";
-import { AppPage } from "../../../src/AppPage";
-import { COUNT_FILMS_PER_PAGE } from "../../../src/constants";
-import { useFilmMove } from "../../../src/hooks";
-import { CategoryTitle } from "../../../src/HeadTitles";
+import { AppPage } from "src/AppPage";
+import { COUNT_FILMS_PER_PAGE } from "src/constants";
+import { useFilmMove } from "src/hooks";
+import { CategoryTitle } from "src/HeadTitles";
 
 export default function CategoryPage() {
   const [page, updatePage, page_size] = usePage({

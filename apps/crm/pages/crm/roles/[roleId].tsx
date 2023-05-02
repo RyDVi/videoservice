@@ -1,13 +1,10 @@
-import {
-  CrmSidebar,
-  CRMContainer,
-  CreateEditPersonRoleForm,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import { useRouter } from "next/router";
 import React from "react";
 import { CircularProgress } from "@mui/material";
-import { usePersonRole } from "@modules/api";
+import { usePersonRole } from "@modules/request-hooks";
+import { CrmSidebar } from "src/CrmSidebar";
+import { CreateEditPersonRoleForm } from "src/forms";
 
 function PersonRolePage() {
   const router = useRouter();

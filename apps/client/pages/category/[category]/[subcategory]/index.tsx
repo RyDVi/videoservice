@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { AppPage } from "../../../../src/AppPage";
-import * as paths from "../../../../src/paths";
+import { AppPage } from "src/AppPage";
+import * as paths from "src/paths";
 
 export default function SubcategoryPage() {
   const router = useRouter();

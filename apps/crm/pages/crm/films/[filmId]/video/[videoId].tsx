@@ -1,28 +1,27 @@
-import {
-  CRMContainer,
-  CrmSidebar,
-  CardForm,
-  AddElementCard,
-  CreateEditSubtitleFileForm,
-  SubtitleFileInfoCard,
-  VideoInfoCard,
-  CreateEditVideoFileForm,
-  VideoFileInfoCard,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import { useRouter } from "next/router";
 import {
   useFilm,
   useSubtitleFiles,
   useVideo,
   useVideoFiles,
-  api,
-} from "@modules/api";
+} from "@modules/request-hooks";
+import { api } from "@modules/api";
 import Head from "next/head";
-import { Box, Card, CardContent, CardHeader, Icon } from "@mui/material";
+import { Box, Card, CardContent, CardHeader } from "@mui/material";
 import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
 import { useMemo } from "react";
 import Script from "next/script";
+import {
+  AddElementCard,
+  CardForm,
+  CreateEditSubtitleFileForm,
+  CreateEditVideoFileForm,
+  SubtitleFileInfoCard,
+  VideoFileInfoCard,
+  VideoInfoCard,
+} from "src/forms";
+import { CrmSidebar } from "src/CrmSidebar";
 
 function FilmsPage() {
   const router = useRouter();

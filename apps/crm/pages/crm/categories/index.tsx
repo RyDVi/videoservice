@@ -1,14 +1,10 @@
-import { useCategories, useDeleteCategory } from "@modules/api";
+import { useCategories, useDeleteCategory } from "@modules/request-hooks";
 import { CircularProgress } from "@mui/material";
-import {
-  CrmSidebar,
-  CRMContainer,
-  paths,
-  DictionaryPanel,
-  DictionariesList,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
+import { CrmSidebar } from "src/CrmSidebar";
 import React from "react";
+import * as paths from "src/paths";
+import { DictionariesList, DictionaryPanel } from "src/elements";
 
 function CategoriesPage() {
   const { categories, isCategoriesLoading } = useCategories({});

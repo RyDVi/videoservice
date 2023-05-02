@@ -14,10 +14,3 @@ export interface Paginated<T> {
   results: T[];
   summary?: Record<string, number>;
 }
-
-export interface RequestError<T = any> {
-  data: T | null;
-  message: string;
-  code?: string | number;
-  isCancel: boolean;
-}

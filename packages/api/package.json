@@ -6,10 +6,7 @@
   "main": "index.ts",
   "dependencies": {
     "react":"^18.2.0",
-    "axios": "^1.2.1",
-    "swr": "^2.0.0",
-    "@modules/constants": "*",
-    "cookies-next": "^2.1.1"
+    "@modules/constants": "*"
   },
   "devDependencies": {
     "@types/react": "^18.0.26"

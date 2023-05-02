@@ -1,8 +1,8 @@
-import { useStaffLogout } from "@modules/api";
+import { useStaffLogout } from "@modules/request-hooks";
 import React from "react";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { paths } from "crmui";
+import * as paths from "src/paths";
 
 const LogoutPage: React.FC = () => {
   const router = useRouter();

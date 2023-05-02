@@ -1,15 +1,7 @@
-import {
-  SeasonsContainer,
-  CardForm,
-  paths,
-  FilmInfoCard,
-  CrmSidebar,
-  CRMContainer,
-  DictionariesMultiselect,
-  PersonRoleMultiselect,
-  useCrmPageTitle,
-} from "crmui";
+import { SeasonsContainer, CRMContainer, useCrmPageTitle } from "@modules/crm";
+import { CrmSidebar } from "src/CrmSidebar";
 import { useRouter } from "next/router";
+import { Video, VideoFile } from "@modules/api";
 import {
   useCategories,
   useFilm,
@@ -21,10 +13,8 @@ import {
   useSaveFilmPerson,
   useVideoFiles,
   useVideos,
-  Video,
-  VideoFile,
   useDeleteFilmPerson,
-} from "@modules/api";
+} from "@modules/request-hooks";
 import Head from "next/head";
 import { Box, Button } from "@mui/material";
 import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";
@@ -32,6 +22,13 @@ import { useMemo } from "react";
 import * as R from "ramda";
 import Script from "next/script";
 import React from "react";
+import * as paths from "src/paths";
+import {
+  CardForm,
+  DictionariesMultiselect,
+  FilmInfoCard,
+  PersonRoleMultiselect,
+} from "src/forms";
 
 function groupBySeason<T extends Video>(videos: T[]): Record<string, T[]> {
   return R.groupBy(R.prop<string>("season"), videos);
@@ -125,7 +122,17 @@ function FilmsPage() {
       >
         <FilmInfoCard film={film} onSave={mutateFilm} />
         <CardForm title="Видеофайлы">
-          <SeasonsContainer videos={videos || []}></SeasonsContainer>
+          <SeasonsContainer
+            videos={videos || []}
+            toSeria={(seria) =>
+              router.push(
+                paths.video({
+                  filmId: seria.video.film,
+                  videoId: seria.video.id,
+                })
+              )
+            }
+          ></SeasonsContainer>
           <Button
             onClick={() =>
               router.push(paths.videoCreate({ filmId: filmId as string }))

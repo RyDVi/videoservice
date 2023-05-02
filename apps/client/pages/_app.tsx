@@ -3,13 +3,22 @@ import Head from "next/head";
 import { AppProps } from "next/app";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import createEmotionCache from "../src/createEmotionCache";
+import createEmotionCache from "src/createEmotionCache";
 import { SWRConfig } from "swr";
-import { axiosInstance } from "@modules/api";
 import { NextPage } from "next";
 import { Theme, ThemeLoader, ThemeSaver } from "@modules/theme";
 import "../styles/index.css";
 import { DictionariesProvider } from "@modules/stores";
+import {
+  AxiosContext,
+  createRequestInstance,
+  getCsrfConfig,
+} from "@modules/request-hooks";
+
+const axiosInstance = createRequestInstance(
+  getCsrfConfig(process.env.NEXT_PUBLIC_SERVER_URL!),
+  true
+);
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -38,24 +47,24 @@ export default function MyApp(props: MyAppProps) {
         <CssBaseline />
         <SWRConfig
           value={{
-            fetcher: (resource: string | [string, any], init) => {
+            fetcher: async (resource: string | [string, any], init) => {
               if (typeof resource === "string") {
-                return axiosInstance
-                  .get(resource, init)
-                  .then((res) => res.data);
+                const res = await axiosInstance.get(resource, init);
+                return res.data;
               }
               if (typeof resource === "object") {
-                return axiosInstance
-                  .get(resource[0], resource[1])
-                  .then((res) => res.data);
+                const res_1 = await axiosInstance.get(resource[0], resource[1]);
+                return res_1.data;
               }
               throw new Error("I don't know how to process this resource");
             },
           }}
         >
-          <DictionariesProvider>
-            {getLayout(<Component {...pageProps} />)}
-          </DictionariesProvider>
+          <AxiosContext.Provider value={axiosInstance}>
+            <DictionariesProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </DictionariesProvider>
+          </AxiosContext.Provider>
         </SWRConfig>
       </Theme>
     </CacheProvider>

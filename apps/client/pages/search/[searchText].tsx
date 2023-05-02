@@ -1,10 +1,10 @@
-import { useFilms } from "@modules/api";
+import { useFilms } from "@modules/request-hooks";
 import { FilmsGrid, FilmsGridLoader } from "@modules/client";
 import { useRouter } from "next/router";
-import { AppPage } from "../../src/AppPage";
-import { useFilmMove } from "../../src/hooks";
+import { AppPage } from "src/AppPage";
+import { useFilmMove } from "src/hooks";
 import { NotFoundFilms } from "@modules/client/notfound/NotFoundFilms";
-import { COUNT_FILMS_PER_PAGE } from "../../src/constants";
+import { COUNT_FILMS_PER_PAGE } from "src/constants";
 import { usePage } from "@modules/nextjs";
 import { Box, Container, Pagination } from "@mui/material";
 import Head from "next/head";

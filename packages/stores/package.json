@@ -8,7 +8,8 @@
   "dependencies": {
     "react": "^18.2.0",
     "@modules/api": "*",
-    "@modules/utils": "*"
+    "@modules/utils": "*",
+    "@modules/request-hooks": "*"
   },
   "devDependencies": {
     "@types/react": "^18.0.26"

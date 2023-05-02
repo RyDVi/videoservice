@@ -1,4 +1,5 @@
-import { CrmSidebar, CRMContainer, useCrmPageTitle } from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
+import { CrmSidebar } from "src/CrmSidebar";
 
 function CustomersPage() {
   useCrmPageTitle("Клиенты");

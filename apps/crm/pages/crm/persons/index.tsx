@@ -1,15 +1,11 @@
-import { useDeletePerson, usePersons } from "@modules/api";
+import { useDeletePerson, usePersons } from "@modules/request-hooks";
 import { formatFullName, searchPerson } from "@modules/utils";
 import { CircularProgress } from "@mui/material";
-import {
-  CRMContainer,
-  CrmSidebar,
-  DictionaryPanel,
-  paths,
-  SimpleList,
-  useCrmPageTitle,
-} from "crmui";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import Head from "next/head";
+import * as paths from "src/paths";
+import { CrmSidebar } from "src/CrmSidebar";
+import { DictionaryPanel, SimpleList } from "src/elements";
 
 function PersonsPage() {
   const { persons, isPersonsLoading } = usePersons();
