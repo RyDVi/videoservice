@@ -24,7 +24,9 @@
     "@next/font": "^13.1.1",
     "ramda": "^0.28.0",
     "static-path": "^0.0.4",
-    "swr": "^2.0.0"
+    "swr": "^2.0.0",
+    "@modules/request-hooks": "*",
+    "@modules/api": "*"
   },
   "devDependencies": {
     "tsconfig": "*",
