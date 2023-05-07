@@ -3,11 +3,11 @@ import { CategoryWithDicts, Genre } from "@modules/api";
 import { useCategoriesWithDicts, useGenres } from "@modules/request-hooks";
 import { ObjectUtils } from "../utils/objects";
 
-interface DictionariesContext {
+interface DictionariesContextProps {
   genres: Record<string, Genre>;
   categoriesWithDicts: Record<string, CategoryWithDicts>;
 }
-const DictionariesContext = React.createContext<DictionariesContext>({
+const DictionariesContext = React.createContext<DictionariesContextProps>({
   genres: {},
   categoriesWithDicts: {},
 });

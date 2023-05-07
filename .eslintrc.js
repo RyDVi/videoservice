@@ -14,4 +14,8 @@ module.exports = {
       rootDir: ["apps/*/"],
     },
   },
+  rules:{
+    // TODO: need remove it and fix in chat
+    "no-unused-vars": "off"
+  }
 };

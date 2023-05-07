@@ -13,3 +13,4 @@ export * from "./users/endpoints";
 export * from "./video/endpoints";
 export * from "./video_files/endpoints";
 export * from "./auth/endpoints";
+export * from "./users/endpoints";

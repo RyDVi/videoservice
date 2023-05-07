@@ -9,7 +9,8 @@ import {
   SidebarToggler,
   HelpButton,
   HelpSearchFilmText,
-  FloatingSearchChatButton,
+  FloatingChatButton,
+  Chat,
 } from "@modules/client";
 import { LogoSvg } from "@modules/client/svg";
 import {
@@ -33,6 +34,8 @@ import { SidebarContent } from "./SidebarContent";
 import * as paths from "./paths";
 import { useDictionariesContext } from "@modules/stores";
 import { COUNTRIES_MAP } from "@modules/constants";
+import { uuid4 } from "@modules/utils";
+import { Message } from "@modules/api";
 
 const PageHeaderContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.pageBackground?.main,
@@ -209,6 +212,22 @@ interface AppPageProps {
 export const AppPage: React.FC<AppPageProps> = ({ children }) => {
   const { search } = useSearch();
   const pageBreadcrumbs = usePageBreadcrumbs();
+  const [messages, setMessages] = React.useState<Message[]>(
+    Array.from({ length: 1 }, () => [
+      {
+        id: uuid4(),
+        text: "Some",
+        sender_id: "user1_user",
+        created_at: new Date().toISOString(),
+      },
+      {
+        id: uuid4(),
+        text: "Some",
+        sender_id: "user2_user",
+        created_at: new Date().toISOString(),
+      },
+    ]).flat()
+  );
   return (
     <SidebarProvider>
       <SidebarCloser />
@@ -248,7 +267,34 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
         footer={<AppPageFooter logo={<LogoSvg />} />}
       >
         {children}
-        <FloatingSearchChatButton />
+        <FloatingChatButton>
+          <Chat
+            messages={messages}
+            onSendMessage={(message) => {
+              // TODO: change user string to user id
+              setMessages([
+                ...messages,
+                {
+                  ...message,
+                  created_at: new Date().toISOString(),
+                  id: uuid4(),
+                },
+              ]);
+              return Promise.resolve();
+            }}
+            sx={({ breakpoints }) => ({
+              m: 1,
+              height: "70vh",
+              width: 600,
+              p: 1,
+              display: "flex",
+              flexDirection: "column",
+              [breakpoints.down("sm")]: {
+                width: "100%",
+              },
+            })}
+          />
+        </FloatingChatButton>
       </PageContainer>
     </SidebarProvider>
   );
