@@ -1,10 +1,11 @@
 import useSwr from "swr";
 import { AxiosProgressEvent, AxiosResponse } from "axios";
-import { axiosInstance, RequestError, useAxiosRequest } from "../axios";
+import { RequestError, useAxiosContext, useAxiosRequest } from "../axios";
 import { subtitlefiles, SubtitleFile } from "@modules/api";
 import { useCallback, useState } from "react";
 
 export function useUploadSubtitleFile(initialSubtitleFile: SubtitleFile) {
+  const axiosInstance = useAxiosContext();
   const [src, setSrc] = useState(initialSubtitleFile.file || "");
   const [errorOfUploadSubtitleFile, setError] = useState<File | null>();
   const [uploadProgress, setUploadProgress] =
@@ -29,7 +30,7 @@ export function useUploadSubtitleFile(initialSubtitleFile: SubtitleFile) {
         setError(error.data);
         throw error.data;
       });
-  }, [initialSubtitleFile, subtitleFile]);
+  }, [axiosInstance, initialSubtitleFile, subtitleFile]);
 
   const { saveSubtitleFile } = useSaveSubtitleFile(initialSubtitleFile);
 
@@ -106,7 +107,7 @@ export function useSubtitleFiles(
 }
 
 export function useDeleteSubtitleFile(id?: string | string[]) {
-  const { loading, request, setData, error, response } = useAxiosRequest({
+  const { loading, request, error } = useAxiosRequest({
     initial: id,
     config: subtitlefiles.destroy,
   });

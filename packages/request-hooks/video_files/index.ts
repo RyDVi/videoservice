@@ -1,10 +1,11 @@
 import useSwr from "swr";
 import { AxiosProgressEvent, AxiosResponse } from "axios";
 import { useCallback, useState } from "react";
-import { axiosInstance, RequestError, useAxiosRequest } from "../axios";
+import { RequestError, useAxiosContext, useAxiosRequest } from "../axios";
 import { VideoFile, videofiles } from "@modules/api";
 
 export function useUploadVideoFile(initialVideoFile: VideoFile) {
+  const axiosInstance = useAxiosContext();
   const [src, setSrc] = useState(initialVideoFile.file || "");
   const [errorOfUploadVideoFile, setError] = useState<File | null>();
   const [uploadProgress, setUploadProgress] =
@@ -29,7 +30,7 @@ export function useUploadVideoFile(initialVideoFile: VideoFile) {
         setError(error.data);
         throw error.data;
       });
-  }, [initialVideoFile, videoFile]);
+  }, [axiosInstance, initialVideoFile, videoFile]);
 
   const { saveVideoFile } = useSaveVideoFile(initialVideoFile);
 
@@ -105,7 +106,7 @@ export function useVideoFiles(
 }
 
 export function useDeleteVideoFile(id?: string | string[]) {
-  const { loading, request, setData, error, response } = useAxiosRequest({
+  const { loading, request, error } = useAxiosRequest({
     initial: id,
     config: videofiles.destroy,
   });
