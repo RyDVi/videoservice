@@ -1,4 +1,4 @@
-import { SeasonsContainer, CRMContainer, useCrmPageTitle } from "@modules/crm";
+import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import { CrmSidebar } from "src/CrmSidebar";
 import { useRouter } from "next/router";
 import { Video, VideoFile } from "@modules/api";
@@ -29,6 +29,7 @@ import {
   FilmInfoCard,
   PersonRoleMultiselect,
 } from "src/forms";
+import { SeasonsContainer } from "src/elements";
 
 function groupBySeason<T extends Video>(videos: T[]): Record<string, T[]> {
   return R.groupBy(R.prop<string>("season"), videos);
