@@ -18,13 +18,16 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
     "prettier": "latest",
-    "turbo": "^1.8.8"
+    "turbo": "^1.9.3"
   },
   "engines": {
     "node": ">=14.0.0"
   },
   "packageManager": "yarn@1.22.19",
   "lint-staged": {
-    "*.{ts,tsx}": ["prettier --write \"**/*.{ts,tsx,md}\"", "eslint --fix"]
+    "*.{ts,tsx}": [
+      "prettier --write \"**/*.{ts,tsx,md}\"",
+      "eslint --fix"
+    ]
   }
 }
