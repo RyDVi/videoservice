@@ -8,7 +8,7 @@ import { SWRConfig } from "swr";
 import { NextPage } from "next";
 import { Theme, ThemeLoader, ThemeSaver } from "@modules/theme";
 import "../styles/index.css";
-import { DictionariesProvider } from "@modules/stores";
+import { DictionariesProvider, MainStoreProvider } from "@modules/stores";
 import {
   AxiosContext,
   createRequestInstance,
@@ -61,9 +61,11 @@ export default function MyApp(props: MyAppProps) {
           }}
         >
           <AxiosContext.Provider value={axiosInstance}>
-            <DictionariesProvider>
-              {getLayout(<Component {...pageProps} />)}
-            </DictionariesProvider>
+            <MainStoreProvider>
+              <DictionariesProvider>
+                {getLayout(<Component {...pageProps} />)}
+              </DictionariesProvider>
+            </MainStoreProvider>
           </AxiosContext.Provider>
         </SWRConfig>
       </Theme>

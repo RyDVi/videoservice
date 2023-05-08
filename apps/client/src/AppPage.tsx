@@ -32,10 +32,9 @@ import { Categories } from "./Categories";
 import { useSearch } from "./hooks";
 import { SidebarContent } from "./SidebarContent";
 import * as paths from "./paths";
-import { useDictionariesContext } from "@modules/stores";
+import { useDictionariesContext, useMainStoreContext } from "@modules/stores";
 import { COUNTRIES_MAP } from "@modules/constants";
-import { uuid4 } from "@modules/utils";
-import { Message } from "@modules/api";
+import { observer } from "@modules/stores";
 
 const PageHeaderContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.pageBackground?.main,
@@ -205,6 +204,35 @@ function usePageBreadcrumbs() {
   return breadcrumbs;
 }
 
+const VideoserviceChat = observer(({}) => {
+  const { userStore } = useMainStoreContext();
+  console.log(userStore);
+  return (
+    <Chat
+      messages={userStore.recommendationMessages}
+      onSendMessage={(message) =>
+        userStore.sendMessage({
+          ...message,
+          sender_id: userStore.currentUser.id,
+          recipient_id: userStore.recommendationMessagesKey,
+        })
+      }
+      isCurrentUser={(userId) => userStore.currentUser.id === userId}
+      sx={({ breakpoints }) => ({
+        m: 1,
+        height: "70vh",
+        width: 600,
+        p: 1,
+        display: "flex",
+        flexDirection: "column",
+        [breakpoints.down("sm")]: {
+          width: "100%",
+        },
+      })}
+    />
+  );
+});
+
 interface AppPageProps {
   children?: React.ReactElement;
 }
@@ -212,22 +240,6 @@ interface AppPageProps {
 export const AppPage: React.FC<AppPageProps> = ({ children }) => {
   const { search } = useSearch();
   const pageBreadcrumbs = usePageBreadcrumbs();
-  const [messages, setMessages] = React.useState<Message[]>(
-    Array.from({ length: 1 }, () => [
-      {
-        id: uuid4(),
-        text: "Some",
-        sender_id: "user1_user",
-        created_at: new Date().toISOString(),
-      },
-      {
-        id: uuid4(),
-        text: "Some",
-        sender_id: "user2_user",
-        created_at: new Date().toISOString(),
-      },
-    ]).flat()
-  );
   return (
     <SidebarProvider>
       <SidebarCloser />
@@ -268,32 +280,7 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
       >
         {children}
         <FloatingChatButton>
-          <Chat
-            messages={messages}
-            onSendMessage={(message) => {
-              // TODO: change user string to user id
-              setMessages([
-                ...messages,
-                {
-                  ...message,
-                  created_at: new Date().toISOString(),
-                  id: uuid4(),
-                },
-              ]);
-              return Promise.resolve();
-            }}
-            sx={({ breakpoints }) => ({
-              m: 1,
-              height: "70vh",
-              width: 600,
-              p: 1,
-              display: "flex",
-              flexDirection: "column",
-              [breakpoints.down("sm")]: {
-                width: "100%",
-              },
-            })}
-          />
+          <VideoserviceChat />
         </FloatingChatButton>
       </PageContainer>
     </SidebarProvider>

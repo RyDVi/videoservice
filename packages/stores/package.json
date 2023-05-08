@@ -9,7 +9,9 @@
     "react": "^18.2.0",
     "@modules/api": "*",
     "@modules/utils": "*",
-    "@modules/request-hooks": "*"
+    "@modules/request-hooks": "*",
+    "mobx": "^6.9.0",
+    "mobx-react-lite": "^3.4.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.26"

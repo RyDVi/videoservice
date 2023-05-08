@@ -17,8 +17,6 @@ import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
 import { Message, buildMessage } from "@modules/api";
 
-const currentUserId = "user1_user";
-
 export const FloatingChatButton: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -70,11 +68,10 @@ const OtherUserMessageContainer = styled(UserMessageContainer)(({ theme }) => ({
   backgroundColor: theme.palette.secondary?.main,
 }));
 
-function isCurrentUser(userId: string) {
-  return userId === currentUserId;
-}
-
-const MessageBlock: React.FC<{ message: Message }> = ({ message }) => {
+const MessageBlock: React.FC<{
+  message: Message;
+  isCurrentUser: (userId: string) => boolean;
+}> = ({ message, isCurrentUser }) => {
   const MessageContainer = isCurrentUser(message.sender_id)
     ? CurrentUserMessageContainer
     : OtherUserMessageContainer;
@@ -114,12 +111,20 @@ const MessageBlock: React.FC<{ message: Message }> = ({ message }) => {
 
 interface MessagesListProps {
   messages: Message[];
+  isCurrentUser: (userId: string) => boolean;
 }
 
-const MessageList: React.FC<MessagesListProps> = ({ messages }) => (
+const MessageList: React.FC<MessagesListProps> = ({
+  messages,
+  isCurrentUser,
+}) => (
   <List sx={{ overflowY: "auto" }}>
     {messages.map((message) => (
-      <MessageBlock key={message.id} message={message} />
+      <MessageBlock
+        key={message.id}
+        message={message}
+        isCurrentUser={isCurrentUser}
+      />
     ))}
   </List>
 );
@@ -127,6 +132,7 @@ const MessageList: React.FC<MessagesListProps> = ({ messages }) => (
 interface MessageComponent {
   messages: Message[];
   onSendMessage: (message: Message) => Promise<void>;
+  isCurrentUser: (userId: string) => boolean;
 }
 
 interface ChatProps extends PaperProps, MessageComponent {}
@@ -166,21 +172,20 @@ const ChatSendMessageBox: React.FC<ChatSendMessageBoxProps> = ({
 export const Chat: React.FC<ChatProps> = ({
   messages,
   onSendMessage,
+  isCurrentUser,
   ...props
 }) => {
-  const [newMessage, setNewMessage] = React.useState<Message>(
-    buildMessage({ sender_id: currentUserId })
-  );
+  const [newMessage, setNewMessage] = React.useState<Message>(buildMessage());
 
   React.useEffect(() => {
-    setNewMessage(buildMessage({ sender_id: currentUserId }));
+    setNewMessage(buildMessage());
   }, [messages]);
 
   const sendMessage = React.useCallback(async () => {
     if (!newMessage.text.trim()) return;
     try {
       await onSendMessage(newMessage);
-      setNewMessage(buildMessage({ sender_id: currentUserId }));
+      setNewMessage(buildMessage());
     } catch (e) {
       //TODO: handle error display needed
       console.log(e);
@@ -189,7 +194,7 @@ export const Chat: React.FC<ChatProps> = ({
 
   return (
     <Paper {...props}>
-      <MessageList messages={messages} />
+      <MessageList messages={messages} isCurrentUser={isCurrentUser} />
       <ChatSendMessageBox
         message={newMessage}
         onChangeMessage={setNewMessage}

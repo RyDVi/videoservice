@@ -26,7 +26,8 @@
     "static-path": "^0.0.4",
     "swr": "^2.0.0",
     "@modules/request-hooks": "*",
-    "@modules/api": "*"
+    "@modules/api": "*",
+    "@modules/stores": "*"
   },
   "devDependencies": {
     "tsconfig": "*",
