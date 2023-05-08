@@ -1,5 +1,5 @@
 {
-  "name": "@modules/request-hooks",
+  "name": "@modules/axios-hooks",
   "description": "",
   "authors": "RyDVi (Ryabchunov Dmitry)",
   "version": "0.0.1",

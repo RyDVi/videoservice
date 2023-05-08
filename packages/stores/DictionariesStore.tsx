@@ -1,6 +1,6 @@
 import React from "react";
 import { CategoryWithDicts, Genre } from "@modules/api";
-import { useCategoriesWithDicts, useGenres } from "@modules/request-hooks";
+import { useCategoriesWithDicts, useGenres } from "@modules/axios-hooks";
 import { ObjectUtils } from "../utils/objects";
 
 interface DictionariesContextProps {

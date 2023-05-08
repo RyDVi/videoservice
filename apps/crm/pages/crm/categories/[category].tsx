@@ -1,4 +1,4 @@
-import { useCategory } from "@modules/request-hooks";
+import { useCategory } from "@modules/axios-hooks";
 import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import { CrmSidebar } from "src/CrmSidebar";
 import { useRouter } from "next/router";

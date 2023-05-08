@@ -2,7 +2,7 @@ import { SubtitleFile } from "@modules/api";
 import {
   useDeleteSubtitleFile,
   useSaveSubtitleFile,
-} from "@modules/request-hooks";
+} from "@modules/axios-hooks";
 import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,

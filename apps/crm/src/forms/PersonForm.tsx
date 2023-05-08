@@ -1,5 +1,5 @@
 import { Person } from "@modules/api";
-import { useSavePerson, useDeletePerson } from "@modules/request-hooks";
+import { useSavePerson, useDeletePerson } from "@modules/axios-hooks";
 import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,

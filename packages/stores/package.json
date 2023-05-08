@@ -9,7 +9,7 @@
     "react": "^18.2.0",
     "@modules/api": "*",
     "@modules/utils": "*",
-    "@modules/request-hooks": "*",
+    "@modules/axios-hooks": "*",
     "mobx": "^6.9.0",
     "mobx-react-lite": "^3.4.3"
   },

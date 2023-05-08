@@ -1,4 +1,4 @@
-import { useStaffLogout } from "@modules/request-hooks";
+import { useStaffLogout } from "@modules/axios-hooks";
 import React from "react";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/router";

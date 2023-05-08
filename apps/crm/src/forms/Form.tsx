@@ -14,7 +14,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ValidationErrors } from "@modules/request-hooks";
+import { ValidationErrors } from "@modules/axios-hooks";
 import React from "react";
 
 export const SubmitButton: React.FC<ButtonProps> = (props) => (

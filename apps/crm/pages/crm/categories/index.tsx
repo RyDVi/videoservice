@@ -1,4 +1,4 @@
-import { useCategories, useDeleteCategory } from "@modules/request-hooks";
+import { useCategories, useDeleteCategory } from "@modules/axios-hooks";
 import { CircularProgress } from "@mui/material";
 import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import { CrmSidebar } from "src/CrmSidebar";

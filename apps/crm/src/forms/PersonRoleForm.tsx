@@ -1,5 +1,5 @@
 import { PersonRole } from "@modules/api";
-import { useSavePersonRole, useDeletePersonRole } from "@modules/request-hooks";
+import { useSavePersonRole, useDeletePersonRole } from "@modules/axios-hooks";
 import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,

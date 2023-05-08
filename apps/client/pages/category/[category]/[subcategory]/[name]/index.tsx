@@ -1,4 +1,4 @@
-import { useFilms } from "@modules/request-hooks";
+import { useFilms } from "@modules/axios-hooks";
 import { FilmsGrid, FilmsGridLoader, NotFoundFilms } from "@modules/client";
 import { usePage } from "@modules/nextjs";
 import { Box, Container, Pagination } from "@mui/material";

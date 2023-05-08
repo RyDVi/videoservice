@@ -1,4 +1,4 @@
-import { useDeletePersonRole, usePersonRoles } from "@modules/request-hooks";
+import { useDeletePersonRole, usePersonRoles } from "@modules/axios-hooks";
 import { CircularProgress } from "@mui/material";
 import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import Head from "next/head";

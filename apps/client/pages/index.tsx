@@ -5,7 +5,7 @@ import {
   FilmsGridLoader,
   NotFoundFilms,
 } from "@modules/client";
-import { useFilms } from "@modules/request-hooks";
+import { useFilms } from "@modules/axios-hooks";
 import { useDictionariesContext } from "@modules/stores";
 import { Box } from "@mui/material";
 import Head from "next/head";

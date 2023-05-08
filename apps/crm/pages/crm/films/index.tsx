@@ -2,7 +2,7 @@ import { CRMContainer, FilmsTable, useCrmPageTitle } from "@modules/crm";
 import { CrmSidebar } from "src/CrmSidebar";
 import { useRouter } from "next/router";
 import { useQuery } from "@modules/nextjs";
-import { useFilms } from "@modules/request-hooks";
+import { useFilms } from "@modules/axios-hooks";
 import { Box, Button, Paper } from "@mui/material";
 import Head from "next/head";
 import { useGridSortModel, useMuiPage } from "@modules/mui-adapter";

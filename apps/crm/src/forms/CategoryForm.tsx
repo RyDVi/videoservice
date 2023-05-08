@@ -19,7 +19,7 @@ import {
 import { useState } from "react";
 import { DeleteDialog } from "@modules/crm";
 import React from "react";
-import { useSaveCategory, useDeleteCategory } from "@modules/request-hooks";
+import { useSaveCategory, useDeleteCategory } from "@modules/axios-hooks";
 
 export const CategoryFormFields: React.FC<FormFields<Category>> = ({
   data,

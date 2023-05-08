@@ -1,4 +1,4 @@
-import { useFilms } from "@modules/request-hooks";
+import { useFilms } from "@modules/axios-hooks";
 import { FilmsGrid, FilmsGridLoader } from "@modules/client";
 import { useRouter } from "next/router";
 import { AppPage } from "src/AppPage";

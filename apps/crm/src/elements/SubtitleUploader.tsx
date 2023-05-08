@@ -1,5 +1,5 @@
 import { SubtitleFile } from "@modules/api";
-import { useUploadSubtitleFile } from "@modules/request-hooks";
+import { useUploadSubtitleFile } from "@modules/axios-hooks";
 import { useIsValueChanged } from "@modules/hooks";
 import { Stack } from "@mui/material";
 import React from "react";

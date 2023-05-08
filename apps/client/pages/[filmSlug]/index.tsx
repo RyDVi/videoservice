@@ -15,7 +15,7 @@ import {
   usePersonRoles,
   usePersons,
   useVideos,
-} from "@modules/request-hooks";
+} from "@modules/axios-hooks";
 import {
   Box,
   Container,

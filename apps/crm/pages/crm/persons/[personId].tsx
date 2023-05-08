@@ -2,7 +2,7 @@ import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import { useRouter } from "next/router";
 import React from "react";
 import { CircularProgress } from "@mui/material";
-import { usePerson } from "@modules/request-hooks";
+import { usePerson } from "@modules/axios-hooks";
 import { formatFullName } from "@modules/utils";
 import { CreateEditPersonForm } from "src/forms";
 import { CrmSidebar } from "src/CrmSidebar";

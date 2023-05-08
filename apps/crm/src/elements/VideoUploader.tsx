@@ -1,5 +1,5 @@
 import { VideoFile } from "@modules/api";
-import { useUploadVideoFile } from "@modules/request-hooks";
+import { useUploadVideoFile } from "@modules/axios-hooks";
 import { useIsValueChanged } from "@modules/hooks";
 import { Stack } from "@mui/material";
 import React from "react";

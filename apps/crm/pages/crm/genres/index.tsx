@@ -1,4 +1,4 @@
-import { useDeleteGenre, useGenres } from "@modules/request-hooks";
+import { useDeleteGenre, useGenres } from "@modules/axios-hooks";
 import { CircularProgress } from "@mui/material";
 import { CRMContainer, useCrmPageTitle } from "@modules/crm";
 import Head from "next/head";

@@ -1,5 +1,5 @@
 import { Video } from "@modules/api";
-import { useDeleteVideo, useSaveVideo } from "@modules/request-hooks";
+import { useDeleteVideo, useSaveVideo } from "@modules/axios-hooks";
 import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,

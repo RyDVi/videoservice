@@ -1,5 +1,5 @@
 import { Genre } from "@modules/api";
-import { useSaveGenre, useDeleteGenre } from "@modules/request-hooks";
+import { useSaveGenre, useDeleteGenre } from "@modules/axios-hooks";
 import { useHandleChange } from "@modules/hooks";
 import {
   CardProps,

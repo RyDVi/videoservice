@@ -14,7 +14,7 @@ import {
   useVideoFiles,
   useVideos,
   useDeleteFilmPerson,
-} from "@modules/request-hooks";
+} from "@modules/axios-hooks";
 import Head from "next/head";
 import { Box, Button } from "@mui/material";
 import { makeVideoFilesUrlsForPlayer, PlayerJS } from "@modules/videoplayer";

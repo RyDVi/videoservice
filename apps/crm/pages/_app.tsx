@@ -11,7 +11,7 @@ import {
   AxiosContext,
   createRequestInstance,
   getCsrfConfig,
-} from "@modules/request-hooks";
+} from "@modules/axios-hooks";
 
 const axiosInstance = createRequestInstance(
   getCsrfConfig(process.env.NEXT_PUBLIC_SERVER_URL!),

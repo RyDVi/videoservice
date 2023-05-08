@@ -1,5 +1,5 @@
 import { CONTENT_RATINGS, Film, VIDEO_TYPES } from "@modules/api";
-import { useDeleteFilm, useSaveFilm } from "@modules/request-hooks";
+import { useDeleteFilm, useSaveFilm } from "@modules/axios-hooks";
 import { useHandleChange } from "@modules/hooks";
 import {
   Box,
