@@ -8,9 +8,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "workspaces": [
-    "src"
-  ],
   "dependencies": {
     "next": "^13.1.1",
     "react": "^18.2.0",
@@ -24,10 +21,7 @@
     "@next/font": "^13.1.1",
     "ramda": "^0.28.0",
     "static-path": "^0.0.4",
-    "swr": "^2.0.0",
-    "@modules/api": "*",
-    "@modules/stores": "*",
-    "@modules/axios-hooks": "*"
+    "swr": "^2.0.0"
   },
   "devDependencies": {
     "tsconfig": "*",
