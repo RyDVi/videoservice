@@ -35,6 +35,7 @@ import * as paths from "./paths";
 import { useDictionariesContext, useMainStoreContext } from "@modules/stores";
 import { COUNTRIES_MAP } from "@modules/constants";
 import { observer } from "@modules/stores";
+import { Message } from "@modules/api";
 
 const PageHeaderContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.pageBackground?.main,
@@ -206,18 +207,37 @@ function usePageBreadcrumbs() {
 
 const VideoserviceChat = observer(({}) => {
   const { userStore } = useMainStoreContext();
-  console.log(userStore);
+  const getUserName = React.useCallback(
+    (userId: string) => {
+      if (userStore.currentUser.id === userId) {
+        return "Вы";
+      }
+      if (userId === userStore.recommendationMessagesKey) {
+        return "Бот";
+      }
+      return userId;
+    },
+    [userStore.currentUser.id, userStore.recommendationMessagesKey]
+  );
+  const handleSendMessage = React.useCallback(
+    (message: Message) =>
+      userStore.sendMessage({
+        ...message,
+        sender_id: userStore.currentUser.id,
+        recipient_id: userStore.recommendationMessagesKey,
+      }),
+    [userStore]
+  );
+  const isCurrentUser = React.useCallback(
+    (userId: string) => userStore.currentUser.id === userId,
+    [userStore.currentUser.id]
+  );
   return (
     <Chat
       messages={userStore.recommendationMessages}
-      onSendMessage={(message) =>
-        userStore.sendMessage({
-          ...message,
-          sender_id: userStore.currentUser.id,
-          recipient_id: userStore.recommendationMessagesKey,
-        })
-      }
-      isCurrentUser={(userId) => userStore.currentUser.id === userId}
+      onSendMessage={handleSendMessage}
+      isCurrentUser={isCurrentUser}
+      getName={getUserName}
       sx={({ breakpoints }) => ({
         m: 1,
         height: "70vh",

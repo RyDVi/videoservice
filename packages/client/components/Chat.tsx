@@ -71,7 +71,8 @@ const OtherUserMessageContainer = styled(UserMessageContainer)(({ theme }) => ({
 const MessageBlock: React.FC<{
   message: Message;
   isCurrentUser: (userId: string) => boolean;
-}> = ({ message, isCurrentUser }) => {
+  getName: (userId: string) => React.ReactNode;
+}> = ({ message, isCurrentUser, getName }) => {
   const MessageContainer = isCurrentUser(message.sender_id)
     ? CurrentUserMessageContainer
     : OtherUserMessageContainer;
@@ -95,7 +96,7 @@ const MessageBlock: React.FC<{
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-            {message.sender_id}
+            {getName(message.sender_id)}
           </Typography>
           <Typography variant="caption">
             {new Date(message.created_at).toDateString()}
@@ -109,14 +110,10 @@ const MessageBlock: React.FC<{
   );
 };
 
-interface MessagesListProps {
-  messages: Message[];
-  isCurrentUser: (userId: string) => boolean;
-}
-
-const MessageList: React.FC<MessagesListProps> = ({
+const MessageList: React.FC<MessageComponent> = ({
   messages,
   isCurrentUser,
+  getName,
 }) => (
   <List sx={{ overflowY: "auto" }}>
     {messages.map((message) => (
@@ -124,6 +121,7 @@ const MessageList: React.FC<MessagesListProps> = ({
         key={message.id}
         message={message}
         isCurrentUser={isCurrentUser}
+        getName={getName}
       />
     ))}
   </List>
@@ -131,11 +129,13 @@ const MessageList: React.FC<MessagesListProps> = ({
 
 interface MessageComponent {
   messages: Message[];
-  onSendMessage: (message: Message) => Promise<void>;
   isCurrentUser: (userId: string) => boolean;
+  getName: (userId: string) => React.ReactNode;
 }
 
-interface ChatProps extends PaperProps, MessageComponent {}
+interface ChatProps extends PaperProps, MessageComponent {
+  onSendMessage: (message: Message) => Promise<void>;
+}
 
 interface ChatSendMessageBoxProps {
   message: Message;
@@ -147,32 +147,32 @@ const ChatSendMessageBox: React.FC<ChatSendMessageBoxProps> = ({
   message,
   onChangeMessage,
   onSendMessage,
-}) => {
-  return (
-    <Box sx={{ display: "flex", alignItems: "center", marginTop: "auto" }}>
-      <TextField
-        value={message.text}
-        multiline
-        onChange={(e) => onChangeMessage({ ...message, text: e.target.value })}
-        onKeyDown={(e) => {
-          if (!e.shiftKey && e.key === "Enter") {
-            e.preventDefault(); // For prevent enter without text
-            onSendMessage();
-          }
-        }}
-        sx={{ width: "100%" }}
-      />
-      <IconButton onClick={onSendMessage}>
-        <SendIcon />
-      </IconButton>
-    </Box>
-  );
-};
+}) => (
+  <Box sx={{ display: "flex", alignItems: "center", marginTop: "auto" }}>
+    <TextField
+      value={message.text}
+      multiline
+      onChange={(e) => onChangeMessage({ ...message, text: e.target.value })}
+      onKeyDown={(e) => {
+        if (!e.shiftKey && e.key === "Enter") {
+          e.preventDefault(); // For prevent enter without text
+          onSendMessage();
+        }
+      }}
+      placeholder="Напишите сообщение..."
+      sx={{ width: "100%" }}
+    />
+    <IconButton onClick={onSendMessage}>
+      <SendIcon />
+    </IconButton>
+  </Box>
+);
 
 export const Chat: React.FC<ChatProps> = ({
   messages,
   onSendMessage,
   isCurrentUser,
+  getName,
   ...props
 }) => {
   const [newMessage, setNewMessage] = React.useState<Message>(buildMessage());
@@ -188,13 +188,17 @@ export const Chat: React.FC<ChatProps> = ({
       setNewMessage(buildMessage());
     } catch (e) {
       //TODO: handle error display needed
-      console.log(e);
+      console.error(e);
     }
   }, [newMessage, onSendMessage]);
 
   return (
     <Paper {...props}>
-      <MessageList messages={messages} isCurrentUser={isCurrentUser} />
+      <MessageList
+        messages={messages}
+        isCurrentUser={isCurrentUser}
+        getName={getName}
+      />
       <ChatSendMessageBox
         message={newMessage}
         onChangeMessage={setNewMessage}
