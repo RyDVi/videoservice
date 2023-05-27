@@ -61,7 +61,14 @@ export default function MyApp(props: MyAppProps) {
           }}
         >
           <AxiosContext.Provider value={axiosInstance}>
-            <MainStoreProvider>
+            <MainStoreProvider
+              onMakeRequest={(request) =>
+                axiosInstance.request(request).then(
+                  (response) => response.data,
+                  (error) => error
+                )
+              }
+            >
               <DictionariesProvider>
                 {getLayout(<Component {...pageProps} />)}
               </DictionariesProvider>

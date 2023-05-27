@@ -1,6 +1,7 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import React from "react";
-import { RequestError, RequestType, ValidationErrors } from "./types";
+import { RequestError, RequestType } from "./types";
+import { ValidationErrors } from "@modules/api";
 
 export const AxiosContext = React.createContext<AxiosInstance>(null as any);
 export function useAxiosContext() {
@@ -26,6 +27,7 @@ export function useAxiosRequest<D = any, R = any, E = ValidationErrors<D>>({
   const request = React.useCallback(
     async (requestData?: D) => {
       setLoading(true);
+      setError(null);
       return axiosInstance
         .request<D, AxiosResponse<R>>(config(requestData || data))
         .then(

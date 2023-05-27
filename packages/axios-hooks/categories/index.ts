@@ -1,6 +1,11 @@
-import { ValidationErrors, useAxiosRequest } from "../axios";
+import { useAxiosRequest } from "../axios";
 import useSwr from "swr";
-import { categories, Category, CategoryWithDicts } from "@modules/api";
+import {
+  categories,
+  Category,
+  CategoryWithDicts,
+  ValidationErrors,
+} from "@modules/api";
 
 export function useSaveCategory(initialCategory?: Category | null) {
   const {

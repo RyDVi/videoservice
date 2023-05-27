@@ -15,7 +15,7 @@ import SendIcon from "@mui/icons-material/Send";
 
 import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
-import { Message, buildMessage } from "@modules/api";
+import { Message, messages as messagesApi } from "@modules/api";
 
 export const FloatingChatButton: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -175,17 +175,19 @@ export const Chat: React.FC<ChatProps> = ({
   getName,
   ...props
 }) => {
-  const [newMessage, setNewMessage] = React.useState<Message>(buildMessage());
+  const [newMessage, setNewMessage] = React.useState<Message>(
+    messagesApi.initial()
+  );
 
   React.useEffect(() => {
-    setNewMessage(buildMessage());
+    setNewMessage(messagesApi.initial());
   }, [messages]);
 
   const sendMessage = React.useCallback(async () => {
     if (!newMessage.text.trim()) return;
     try {
       await onSendMessage(newMessage);
-      setNewMessage(buildMessage());
+      setNewMessage(messagesApi.initial());
     } catch (e) {
       //TODO: handle error display needed
       console.error(e);

@@ -1,7 +1,17 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { MainStore } from "./MainStore";
-import { AuthData, Message, User, buildUser } from "@modules/api";
+import {
+  AuthData,
+  LoginData,
+  Message,
+  SignupData,
+  User,
+  api,
+  buildUser,
+  messages as messagesApi,
+} from "@modules/api";
 import { uuid4 } from "../utils/utils";
+import { signup } from "../../apps/client/src/paths";
 
 const CURRENT_USER_KEY = "current_user";
 
@@ -57,6 +67,7 @@ class ApiUserStorage extends UserStorage {
 
   getMessages(): Promise<Message[]> {
     throw new Error("TODO: need implement");
+    // messagesApi.list({})
   }
   sendMessage(message: Message): Promise<void> {
     throw new Error("TODO: need implement");

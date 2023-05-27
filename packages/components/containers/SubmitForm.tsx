@@ -37,4 +37,3 @@ export const SubmitForm: React.FC<SubmitFormProps> = ({
     </Form>
   );
 };
-// TODO: need to remove this

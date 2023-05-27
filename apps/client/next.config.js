@@ -16,6 +16,17 @@ module.exports = {
         destination: "/",
         permanent: true,
       },
+      // {
+      //   source: "/login",
+      //   destination: "/",
+      //   permanent: true,
+      //   has: [
+      //     {
+      //       type: "cookie",
+      //       key: "access_token",
+      //     },
+      //   ],
+      // },
     ];
   },
   reactStrictMode: true,

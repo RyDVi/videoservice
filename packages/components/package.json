@@ -1,0 +1,17 @@
+{
+  "name": "@modules/components",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "author": "RyDVi (Ryabchunov Dmitry)",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.1",
+    "@modules/hooks": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26"
+  }
+}

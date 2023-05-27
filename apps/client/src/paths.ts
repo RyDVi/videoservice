@@ -17,3 +17,9 @@ export const search = baseSearch.path("/:searchText");
 
 export const copyright = path("/copyright");
 export const feedback = path("/feedback");
+
+export const login = path("/login");
+export const signup = login.path("/signup");
+export const signupSuccess = signup.path("/success");
+export const sendRestoreLink = login.path("/restore");
+export const sendRestoreLinkSuccess = sendRestoreLink.path("/success");

@@ -24,6 +24,7 @@ import {
   Paper,
   Breadcrumbs,
   styled,
+  Button,
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -66,7 +67,16 @@ const PageHeader: React.FC<AppProps> = ({
     <Box sx={{ height: 70 }}>{logo}</Box>
     <UpTabletScreen>
       <Box sx={{ display: "flex", alignItems: "center" }}>{actions}</Box>
-      <Box sx={{ marginLeft: "auto" }}>{search}</Box>
+      <Box
+        sx={{
+          marginLeft: "auto",
+          display: "flex",
+          gap: 2,
+          alignItems: "center",
+        }}
+      >
+        {search}
+      </Box>
     </UpTabletScreen>
     <DownTabletScreen>
       <Box sx={{ marginLeft: "auto" }}>{sidebarButton}</Box>
@@ -198,6 +208,13 @@ function usePageBreadcrumbs() {
     [paths.feedback({})]: { text: "Обратная связь", disabled: true },
     [paths.copyright({})]: { text: "Правообладателям", disabled: true },
     [paths.baseSearch({})]: { text: "Поиск", disabled: true },
+    [paths.login({})]: { text: "Авторизация" },
+    [paths.signup({})]: { text: "Регистрация", disabled: true },
+    [paths.signupSuccess({})]: {
+      text: "Успешно зарегистрирован",
+      disabled: true,
+    },
+    [paths.sendRestoreLink({})]: { text: "Восстановление пароля" },
     ...genresBreadcrumbs,
     ...categoriesBreadcrumbs,
     ...countriesBreadcrumbs,
@@ -282,15 +299,20 @@ export const AppPage: React.FC<AppPageProps> = ({ children }) => {
               </>
             }
             search={
-              <SearchField
-                onSearch={search}
-                endButtons={
-                  <HelpButton>
-                    <HelpSearchFilmText />
-                  </HelpButton>
-                }
-                placeholder="Введите название или опишите фильм"
-              />
+              <>
+                <SearchField
+                  onSearch={search}
+                  endButtons={
+                    <HelpButton>
+                      <HelpSearchFilmText />
+                    </HelpButton>
+                  }
+                  placeholder="Введите название или опишите фильм"
+                />
+                <Button LinkComponent={Link} href={paths.login({})}>
+                  Войти
+                </Button>
+              </>
             }
             sidebarButton={<SidebarToggler />}
           />

@@ -1,6 +1,6 @@
 import useSwr from "swr";
-import { useAxiosRequest, ValidationErrors } from "../axios";
-import { PersonRole, personsRoles } from "@modules/api";
+import { useAxiosRequest } from "../axios";
+import { PersonRole, personsRoles, ValidationErrors } from "@modules/api";
 
 export function usePersonRoles(
   filters?: Parameters<typeof personsRoles.list>[0]

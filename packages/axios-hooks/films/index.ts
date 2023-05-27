@@ -1,7 +1,6 @@
 import { useAxiosRequest } from "../axios/hooks";
-import { ValidationErrors } from "../axios/types";
 import useSwr from "swr";
-import { films, Paginated, Film } from "@modules/api";
+import { films, Paginated, Film, ValidationErrors } from "@modules/api";
 import React from "react";
 import { isValidURL } from "@modules/utils";
 

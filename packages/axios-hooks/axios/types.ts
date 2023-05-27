@@ -1,18 +1,5 @@
 import { AxiosResponse } from "axios";
-
-export interface ListValidationErrors<T> {
-  [index: number]: T extends string | number | symbol
-    ? string[]
-    : ValidationErrors<T>;
-}
-
-export type ValidationErrors<T> = {
-  [K in keyof T]?: T[K] extends any[]
-    ? ListValidationErrors<T[K][number]>
-    : T[K] extends Record<string, any> | undefined | null
-    ? ValidationErrors<T[K]>
-    : string[];
-} & { non_field_errors?: string[] };
+import { ValidationErrors } from "@modules/api";
 
 export type RequestType<D = any, R = any, E = ValidationErrors<D>> = {
   data: D;

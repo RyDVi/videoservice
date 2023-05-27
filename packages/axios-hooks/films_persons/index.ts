@@ -1,6 +1,6 @@
 import useSwr from "swr";
-import { useAxiosRequest, ValidationErrors } from "../axios";
-import { filmsPersons, FilmPerson } from "@modules/api";
+import { useAxiosRequest } from "../axios";
+import { filmsPersons, FilmPerson, ValidationErrors } from "@modules/api";
 
 export function useFilmsPersons(
   filters?: Parameters<typeof filmsPersons.list>[0]

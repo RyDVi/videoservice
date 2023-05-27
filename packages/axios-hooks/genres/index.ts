@@ -1,6 +1,6 @@
-import { useAxiosRequest, ValidationErrors } from "../axios";
+import { useAxiosRequest } from "../axios";
 import useSwr from "swr";
-import { Genre, genres } from "@modules/api";
+import { Genre, genres, ValidationErrors } from "@modules/api";
 
 export function useSaveGenre(initialGenre?: Genre) {
   const {
